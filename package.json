@@ -1,0 +1,34 @@
+{
+  "name": "DDM",
+  "version": "1.0.0",
+  "description": "基于React Json Schema的动态数据管理平台",
+  "main": "",
+  "scripts": {
+    "dev": "cross-env NODE_ENV=dev PORT=6601 roadhog server",
+    "build": "cross-env NODE_ENV=prod roadhog build"
+  },
+  "keywords": [
+    "react",
+    "dva",
+    "DDM",
+    "Dynamic Data Management"
+  ],
+  "author": "fishuncle",
+  "license": "MIT",
+  "dependencies": {
+    "dva": "^2.1.0",
+    "eruda": "^1.5.4",
+    "postcss-px2rem": "^0.3.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "styled-components": "^4.1.3"
+  },
+  "devDependencies": {
+    "babel-plugin-dva-hmr": "^0.3.2",
+    "cross-env": "^5.2.0",
+    "husky": "^0.12.0",
+    "redbox-react": "^1.4.3",
+    "roadhog": "^2.0.0"
+  }
+}
