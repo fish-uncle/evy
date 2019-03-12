@@ -1,8 +1,11 @@
-/node_modules
-/dist
-/test
-.idea
-.vscode
-.DS_Store
+# IDEA Config
+/.idea/
+
+# node_modules
+/node_modules/
+npm-debug.log
+yarn-error.log
 *.log
-.webpackrc.js
+
+# mac
+/.DS_Store/
