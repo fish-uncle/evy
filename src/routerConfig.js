@@ -1,6 +1,7 @@
 import {
   IndexPage,
-} from './routes/index.js';
+  UserPage
+} from './routes';
 
 /**
  * routerConfig的参数说明
@@ -15,6 +16,11 @@ const routerConfig = [
     path: '/',
     title: '11',
     component: IndexPage,
+  },
+  {
+    path: '/user',
+    title: 'user',
+    component: UserPage,
   }
 ];
 
