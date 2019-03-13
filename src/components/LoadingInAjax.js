@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import styled from 'styled-px2rem';
+import styled from 'styled-components';
 
 const LoadingStyle = styled.div`
    //background-color: rgba(0,0,0,.5);

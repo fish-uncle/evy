@@ -18,13 +18,16 @@ table {
   border-spacing: 0;
 }
 
+i {
+  font-style: normal;
+}
+
 a {
   text-decoration: none;
 }
 
 html, body, #root {
   width: 100%;
-  overflow-x: hidden;
 }
 
 html {
@@ -37,4 +40,66 @@ html {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+
+.pos-r {
+  position: relative;
+}
+
+.fn-block {
+  display: block;
+}
+
+.fn-clear {
+  *zoom: 1;
+
+  &:before, &:after {
+    display: table;
+    content: "";
+    line-height: 0;
+  }
+
+  &:after {
+    clear: both;
+  }
+}
+
+.fn-fl {
+  float: left;
+}
+
+.fn-fr {
+  float: right;
+}
+
+.pos-a {
+  position: absolute;
+}
+
+.over-hidden {
+  overflow: hidden;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.fn-hide {
+  display: none;
+}
+
+.pos-f {
+  position: fixed;
+}
+
+.z-index-9 {
+  z-index: 9;
+}
+
+.z-index-99 {
+  z-index: 99;
+}
+
+.z-index-999 {
+  z-index: 999;
 }

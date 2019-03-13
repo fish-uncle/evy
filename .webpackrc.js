@@ -1,21 +1,14 @@
 import path from 'path';
 import pkg from './package';
 
-
-const fullYear = new Date().getFullYear();
-const realEnv = process.env.YY_ENV === 'prod' ? 'prod' : 'test';
-const yuming = process.env.YY_ENV === 'prod' ? '8' : 'source';
-
-// const publicPath = `https://${yuming}.yingyinglicai.com/lyfe/node-projects/${fullYear}/credit-card/${pkg.name}/${pkg.version}/${realEnv}/`;
-const publicPath = `https://${yuming}.yingyinglicai.com/lyfe/h5-activities/${fullYear}/${pkg.name}/${realEnv}/${pkg.version}/`; // h5-activities
-
+const publicPath = `/`;
 export default {
   define: {
-    'process.env.YY_ENV': process.env.YY_ENV,
+    'process.env.NODE_ENV': process.env.NODE_ENV,
   },
   entry: {
     index: './src/index.js',
-    vendor: ['dva', 'react-dom', 'react', 'styled-components']
+    vendor: ['dva', 'react-dom', 'react', 'styled-components', 'antd']
   },
   commons: [
     {name: ['vendor']}
@@ -34,20 +27,14 @@ export default {
   outputPath: path.resolve(__dirname, 'dist', pkg.version),
   hash: false,
   disableCSSModules: true,
-  extraPostCSSPlugins: [
-    require('postcss-px2rem')({remUnit: 75})
-  ],
-  alias: {
-    'styled-px2rem': path.resolve(__dirname, 'src/lib/styled-px2rem.js')
-  },
-  proxy: {
-
-  },
-
-  extraBabelPlugins: [],
+  proxy: {},
+  extraBabelPlugins: [["import", {
+    "libraryName": "antd",
+    "libraryDirectory": "es",
+    "style": true
+  }]],
   env: {
-    development: {
-    },
+    development: {},
     production: {
       publicPath
     }

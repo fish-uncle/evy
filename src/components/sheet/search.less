@@ -1,0 +1,33 @@
+.sheet-search-box {
+  .sheet-search {
+    margin-bottom: 10px;
+    width: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+    transition: all 0.3s;
+    visibility: hidden;
+    height: 0;
+    &.active {
+      height: 32px;
+      visibility: inherit;
+      width: 25%;
+    }
+  }
+  .sheet-search-btn {
+    width: 25%;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-bottom: 10px;
+    transition: all 0.3s;
+    &.active {
+      width: 100%;
+    }
+  }
+  .ant-select {
+    display: block;
+  }
+  .ant-btn {
+    display: block;
+    width: 100%;
+  }
+}

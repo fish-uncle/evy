@@ -8,7 +8,7 @@ function RouterConfig({history}) {
       <Switch>
         {
           routerConfig.map((value, index) => (
-            <Route path={value.path} exact={value.exact} component={value.component} key={index}/>
+            <Route path={value.path} exact={value.exact || true} component={value.component} key={index}/>
           ))
         }
       </Switch>
@@ -16,13 +16,4 @@ function RouterConfig({history}) {
   );
 }
 
-// process.env.YY_ENV === 'prod' ? void 0 :
-//   (function () {
-//     var script = document.createElement('script');
-//     // script.src = "https://8.yingyinglicai.com/lyfe/common/js/eruda.js";
-//     document.body.appendChild(script);
-//     // script.onload = function () {
-//     //   // eruda.init()
-//     // }
-//   })();
 export default RouterConfig;

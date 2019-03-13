@@ -1,5 +1,6 @@
 import {routerRedux} from 'dva/router';
 import routerConfig from '../routerConfig';
+import config from '../models/config';
 import {createModelActions} from '../utils/action';
 
 export default {
@@ -9,18 +10,10 @@ export default {
     setup({dispatch, history}) {
       history.listen(async ({pathname}) => {
         const len = routerConfig.length;
-        for(let i = 0; i < len; i++) {
-          const config = routerConfig[i];
-          if (checkPath(pathname, config)) {
-
-            doAfterMatch(config);
-
-            // 登录跳转
-            if (config.needLogin) {
-              dispatch({
-                type: 'login/eff_checkLogin'
-              });
-            }
+        for (let i = 0; i < len; i++) {
+          const con = routerConfig[i];
+          if (checkPath(pathname, con)) {
+            doAfterMatch(con);
           }
         }
       });
@@ -61,7 +54,7 @@ function checkPath(path, config) {
     return false;
   }
   const len = arr1.length;
-  for(let i = 0; i < len; i++) {
+  for (let i = 0; i < len; i++) {
     const val1 = arr1[i];
     const val2 = arr2[i];
     const ind = val2.indexOf(':');
@@ -82,10 +75,7 @@ function checkPath(path, config) {
   return true;
 }
 
-function doAfterMatch(config) {
-  const {backgroundColor = '#fff', title = 'DDM'} = config;
-
-  document.title = title;
-
-  document.getElementsByTagName('html')[0].style.backgroundColor = backgroundColor || '#ffffff';
+function doAfterMatch(con) {
+  const {title} = con;
+  title ? document.title = config.state.title + '-' + title : document.title = config.state.title;
 }

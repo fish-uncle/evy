@@ -4,7 +4,7 @@
   "description": "基于React Json Schema的动态数据管理平台",
   "main": "",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev PORT=6601 roadhog server",
+    "dev": "cross-env NODE_ENV=dev ESLINT=none PORT=6601 roadhog server",
     "build": "cross-env NODE_ENV=prod roadhog build"
   },
   "keywords": [
@@ -16,9 +16,10 @@
   "author": "fishuncle",
   "license": "MIT",
   "dependencies": {
+    "antd": "^3.15.0",
     "dva": "^2.1.0",
     "eruda": "^1.5.4",
-    "postcss-px2rem": "^0.3.0",
+    "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
@@ -26,9 +27,14 @@
   },
   "devDependencies": {
     "babel-plugin-dva-hmr": "^0.3.2",
+    "babel-plugin-import": "^1.11.0",
     "cross-env": "^5.2.0",
     "husky": "^0.12.0",
     "redbox-react": "^1.4.3",
     "roadhog": "^2.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:fish-uncle/DDM.git"
   }
 }

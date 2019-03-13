@@ -1,6 +1,6 @@
 import fetch from 'dva/fetch';
-import {LoadingInAjax} from '../components/index';
-import {toast, alert} from './utils';
+// import {LoadingInAjax} from '../components/Body';
+// import {toast, alert} from './utils';
 
 function parseJSON(response) {
   return response.json();
@@ -17,24 +17,18 @@ function checkStatus(response) {
 }
 
 function checkResult(res) {
-  const {success, message, ...other} = res;
+  const {success, data, msg} = res;
   if (success) {
-    // return Object.keys(other).length ? {message, ...other} : message;
-    return message;
+    return data;
   }
-  toast(message);
-  throw new Error(message);
+  // toast(message);
+  throw new Error(msg);
 }
 
 let requestCount = 0;
-let timeoutForLoadingToShow;
 
 function requestStart() {
-  requestCount++;
-  clearTimeout(timeoutForLoadingToShow);
-  timeoutForLoadingToShow = setTimeout(_ => {
-    LoadingInAjax.show();
-  }, 50);
+  // requestCount++;
 }
 
 function parseParams(obj) {
@@ -49,12 +43,12 @@ function parseParams(obj) {
 }
 
 function requestEnd() {
-  requestCount--;
+  // requestCount--;
   // console.log('requestCount = ' + requestCount);
-  if (requestCount < 1) {
-    clearTimeout(timeoutForLoadingToShow);
-    LoadingInAjax.hide();
-  }
+  // if (requestCount < 1) {
+  //   clearTimeout(timeoutForLoadingToShow);
+  //   LoadingInAjax.hide();
+  // }
 }
 
 /**
@@ -115,7 +109,7 @@ export default function request(url, options) {
 
 
   requestStart();
-  return fetch('/creditcard' + url, newOpt)
+  return fetch(url, newOpt)
     .then(checkStatus)
     .then(parseJSON)
     .then(checkResult)
