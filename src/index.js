@@ -4,7 +4,7 @@ import './utils/always';
 
 // 1. Initialize
 const app = dva({
-  onError: function(e) {
+  onError: function (e) {
     e.preventDefault();
     console.error('全局onError', e);
   }
@@ -18,6 +18,7 @@ app.model(require('./models/router').default);
 app.model(require('./models/left').default);
 app.model(require('./models/config').default);
 app.model(require('./models/sheet').default);
+app.model(require('./models/search').default);
 
 // 4. Router
 app.router(require('./router').default);

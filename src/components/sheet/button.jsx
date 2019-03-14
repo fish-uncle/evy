@@ -2,9 +2,11 @@
 import React from 'react';
 import {Button, notification, Modal, Icon} from 'antd';
 import './button.less';
+import {connect} from "dva";
+import {SheetActions} from "../../models";
 
 const {confirm} = Modal;
-
+@connect((sheet) => ({...sheet}), {...SheetActions})
 export default class SheetButton extends React.Component {
 
   state = {
@@ -115,21 +117,22 @@ export default class SheetButton extends React.Component {
 
   authHtml = _ => {
     let result = [], ghost = [];
-    const {button = []} = this.props;
+    const {sheet} = this.props;
+    const {button} = sheet;
     for (let i = 0; i < button.length; i++) {
-      const {button_title, button_type, button_style, button_url} = button[i];
+      const {title, type, style, url} = button[i];
       ghost.push(true);
       let options;
-      switch (button_type) {
+      switch (type) {
         case 'insert':
           options = {
-            href: button_url
+            href: url
           };
           break;
         case 'delete':
           options = {
             onClick: _ => {
-              this.deleteHandle(button_url)
+              this.deleteHandle(url)
             },
             icon: 'scissor'
           };
@@ -137,7 +140,7 @@ export default class SheetButton extends React.Component {
         case 'update':
           options = {
             onClick: _ => {
-              this.updateHandle(button_url)
+              this.updateHandle(url)
             },
           };
           break;
@@ -145,7 +148,7 @@ export default class SheetButton extends React.Component {
           options = {
             icon: 'rise',
             onClick: _ => {
-              this.upperHandle(button_url)
+              this.upperHandle(url)
             },
           };
           break;
@@ -153,27 +156,27 @@ export default class SheetButton extends React.Component {
           options = {
             icon: 'fall',
             onClick: _ => {
-              this.lowerHandle(button_url)
+              this.lowerHandle(url)
             },
           };
           break;
         case 'recover':
           options = {
             onClick: _ => {
-              this.recoverHandle(button_url)
+              this.recoverHandle(url)
             }
           };
           break;
         case 'recovery':
           options = {
             icon: 'delete',
-            href: button_url
+            href: url
           };
           break;
       }
-      result[i] = <div key={i} title={button_title}
-                       className={`${button_style === '1' ? 'fn-fl' : ''} ${button_type === 'view' ? 'fn-hide' : ''} ${button_style === '2' ? 'fn-fr' : ''} sheet-button-btn`}>
-        <Button {...options} target='_blank' type="primary" ghost={true}>{button_title}</Button>
+      result[i] = <div key={i} title={title}
+                       className={`${style === '1' ? 'fn-fl' : ''} ${type === 'view' ? 'fn-hide' : ''} ${style === '2' ? 'fn-fr' : ''} sheet-button-btn`}>
+        <Button {...options} target='_blank' type="primary" ghost={true}>{title}</Button>
       </div>
     }
     return result;

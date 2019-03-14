@@ -27,7 +27,13 @@ export default {
   outputPath: path.resolve(__dirname, 'dist', pkg.version),
   hash: false,
   disableCSSModules: true,
-  proxy: {},
+  proxy: {
+    '/api': {
+      target: 'http://127.0.0.1:6602',  // 本地
+      changeOrigin: true,
+      secure: true,
+    }
+  },
   extraBabelPlugins: [["import", {
     "libraryName": "antd",
     "libraryDirectory": "es",

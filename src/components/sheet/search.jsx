@@ -1,16 +1,14 @@
 'use strict';
 import React, {Fragment} from 'react';
-import {Button, DatePicker, Input, Select, Divider} from 'antd';
+import {Button, DatePicker, Input, Select} from 'antd';
 import './search.less';
+import {connect} from "dva";
+import {SearchActions} from "../../models";
 
 const {RangePicker} = DatePicker;
 const Option = Select.Option;
-
+@connect((search) => ({...search}), {...SearchActions})
 export default class Search extends React.Component {
-
-  state = {
-    searchBox: false
-  };
 
   componentWillMount() {
     let obj = {};
@@ -49,9 +47,9 @@ export default class Search extends React.Component {
     this.setState({search});
   };
 
-  searchHtml() {
-    const {columns} = this.props;
-    const {searchBox} = this.state;
+  searchRender() {
+    const {columns, search} = this.props;
+    const {collapsed} = search;
     let result = [];
     columns.map((item, index) => {
       let html = null;
@@ -78,7 +76,7 @@ export default class Search extends React.Component {
           break;
       }
       if (html) {
-        result.push(<div className={`fn-fl sheet-search ${searchBox ? 'active' : ''}`} key={index}>{html}</div>)
+        result.push(<div className={`fn-fl sheet-search ${collapsed ? 'active' : ''}`} key={index}>{html}</div>)
       }
     });
     return result;
@@ -109,31 +107,30 @@ export default class Search extends React.Component {
   };
 
   searchHandle = e => {
-    const {searchBox} = this.state;
-    if (searchBox) {
+    const {search} = this.props;
+    const {collapsed} = search;
+    if (collapsed) {
       this.realSearch()
     } else {
-      this.setState({
-        searchBox: true
-      });
+      this.props.search_toggle();
     }
   };
 
   render() {
-    const {searchBox} = this.state;
+    const {search} = this.props;
+    const {collapsed} = search;
     return (
       <Fragment>
         <div className='sheet-search-box fn-clear'>
-          {this.searchHtml()}
-          <div className={`fn-fl sheet-search ${searchBox ? 'active' : ''}`}><RangePicker onChange={value => {
+          {this.searchRender()}
+          <div className={`fn-fl sheet-search ${collapsed ? 'active' : ''}`}><RangePicker onChange={value => {
             this.dateHandel(value)
           }}/></div>
-          <div className={`fn-fl sheet-search-btn ${!searchBox ? 'active' : ''}`}>
+          <div className={`fn-fl sheet-search-btn ${collapsed ? '' : 'active'}`}>
             <Button type="primary" icon="search"
                     onClick={this.searchHandle}>搜索</Button>
           </div>
         </div>
-        <Divider dashed={true}/>
       </Fragment>
     )
   }

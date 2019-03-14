@@ -6,7 +6,7 @@ import SheetButton from './button.jsx';
 import Search from './search.jsx';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-
+import './index.less';
 @connect((sheet) => ({...sheet}), {...SheetActions})
 export default class Sheet extends React.Component {
 
@@ -16,7 +16,7 @@ export default class Sheet extends React.Component {
     selected: [],
     loading: false,
     search: {},
-    button: this.props.button || [],
+    // button: this.props.button || [],
     button_0: null,
     sync: false
   };
@@ -28,14 +28,16 @@ export default class Sheet extends React.Component {
   // };
 
   componentDidMount() {
-    this.props.sheet_load();
+    const {sheet} = this.props;
+    const {page, url} = sheet;
+    this.props.sheet_load({page, url});
   }
 
   load = (options) => {
     let current;
-    const {button, button_0, search} = this.state;
+    const {button_0, search} = this.state;
     const {sheet} = this.props;
-    const {page} = sheet;
+    const {page, button} = sheet;
     if (options) {
       this.props.sheet_page(options);
       current = options.current;
@@ -130,7 +132,7 @@ export default class Sheet extends React.Component {
     };
     return (
       <Fragment>
-         <Search columns={columns} reload={this.reload}/>
+        <Search columns={columns} reload={this.reload}/>
         <SheetButton button={button} selected={selected[0]} sync={sync} rowKey={rowKey} reload={this.reload}
                      update={this.update}/>
         <Table rowKey={rowKey}

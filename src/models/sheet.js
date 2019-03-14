@@ -1,5 +1,5 @@
 import {createModelActions} from '../utils/action';
-import {getUsers} from '../services/user'
+import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../utils/request';
 
 export default {
 
@@ -7,32 +7,40 @@ export default {
 
   state: {
     dataSource: [],
+    button: [],
     loading: false,
     page: {
       current: 0,
       total: 0
     },
+    url: '/api/user',
     columns: [],
   },
 
   subscriptions: {},
 
   effects: {
-    * sheet_load({payload, callback}, {call, put}) {
+    * sheet_load({payload, callback, ...other}, {call, put}) {
       try {
-        const result = yield call(getUsers, payload);
+        const {page, url} = payload;
+        const result = yield call(_ => {
+          return GET(url, {page: page.current})
+        });
         yield put({
           type: 'r_sheet_load',
           payload: result
         });
         typeof callback === 'function' && callback(result);
       } catch (e) {
-        console.error('eff_applyCreditCard报错了： ', e);
+        console.error('r_sheet_load报错了： ', e);
       }
     },
   },
 
   reducers: {
+    sheet_button(state, {payload}) {
+      return {...state, button: payload};
+    },
     r_sheet_load(state, {payload}) {
       const {list, total} = payload;
       let page = Object.assign({}, state.page, {total});

@@ -9,3 +9,6 @@ yarn-error.log
 
 # mac
 /.DS_Store/
+
+#egg
+/run/
