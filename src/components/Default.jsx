@@ -2,7 +2,6 @@
 import React, {Component} from 'react';
 import {LocaleProvider} from 'antd';
 import zh_CN from "antd/lib/locale-provider/zh_CN";
-
 export default class Default extends Component {
 
   render() {

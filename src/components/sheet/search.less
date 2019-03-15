@@ -1,17 +1,25 @@
 .sheet-search-box {
   .sheet-search {
-    margin-bottom: 10px;
     width: 0;
-    padding-left: 8px;
-    padding-right: 8px;
-    transition: all 0.3s;
+    transition: all .3s;
     visibility: hidden;
     height: 0;
 
+    i {
+      visibility: hidden;
+    }
+
     &.active {
+      margin-bottom: 10px;
       height: 32px;
+      padding-left: 8px;
+      padding-right: 8px;
       visibility: inherit;
       width: 25%;
+
+      i {
+        visibility: inherit;
+      }
     }
   }
 
@@ -20,15 +28,30 @@
     padding-left: 8px;
     padding-right: 8px;
     margin-bottom: 10px;
-    transition: all 0.3s;
+    transition: width 0.3s;
 
     &.active {
       width: 100%;
     }
   }
 
+  .sheet-search-close {
+    line-height: 32px;
+    padding-left: 8px;
+    color: #1890ff;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
   .ant-calendar-picker {
     display: block;
+  }
+
+  .ant-input, .ant-select, .ant-calendar-picker {
+    transition: width .3s;
   }
 
   .ant-select {

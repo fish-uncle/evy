@@ -115,15 +115,13 @@ export default class SheetButton extends React.Component {
     });
   };
 
-  authHtml = _ => {
-    let result = [], ghost = [];
+  buttonRender = _ => {
+    let result = [];
     const {sheet} = this.props;
     const {button} = sheet;
     for (let i = 0; i < button.length; i++) {
-      const {title, type, style, url} = button[i];
-      ghost.push(true);
-      let options;
-      switch (type) {
+      const {title, type, style, icon} = button[i];
+      /*switch (type) {
         case 'insert':
           options = {
             href: url
@@ -173,14 +171,19 @@ export default class SheetButton extends React.Component {
             href: url
           };
           break;
-      }
-      result[i] = <div key={i} title={title}
-                       className={`${style === '1' ? 'fn-fl' : ''} ${type === 'view' ? 'fn-hide' : ''} ${style === '2' ? 'fn-fr' : ''} sheet-button-btn`}>
-        <Button {...options} target='_blank' type="primary" ghost={true}>{title}</Button>
+      }*/
+      let className = style === '1' ? 'fn-fl' : '' + style === '2' ? 'fn-fr' : '';
+      result[i] = type === 'view' ? null : <div key={i} title={title}
+                                                className={`${className} sheet-button-btn`}>
+        <Button icon={icon} type="primary" ghost={true} onClick={sheet.buttonEvent[type]}>{title}</Button>
       </div>
     }
     return result;
   };
+
+  componentDidMount() {
+    // this.props
+  }
 
   render() {
     const {sync} = this.props;
@@ -192,7 +195,7 @@ export default class SheetButton extends React.Component {
               <Icon type='sync'/>
             </div> : null
         }
-        {this.authHtml()}
+        {this.buttonRender()}
       </div>
     )
   }

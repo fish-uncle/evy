@@ -5,10 +5,12 @@
 /node_modules/
 npm-debug.log
 yarn-error.log
-*.log
+
 
 # mac
 /.DS_Store/
 
 #egg
 /run/
+/logs/
+*.log

@@ -2,11 +2,12 @@
 import React, {Fragment} from 'react';
 import {Table} from 'antd';
 import moment from 'moment';
-import SheetButton from './button.jsx';
-import Search from './search.jsx';
+import SheetButton from './sheet/button.jsx';
+import Search from './sheet/search.jsx';
 import {connect} from "dva";
-import {SheetActions} from "../../models";
-import './index.less';
+import {SheetActions} from "../models";
+import './sheet/index.less';
+
 @connect((sheet) => ({...sheet}), {...SheetActions})
 export default class Sheet extends React.Component {
 
@@ -123,7 +124,7 @@ export default class Sheet extends React.Component {
 
   render() {
     const {sheet, rowKey, columns} = this.props;
-    const {dataSource, loading, page} = sheet;
+    const {dataSource, loading, page, buttonEvent} = sheet;
     const {selected, button, sync} = this.state;
     const rowSelection = {
       selectedRowKeys: selected,
@@ -138,6 +139,21 @@ export default class Sheet extends React.Component {
         <Table rowKey={rowKey}
                loading={loading}
                pagination={{total: page.total, current: page.current}}
+               onRow={(record) => {
+                 return {
+                   onClick: (event) => {
+                     buttonEvent.detail(record, event)
+                   },
+                   onDoubleClick: (event) => {
+                   },
+                   onContextMenu: (event) => {
+                   },
+                   onMouseEnter: (event) => {
+                   },  // 鼠标移入行
+                   onMouseLeave: (event) => {
+                   }
+                 };
+               }}
           // onChange={this.load}
                rowSelection={rowSelection}
                columns={columns}

@@ -1,6 +1,6 @@
 'use strict';
 import React, {Component} from 'react';
-import {Default, Left} from '../components';
+import {Default, Left} from './index';
 import {Layout, Icon, Breadcrumb} from 'antd';
 import {LeftActions} from '../models';
 import './Body.less';

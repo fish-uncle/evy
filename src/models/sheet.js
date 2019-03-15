@@ -1,5 +1,6 @@
 import {createModelActions} from '../utils/action';
 import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../utils/request';
+import {getButton} from "../services/sheet";
 
 export default {
 
@@ -8,6 +9,10 @@ export default {
   state: {
     dataSource: [],
     button: [],
+    buttonEvent: {
+      detail: () => {
+      }
+    },
     loading: false,
     page: {
       current: 0,
@@ -20,7 +25,19 @@ export default {
   subscriptions: {},
 
   effects: {
-    * sheet_load({payload, callback, ...other}, {call, put}) {
+    * sheet_button({payload, callback}, {call, put}) {
+      try {
+        const result = yield call(getButton);
+        yield put({
+          type: 'r_sheet_button',
+          payload: result
+        });
+        typeof callback === 'function' && callback(result);
+      } catch (e) {
+        console.error('sheet_button报错了： ', e);
+      }
+    },
+    * sheet_load({payload, callback}, {call, put}) {
       try {
         const {page, url} = payload;
         const result = yield call(_ => {
@@ -32,19 +49,23 @@ export default {
         });
         typeof callback === 'function' && callback(result);
       } catch (e) {
-        console.error('r_sheet_load报错了： ', e);
+        console.error('sheet_load报错了： ', e);
       }
     },
   },
 
   reducers: {
-    sheet_button(state, {payload}) {
-      return {...state, button: payload};
+    r_sheet_button(state, {payload}) {
+      return {...state, button: payload.list};
     },
     r_sheet_load(state, {payload}) {
       const {list, total} = payload;
       let page = Object.assign({}, state.page, {total});
       return {...state, page, dataSource: list};
+    },
+    sheet_button_event(state, {payload}) {
+      let buttonEvent = Object.assign({}, state.buttonEvent, {[payload.type]: payload.callback});
+      return {...state, buttonEvent};
     },
     sheet_page(state, {payload}) {
       let page = Object.assign({}, state.page, payload);

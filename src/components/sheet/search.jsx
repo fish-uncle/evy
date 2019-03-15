@@ -130,6 +130,10 @@ export default class Search extends React.Component {
             <Button type="primary" icon="search"
                     onClick={this.searchHandle}>搜索</Button>
           </div>
+          <div className={`fn-fl sheet-search-close ${collapsed ? '' : 'fn-hide'}`} onClick={_ => {
+            this.props.search_toggle();
+          }}>收起
+          </div>
         </div>
       </Fragment>
     )

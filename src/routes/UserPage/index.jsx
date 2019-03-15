@@ -2,8 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'dva';
 import {Link} from 'dva/router';
 import {RouterActions, SheetActions} from '../../models';
-import {Body} from '../../components';
-import Sheet from '../../components/sheet';
+import {Body,Sheet} from '../../components';
 
 const columns = [{
   title: '姓名',
@@ -33,38 +32,7 @@ export default class IndexPage extends Component {
 
   componentDidMount() {
     this.props.sheet_page({current: 1});
-    const button = [{
-      "type": "recovery",
-      "style": "2",
-      "title": "回收站",
-      "url": "/userCenterRecovery"
-    }, {
-      "type": "insert",
-      "style": "1",
-      "title": "添加",
-      "url": "/userCenterInsert"
-    }, {
-      "type": "read",
-      "style": "1",
-      "title": "列表数据",
-      "url": "/api/user"
-    }, {
-      "type": "view",
-      "style": "1",
-      "title": "员工信息",
-      "url": "/userCenter"
-    }, {
-      "type": "delete",
-      "style": "2",
-      "title": "删除",
-      "url": "/pear/user/delete"
-    }, {
-      "type": "update",
-      "style": "1",
-      "title": "更新",
-      "url": "/userCenterUpdate"
-    }];
-    this.props.sheet_button(button);
+    this.props.sheet_button();
   }
 
   componentWillUnmount() {

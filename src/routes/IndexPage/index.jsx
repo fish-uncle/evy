@@ -1,9 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
-import {Link} from 'dva/router';
-import {RouterActions, SheetActions} from '../../models';
-import {Body} from '../../components';
-import Sheet from '../../components/sheet';
+import {ModalActions, RouterActions, SheetActions} from '../../models';
+import {Body, Modal, Sheet} from '../../components';
 
 const columns = [{
   title: '姓名',
@@ -28,55 +26,41 @@ const columns = [{
   searchType: 'select',
   searchArray: [[1, '可用'], [0, '不可用']]
 }];
-@connect((sheet) => ({...sheet}), {...RouterActions, ...SheetActions})
+@connect((sheet, modal) => ({...sheet, ...modal}), {...RouterActions, ...SheetActions, ...ModalActions})
 export default class IndexPage extends Component {
+
+
+  insertHandle = () => {
+    this.props.sheet_button_event({
+      type: 'insert',
+      callback: _ => {
+        this.props.modal_show();
+      }
+    });
+    this.props.sheet_button_event({
+      type: 'detail',
+      callback: (record) => {
+        console.log(record)
+      }
+    });
+  };
+
+  componentWillMount() {
+    this.insertHandle();
+  }
 
   componentDidMount() {
     this.props.sheet_page({current: 1});
-    const button = [{
-      "type": "recovery",
-      "style": "2",
-      "title": "回收站",
-      "url": "/userCenterRecovery"
-    }, {
-      "type": "insert",
-      "style": "1",
-      "title": "添加",
-      "url": "/userCenterInsert"
-    }, {
-      "type": "read",
-      "style": "1",
-      "title": "列表数据",
-      "url": "/api/user"
-    }, {
-      "type": "view",
-      "style": "1",
-      "title": "员工信息",
-      "url": "/userCenter"
-    }, {
-      "type": "delete",
-      "style": "2",
-      "title": "删除",
-      "url": "/pear/user/delete"
-    }, {
-      "type": "update",
-      "style": "1",
-      "title": "更新",
-      "url": "/userCenterUpdate"
-    }];
-    this.props.sheet_button(button);
-  }
-
-  componentWillUnmount() {
-
+    this.props.sheet_button();
   }
 
   render() {
-
-
     return (
       <Body>
       <Sheet rowKey='user_id' columns={columns}/>
+      <Modal>
+        <p>Bla bla ...</p>
+      </Modal>
       </Body>
     );
   }

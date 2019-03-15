@@ -76,3 +76,24 @@ CREATE TABLE IF NOT EXISTS `ddm-user`
 ENGINE=InnoDB
 COMMENT '地址表'
 DEFAULT CHARSET=utf8;
+
+-- 按钮表
+CREATE TABLE IF NOT EXISTS `ddm-button`
+(
+  `id` INTEGER auto_increment COMMENT 'id.',
+  `button_id` CHAR(36) NOT NULL COMMENT 'id.',
+  `title` CHAR(30) NOT NULL COMMENT '标题。',
+  `icon` CHAR(30) COMMENT '图标。',
+  `menu` CHAR(100) COMMENT '所属页面。',
+  `sort` CHAR(4) DEFAULT 0 COMMENT '排序：数字越大，越在前面。',
+  `style` CHAR(1) DEFAULT 1 COMMENT '类型 1：靠左 2：靠右。',
+  `type` CHAR(20) NOT NULL COMMENT '类型 upper：上架数据 lower：下架数据 read：列表数据 delete：删除数据 recover：恢复数据 update：更新数据 insert：添加数据 recovery：回收站。',
+  `soft_delete` TINYINT UNSIGNED DEFAULT 0 COMMENT '记录：未删除/已删除：0/1。',
+  `create_time` DATETIME NOT NULL COMMENT '创建时间',
+  `update_time` DATETIME NOT NULL COMMENT '更新时间',
+  `delete_time` DATETIME COMMENT '删除时间',
+  PRIMARY KEY (`id`, `button_id`)
+)
+ENGINE=InnoDB
+COMMENT '后台按钮表'
+DEFAULT CHARSET=utf8;
