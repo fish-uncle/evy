@@ -1,66 +1,52 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
-import {ModalActions, RouterActions, SheetActions} from '../../models';
+import {DrawerActions, RouterActions, SheetActions} from '../../models';
 import {Body, Modal, Sheet} from '../../components';
+import columns from './columns';
+import Detail from './detail';
 
-const columns = [{
-  title: '姓名',
-  key: 'real_name',
-  searchType: 'input',
-}, {
-  title: '手机号',
-  key: 'phone',
-  searchType: 'input',
-}, {
-  title: '职称',
-  key: 'job_name',
-  searchType: 'input',
-}, {
-  title: '性别',
-  key: 'sex',
-  searchType: 'select',
-  searchArray: [[1, '男'], [0, '女'], [2, '未知']]
-}, {
-  title: '状态',
-  key: 'status',
-  searchType: 'select',
-  searchArray: [[1, '可用'], [0, '不可用']]
-}];
-@connect((sheet, modal) => ({...sheet, ...modal}), {...RouterActions, ...SheetActions, ...ModalActions})
+@connect((sheet) => ({...sheet}), {...RouterActions, ...SheetActions,...DrawerActions})
 export default class IndexPage extends Component {
 
-
-  insertHandle = () => {
+  buttonHandle = () => {
+    // const defaultUser = {
+    //   sex: 1,
+    //   nation: '汉族',
+    //   marriage: 0,
+    //   status: 1,
+    // };
     this.props.sheet_button_event({
-      type: 'insert',
+      type: 'insert', // 自定义按钮 insert 事件
       callback: _ => {
-        this.props.modal_show();
+        this.props.drawer_detail_show();
       }
     });
     this.props.sheet_button_event({
-      type: 'detail',
+      type: 'detail', // 自定义按钮 detail 事件
       callback: (record) => {
-        console.log(record)
+        this.props.drawer_detail_show({data: record});
       }
     });
   };
 
   componentWillMount() {
-    this.insertHandle();
+    this.props.sheet_columns({columns: columns}); // 初始化 table 列表
+    this.buttonHandle();
   }
 
   componentDidMount() {
     this.props.sheet_page({current: 1});
-    this.props.sheet_button();
+    this.props.sheet_button(); // 按钮权限获取
   }
 
   render() {
     return (
       <Body>
-      <Sheet rowKey='user_id' columns={columns}/>
+      <Sheet rowKey='user_id'/>
       <Modal>
         <p>Bla bla ...</p>
       </Modal>
+      <Detail/>
       </Body>
     );
   }

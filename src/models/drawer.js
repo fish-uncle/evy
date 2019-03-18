@@ -5,7 +5,12 @@ export default {
   namespace: 'drawer',
 
   state: {
-    visible: false
+    detailVisible: false,
+    searchVisible: false,
+    data: {},
+    search: {},
+    getFieldDecorator: () => {
+    }
   },
 
   subscriptions: {},
@@ -13,11 +18,16 @@ export default {
   effects: {},
 
   reducers: {
-    drawer_show(state) {
-      return {...state, visible: true};
+    drawer_detail_show(state, {payload = {data: {}}}) {
+      const {data} = payload;
+      return {...state, detailVisible: true, data};
     },
-    drawer_close(state) {
-      return {...state, visible: false};
+    drawer_set(state, {payload}) {
+      const {getFieldDecorator} = payload;
+      return {...state, getFieldDecorator};
+    },
+    drawer_detail_close(state) {
+      return {...state, detailVisible: false};
     }
   },
 
