@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {connect} from 'dva';
 import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
-import {Button, Form} from 'antd';
+import {Button, Form, Upload} from 'antd';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Detail extends Component {
@@ -14,12 +14,15 @@ class Detail extends Component {
 
   render() {
     const {sheet} = this.props;
-    const {drawerType} = sheet;
+    const {drawerType, detailData} = sheet;
     return (
       <Fragment>
         {
           drawerType === 'insert' || drawerType === 'detail' ? <Fragment>
-            <FormItem label="职称" title='avatar'/>
+            <div className='avatar-container'>
+              <img src={detailData.avatar} alt=""/>
+              <Upload accept=".jpg,.png" action='' name='avatar' withCredentials={true}><Button type='primary'>更换</Button></Upload>
+            </div>
             <FormItem label="姓名" title='real_name'/>
             <FormItem label="角色" title='role'/>
             <FormItem label="职称" title='job_name'/>

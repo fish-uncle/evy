@@ -25,7 +25,7 @@ class Detail extends Component {
             <FormItem label="版本" title='version'/>
             <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
             <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
-            <FormItem title='user_id' type='hidden'/>
+            <FormItem title='app_id' type='hidden'/>
             {
               drawerType === 'insert' ?
                 <Button type='primary' block>新增</Button> :

@@ -6,10 +6,11 @@ import {LeftActions, RouterActions} from "../models";
 
 const {SubMenu} = Menu;
 const {Sider} = Layout;
-@connect((left, config) => ({...left, ...config}), {...LeftActions, ...RouterActions})
+@connect((left, config, sheet) => ({...left, ...config, ...sheet}), {...LeftActions, ...RouterActions})
 export default class Default extends Component {
 
   componentWillMount() {
+    // console.log(this.props)
     this.props.left_load();
   }
 

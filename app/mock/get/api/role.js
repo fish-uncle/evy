@@ -4,19 +4,9 @@ module.exports = Mock.mock({
   code: 200,
   data: {
     'list|10': [{
-      user_id: '@guid',
-      'employee_id': /Y\d{5}/,
-      'sex|1-2': 1,
-      'status|1-2': 1,
-      'phone': /1\d{10}/,
-      email: '@email',
-      role: '@ctitle(4,7)',
-      real_name: '@cname',
-      job_name: '@ctitle(4,7)',
-      birth_time: '@datetime',
-      nation: '汉族',
-      'marriage|1-3': 1,
-      avatar: '@image(200x200,@color)',
+      role_id: '@guid',
+      title: '@cname',
+      'count|10-30': 1,
       update_time: '@datetime',
       create_time: '@datetime'
     }],

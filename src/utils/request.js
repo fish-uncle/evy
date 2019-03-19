@@ -1,6 +1,5 @@
 import fetch from 'dva/fetch';
-// import {LoadingInAjax} from '../components/Body';
-// import {toast, alert} from './utils';
+import LoadingInAjax from '../components/LoadingInAjax';
 
 function parseJSON(response) {
   return response.json();
@@ -26,9 +25,14 @@ function checkResult(res) {
 }
 
 let requestCount = 0;
+let timeoutForLoadingToShow;
 
 function requestStart() {
-  // requestCount++;
+  requestCount++;
+  clearTimeout(timeoutForLoadingToShow);
+  timeoutForLoadingToShow = setTimeout(_ => {
+    LoadingInAjax.show();
+  }, 50);
 }
 
 function parseParams(obj) {
@@ -43,12 +47,12 @@ function parseParams(obj) {
 }
 
 function requestEnd() {
-  // requestCount--;
+  requestCount--;
   // console.log('requestCount = ' + requestCount);
-  // if (requestCount < 1) {
-  //   clearTimeout(timeoutForLoadingToShow);
-  //   LoadingInAjax.hide();
-  // }
+  if (requestCount < 1) {
+    clearTimeout(timeoutForLoadingToShow);
+    LoadingInAjax.hide();
+  }
 }
 
 /**

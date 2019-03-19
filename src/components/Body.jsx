@@ -8,7 +8,7 @@ import {connect} from 'dva';
 
 const {Header, Content, Footer} = Layout;
 
-@connect((left, config, search) => ({...left, ...config, ...search}), {...LeftActions})
+@connect((left, config) => ({...left, ...config}), {...LeftActions})
 export default class Body extends Component {
 
   toggle = () => {

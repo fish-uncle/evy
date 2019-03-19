@@ -12,22 +12,11 @@ const deleteHandle = item => {
   })
 };
 const columns = [{
-  title: '姓名',
-  key: 'real_name',
+  title: '角色名',
+  key: 'title',
 }, {
-  title: '手机号',
-  key: 'phone',
-}, {
-  title: '角色',
-  key: 'role',
-}, {
-  title: '性别',
-  key: 'sex',
-  render: item => item.sex === 1 ? '男' : '女',
-}, {
-  title: '状态',
-  key: 'status',
-  render: item => item.status === 1 ? '可用' : '禁用',
+  title: '数量',
+  key: 'count',
 }, {
   title: '更新时间',
   width: 160,

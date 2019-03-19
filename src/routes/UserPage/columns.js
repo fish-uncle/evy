@@ -12,7 +12,7 @@ const deleteHandle = item => {
   })
 };
 const columns = [{
-  title: '姓名',
+  role: '姓名',
   key: 'real_name',
 }, {
   title: '手机号',
