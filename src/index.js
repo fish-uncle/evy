@@ -19,7 +19,6 @@ app.model(require('./models/left').default);
 app.model(require('./models/config').default);
 app.model(require('./models/sheet').default);
 app.model(require('./models/modal').default);
-app.model(require('./models/drawer').default);
 
 // 4. Router
 app.router(require('./router').default);

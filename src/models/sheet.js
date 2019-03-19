@@ -1,18 +1,23 @@
 import {createModelActions} from '../utils/action';
 import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../utils/request';
-import {getButton} from "../services/sheet";
 
 export default {
 
   namespace: 'sheet',
 
   state: {
+    // 右侧悬浮框
+    drawerVisible: false,
+    drawerType: 'detail',
+    detailData: {},
+    getFieldDecorator: () => {
+    },
+    // 表格
     dataSource: [],
-    button: [],
     buttonEvent: {
       insert: () => {
       },
-      update: () => {
+      search: () => {
       },
       delete: () => {
       },
@@ -24,30 +29,23 @@ export default {
       current: 0,
       total: 0
     },
-    url: '/api/user',
+    rowKey: '',
     columns: [],
+    // 请求地址
+    listUrl: '/api/user',
+    insertUrl: '/api/user',
+    updateUrl: '/api/user',
+    deleteUrl: '/api/user',
   },
 
   subscriptions: {},
 
   effects: {
-    * sheet_button({payload, callback}, {call, put}) {
-      try {
-        const result = yield call(getButton);
-        yield put({
-          type: 'r_sheet_button',
-          payload: result
-        });
-        typeof callback === 'function' && callback(result);
-      } catch (e) {
-        console.error('sheet_button报错了： ', e);
-      }
-    },
     * sheet_reload({payload, callback}, {call, put}) {
       try {
-        const {url} = payload;
+        const {listUrl} = payload;
         const result = yield call(_ => {
-          return GET(url, {page: 1})
+          return GET(listUrl, {page: 1})
         });
         yield put({
           type: 'r_sheet_load',
@@ -60,9 +58,9 @@ export default {
     },
     * sheet_load({payload, callback}, {call, put}) {
       try {
-        const {page, url} = payload;
+        const {page, listUrl} = payload;
         const result = yield call(_ => {
-          return GET(url, {page: page.current})
+          return GET(listUrl, {page: page.current})
         });
         yield put({
           type: 'r_sheet_load',
@@ -76,25 +74,38 @@ export default {
   },
 
   reducers: {
-    r_sheet_button(state, {payload}) {
-      return {...state, button: payload.list};
+    drawer_show(state, {payload = {}}) {
+      const {detailData = {}, drawerType = 'detail'} = payload;
+      return {...state, drawerVisible: true, detailData, drawerType};
+    },
+    drawer_set(state, {payload}) {
+      const {getFieldDecorator} = payload;
+      return {...state, getFieldDecorator};
+    },
+    drawer_close(state) {
+      return {...state, drawerVisible: false};
     },
     r_sheet_load(state, {payload}) {
       const {list, total} = payload;
       let page = Object.assign({}, state.page, {total});
       return {...state, page, dataSource: list};
     },
-    sheet_columns(state, {payload}) {
-      let {columns} = payload;
-      return {...state, columns};
+    sheet_set(state, {payload}) {
+      let {columns, rowKey} = payload;
+      return {...state, columns, rowKey, dataSource: []};
     },
     sheet_button_event(state, {payload}) {
       let buttonEvent = Object.assign({}, state.buttonEvent, {[payload.type]: payload.callback});
+
       return {...state, buttonEvent};
     },
-    sheet_page(state, {payload}) {
+    sheet_page(state, {payload = {}}) {
       let page = Object.assign({}, state.page, payload);
       return {...state, page};
+    },
+    sheet_url(state, {payload}) {
+      const {listUrl, insertUrl, updateUrl, deleteUrl} = payload;
+      return {...state, listUrl, insertUrl, updateUrl, deleteUrl};
     },
   },
 

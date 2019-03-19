@@ -1,25 +1,25 @@
 import React, {Component} from 'react';
 import {connect} from "dva";
-import {DrawerActions} from "../models";
+import {SheetActions} from "../models";
 import {Drawer} from 'antd';
 import PropTypes from 'prop-types';
 import './Drawer.less';
 
-@connect((drawer) => ({...drawer}), {...DrawerActions})
+@connect((sheet) => ({...sheet}), {...SheetActions})
 export default class _Drawer extends Component {
 
   hideDrawer = () => {
-    this.props.drawer_detail_close();
+    this.props.drawer_close();
   };
 
   render() {
-    const {drawer, children, title = '', ...others} = this.props;
-    const {visible} = drawer;
+    const {sheet, children, title = '', ...others} = this.props;
+    const {drawerVisible} = sheet;
     return (
       <Drawer
         className='detail-container'
         title={title}
-        visible={visible}
+        visible={drawerVisible}
         closable={false}
         onClose={this.hideDrawer}
         {...others}

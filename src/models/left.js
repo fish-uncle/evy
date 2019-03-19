@@ -1,4 +1,5 @@
 import {createModelActions} from '../utils/action';
+import {GET} from "../utils/request";
 
 export default {
 
@@ -6,34 +7,65 @@ export default {
 
   state: {
     collapsed: false, // 左侧导航栏的展开状态
-    breadcrumb: ['Home', 'User'],
-    menu: [
-      {
-        "nexus": "b9e0656b-27b3-4a8a-8f93-fd9dc335c9ea",
-        "title": "菜单管理",
-        "type": "1",
-        "url": "/menuCenter"
-      }, {
-        "nexus": "",
-        "title": "帮助中心",
-        "type": "1",
-        "url": "/helpCenter.html"
-      }, {
-        "nexus": "",
-        "title": "帮助中心",
-        "type": "1",
-        "url": "/helpCenter.html"
-      }
-    ]
+    breadcrumb: [],
+    selectedKey: [],
+    openKeys: [],
+    menu: null
   },
 
   subscriptions: {},
 
-  effects: {},
+  effects: {
+    * left_load({payload, callback}, {call, put}) {
+      try {
+        const result = yield call(_ => {
+          return GET('/api/menu')
+        });
+        yield put({
+          type: 'r_left_load',
+          payload: result
+        });
+        typeof callback === 'function' && callback(result);
+      } catch (e) {
+        console.error('left_load报错了： ', e);
+      }
+    }
+  },
 
   reducers: {
-    left_choose() {
-
+    r_left_load(state, {payload}) {
+      const {list} = payload;
+      let menu = {}, openKeys = [], selectedKeys = [], breadcrumb = [];
+      for (let i = 0; i < list.length; i++) {
+        if (!list[i]['nexus']) {
+          for (let j = 0; j < list.length; j++) {
+            let obj = menu[list[i]['menu_id']] ? menu[list[i]['menu_id']] || list[i] : list[i];
+            if (list[j]['url'] === location.hash.replace('#', '')) {
+              openKeys = [list[j]['nexus']];
+              selectedKeys = [list[j]['menu_id']];
+              breadcrumb = [list[j]['title']];
+            }
+            if (list[j]['nexus'] === list[i]['menu_id']) {
+              if (obj.children) {
+                obj.children.push(list[j]);
+              } else {
+                obj.children = [list[j]]
+              }
+            }
+            menu[list[i]['menu_id']] = obj;
+          }
+        }
+      }
+      openKeys[0] ? void 0 : openKeys = state.openKeys;
+      return {...state, menu, openKeys, selectedKeys, breadcrumb};
+    },
+    left_choose(state, {payload}) {
+      const {title} = payload;
+      return {...state, breadcrumb: [title]};
+    },
+    left_openKey(state, {payload}) {
+      const {openKeys} = payload;
+      return {...state, openKeys};
     },
     left_toggle(state) {
       return {...state, collapsed: !state.collapsed};

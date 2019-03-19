@@ -1,6 +1,8 @@
 import {
   IndexPage,
-  UserPage
+  UserPage,
+  AppPage,
+  RolePage
 } from './routes';
 
 /**
@@ -14,13 +16,23 @@ import {
 const routerConfig = [
   {
     path: '/',
-    title: '11',
+    title: '',
     component: IndexPage,
   },
   {
     path: '/user',
-    title: 'user',
+    title: '用户中心',
     component: UserPage,
+  },
+  {
+    path: '/role',
+    title: '角色管理',
+    component: RolePage,
+  },
+  {
+    path: '/app',
+    title: '应用列表',
+    component: AppPage,
   }
 ];
 

@@ -22,7 +22,8 @@ export default {
   effects: {
     // 使用方法 this.props.push('/')
     * push({payload}, {put}) {
-      yield put(routerRedux.push(payload));
+      location.hash.replace('#', '') === payload ? void 0 :
+        yield put(routerRedux.push(payload));
     },
     // 使用方法 this.props.goBack('/')
     * goBack({payload}, {put}) {

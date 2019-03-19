@@ -1,8 +1,8 @@
 const Mock = require('mockjs');
 module.exports = Mock.mock({
-  'success': true,
-  'code': 200,
-  'data': {
+  success: true,
+  code: 200,
+  data: {
     'list': [{
       button_id: '@guid',
       title: '添加',

@@ -4,7 +4,6 @@ import {Button, Modal} from "antd";
 import mackColumns from '../../utils/mackColumns';
 
 const deleteHandle = item => {
-
   Modal.confirm({
     content: '确认是否删除？',
     onOk: () => {
@@ -13,34 +12,20 @@ const deleteHandle = item => {
   })
 };
 const columns = [{
-  title: '姓名',
-  searchType: 'input',
-  key: 'real_name',
+  title: '标题名',
+  key: 'cn_title',
 }, {
-  title: '手机号',
-  searchType: 'input',
-  key: 'phone',
+  title: '描述',
+  key: 'description',
 }, {
-  title: '职称',
-  searchType: 'input',
-  key: 'job_name',
-}, {
-  title: '性别',
-  searchType: 'select',
-  searchArray: [[1, '男'], [2, '女']],
-  key: 'sex',
-}, {
-  title: '状态',
-  searchType: 'select',
-  searchArray: [[1, '可用'], [2, '禁用']],
-  key: 'status',
+  title: '版本',
+  key: 'version',
 }, {
   title: '更新时间',
   width: 160,
   key: 'update_time',
   render: item => (moment(item.update_time).format('YYYY-MM-DD hh:mm:ss')),
-}
-, {
+}, {
   title: '操作',
   width: 100,
   key: 'operation',
@@ -48,8 +33,7 @@ const columns = [{
     e.stopPropagation();
     deleteHandle(item)
   }}>删除</Button>,
-}
-];
+}];
 
 
 export default mackColumns(columns);
