@@ -16,7 +16,7 @@ export default class Body extends Component {
   };
 
   render() {
-    const {left, children, config} = this.props;
+    const {left, children, config, style} = this.props;
     const {collapsed, breadcrumb} = left;
     return (
       <Default>
@@ -31,11 +31,11 @@ export default class Body extends Component {
               />
               <Breadcrumb className='body-breadcrumb'>
                 {
-                  breadcrumb.map((item, index) => <Breadcrumb.Item key={index} >{item}</Breadcrumb.Item>)
+                  breadcrumb.map((item, index) => <Breadcrumb.Item key={index}>{item}</Breadcrumb.Item>)
                 }
               </Breadcrumb>
             </Header>
-            <Content className='body-content'>
+            <Content className='body-content' style={style}>
               {children}
             </Content>
             <Footer className='body-footer text-center'>

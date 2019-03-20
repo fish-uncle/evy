@@ -2,6 +2,7 @@ import {
   IndexPage,
   UserPage,
   AppPage,
+  ModulePage,
   RolePage
 } from './routes';
 
@@ -33,6 +34,11 @@ const routerConfig = [
     path: '/app',
     title: '应用列表',
     component: AppPage,
+  },
+  {
+    path: '/module/:app_id',
+    title: '模块列表',
+    component: ModulePage,
   }
 ];
 

@@ -19,7 +19,7 @@ export default {
     * left_load({payload, callback}, {call, put}) {
       try {
         const result = yield call(_ => {
-          return GET('/api/menu')
+          return GET('/api/left')
         });
         yield put({
           type: 'r_left_load',
@@ -56,14 +56,24 @@ export default {
           }
         }
       }
-      openKeys[0] ? void 0 : openKeys = state.openKeys;
-      return {...state, menu, openKeys, selectedKeys, breadcrumb};
+      let obj = {};
+      if (openKeys) {
+        openKeys[0] ? void 0 : openKeys = state.openKeys;
+        obj = Object.assign({}, obj, {openKeys: openKeys})
+      }
+      if (selectedKeys.length) {
+        obj = Object.assign({}, obj, {selectedKeys: selectedKeys})
+      }
+      if (breadcrumb.length) {
+        obj = Object.assign({}, obj, {breadcrumb: breadcrumb})
+      }
+      return {...state, menu, ...obj};
     },
     left_choose(state, {payload}) {
       const {title} = payload;
       return {...state, breadcrumb: [title]};
     },
-    left_openKey(state, {payload}) {
+    left_openkey(state, {payload}) {
       const {openKeys} = payload;
       return {...state, openKeys};
     },

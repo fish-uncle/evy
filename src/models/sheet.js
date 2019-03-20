@@ -33,6 +33,7 @@ export default {
     columns: [],
     // 请求地址
     listUrl: '/api/user',
+    exportUrl: '',
     insertUrl: '/api/user',
     updateUrl: '/api/user',
     deleteUrl: '/api/user',
@@ -104,8 +105,8 @@ export default {
       return {...state, page};
     },
     sheet_url(state, {payload}) {
-      const {listUrl, insertUrl, updateUrl, deleteUrl} = payload;
-      return {...state, listUrl, insertUrl, updateUrl, deleteUrl};
+      const {listUrl, insertUrl, updateUrl, deleteUrl, exportUrl} = payload;
+      return {...state, listUrl, insertUrl, updateUrl, deleteUrl, exportUrl};
     },
   },
 

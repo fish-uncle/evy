@@ -68,11 +68,11 @@ export default class Default extends Component {
         collapsible
         collapsed={collapsed}
       >
-        <div className="logo" style={{backgroundImage: `url(${logo})`}}/>
+        <div className="logo" style={{backgroundImage: `url(${logo.white})`}}/>
         {
           menu ? <Menu theme="dark" mode="inline" defaultOpenKeys={openKeys} selectedKeys={selectedKeys}
                        onOpenChange={openKeys => {
-                         this.props.left_openKey({openKeys})
+                         this.props.left_openkey({openKeys})
                        }}>
             {this.menuRender()}
           </Menu> : null

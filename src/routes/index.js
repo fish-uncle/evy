@@ -15,6 +15,11 @@ export const AppPage = dynamic({
   component: () => import('./AppPage')
 });
 
+// 应用列表
+export const ModulePage = dynamic({
+  component: () => import('./ModulePage')
+});
+
 // 角色管理
 export const RolePage = dynamic({
   component: () => import('./RolePage')

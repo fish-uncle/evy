@@ -24,7 +24,8 @@ class Search extends Component {
             <FormItem label="英文标题" title='en_title' required={false}/>
             <FormItem label="描述" title='description' type='textArea' required={false}/>
             <FormItem label="版本" title='version' required={false}/>
-            <FormItem label="强制更新" title='update' type='switch' required={false}/>
+            <FormItem label="是否上架" title='release' type='switch' required={false}/>
+            <FormItem label="是否为定时模块" title='timing' type='switch' required={false}/>
             <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
             <Button block>清空</Button>
             <Button type='primary' block>搜索</Button>

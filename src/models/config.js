@@ -6,7 +6,7 @@ export default {
 
   state: {
     title: 'DDM',
-    logo: require('../assets/logo-white.png'),
+    logo: {white: require('../imgs/logo-white.png'), gray: require('../imgs/logo-gray.png')},
     icp: '浙ICP备17040239号',
     copyRight: `Copyright © ${new Date().getFullYear()} DDM `
   },

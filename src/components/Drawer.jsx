@@ -17,6 +17,7 @@ export default class _Drawer extends Component {
     const {drawerVisible} = sheet;
     return (
       <Drawer
+        destroyOnClose={true}
         className='detail-container'
         title={title}
         visible={drawerVisible}

@@ -3,9 +3,10 @@ import React, {Fragment} from 'react';
 import {Table, Row, Col, Button, Divider} from 'antd';
 import {connect} from "dva";
 import {SheetActions} from "../models";
+import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../utils/request';
 import './Sheet.less';
 
-@connect((sheet) => ({...sheet}), {...SheetActions})
+@connect((sheet, left) => ({...sheet, ...left}), {...SheetActions})
 export default class Sheet extends React.Component {
 
   componentWillMount() {
@@ -42,7 +43,9 @@ export default class Sheet extends React.Component {
   };
 
   exportHandle = () => {
-
+    const {sheet} = this.props;
+    const {exportUrl} = sheet;
+    exportUrl ? location.href = exportUrl : void 0;
   };
 
   componentDidMount() {
@@ -53,7 +56,7 @@ export default class Sheet extends React.Component {
 
   render() {
     const {sheet} = this.props;
-    const {dataSource, loading, page, buttonEvent, columns, rowKey} = sheet;
+    const {dataSource, loading, page, buttonEvent, columns, rowKey, exportUrl} = sheet;
     return (
       <Fragment>
         <Row className='btn-container'>
@@ -64,7 +67,8 @@ export default class Sheet extends React.Component {
             <Button icon="search" type="primary" block onClick={this.searchHandle}>搜索</Button>
           </Col>
           <Col span={6} style={{padding: '0 5px'}}>
-            <Button icon="bar-chart" type="primary" block onClick={this.exportHandle}>导出</Button>
+            <Button icon="bar-chart" type="primary" block disabled={exportUrl ? false : true}
+                    onClick={this.exportHandle}>导出</Button>
           </Col>
           <Col span={6} style={{paddingLeft: '5px'}}>
             <Button icon="delete" type="primary" block>回收站</Button>

@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `ddm-menu`
   `icon` CHAR(30) COMMENT '图标。',
   `url` CHAR(30) NOT NULL COMMENT '链接地址。',
   `type` TINYINT UNSIGNED DEFAULT 1 COMMENT '跳转类型：内部/外部 ：1/2',
+  `sort` CHAR(30) DEFAULT NULL COMMENT '排序。',
   `nexus` int(36) NOT NULL COMMENT '关联菜单',
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
   `create_time` DATETIME NOT NULL COMMENT '创建时间',
