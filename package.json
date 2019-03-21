@@ -1,7 +1,7 @@
 {
-  "name": "DDM",
+  "name": "evy",
   "version": "1.0.0",
-  "description": "基于React Json Schema的动态数据管理平台",
+  "description": "后台数据管理平台",
   "main": "",
   "scripts": {
     "server": "egg-bin dev",
@@ -11,10 +11,9 @@
   "keywords": [
     "react",
     "dva",
-    "DDM",
+    "evy",
     "egg",
-    "antd",
-    "Dynamic Data Management"
+    "antd"
   ],
   "author": "fishuncle",
   "license": "MIT",
@@ -49,6 +48,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:fish-uncle/DDM.git"
+    "url": "git@github.com:fish-uncle/evy.git"
   }
 }

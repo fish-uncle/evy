@@ -39,7 +39,7 @@ module.exports = appInfo => {
       port: '3306',
       user: 'root',
       password: '',
-      database: 'ddm',
+      database: 'evy',
     },
     app: true,
     agent: false,

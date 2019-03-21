@@ -1,5 +1,5 @@
 -- 用户表
-CREATE TABLE IF NOT EXISTS `ddm-user`
+CREATE TABLE IF NOT EXISTS `evy-user`
 (
   `id` INTEGER auto_increment COMMENT 'id.',
   `role_id` CHAR(36) NOT NULL COMMENT 'id.',

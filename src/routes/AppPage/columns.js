@@ -46,7 +46,7 @@ const columns = [{
   title: '更新时间',
   width: 160,
   key: 'update_time',
-  render: item => (moment(item.update_time).format('YYYY-MM-DD hh:mm:ss')),
+  render: item => moment(item.update_time).format('YYYY-MM-DD hh:mm:ss'),
 }, {
   title: '操作',
   width: 200,

@@ -1,5 +1,5 @@
 -- 应用表
-CREATE TABLE IF NOT EXISTS `ddm-app`
+CREATE TABLE IF NOT EXISTS `evy-app`
 (
   `id` INTEGER auto_increment COMMENT 'id.',
   `app_id` CHAR(36) NOT NULL COMMENT 'id.',

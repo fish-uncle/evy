@@ -1,5 +1,5 @@
 -- 用户表
-CREATE TABLE IF NOT EXISTS `ddm-user`
+CREATE TABLE IF NOT EXISTS `evy-user`
 (
   `id` INTEGER auto_increment COMMENT 'id.',
   `user_id` CHAR(36) NOT NULL COMMENT 'id.',
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `ddm-user`
   `wechat` CHAR(30) DEFAULT NULL COMMENT '微信号。',
   `qq` CHAR(30) DEFAULT NULL COMMENT 'qq号。',
   `sina` CHAR(30) DEFAULT NULL COMMENT '新浪号。',
-  `origin_system` CHAR(1) DEFAULT 1 COMMENT '注册来源系统：DDM 1（多系统注册用户）。',
+  `origin_system` CHAR(1) DEFAULT 1 COMMENT '注册来源系统：evy 1（多系统注册用户）。',
   `origin_user` CHAR(36) DEFAULT NULL COMMENT '注册来源用户（邀友）。',
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
   `create_time` DATETIME NOT NULL COMMENT '创建时间。',

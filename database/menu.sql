@@ -1,5 +1,5 @@
 -- 菜单表
-CREATE TABLE IF NOT EXISTS `ddm-menu`
+CREATE TABLE IF NOT EXISTS `evy-menu`
 (
   `id` INTEGER auto_increment COMMENT 'id.',
   `menu_id` CHAR(36) NOT NULL COMMENT 'id.',

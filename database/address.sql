@@ -1,5 +1,5 @@
 -- 地址表
-CREATE TABLE IF NOT EXISTS `ddm-address`
+CREATE TABLE IF NOT EXISTS `evy-address`
 (
   `id` INTEGER auto_increment COMMENT 'id.',
   `address_id` CHAR(36) NOT NULL COMMENT 'id.',
