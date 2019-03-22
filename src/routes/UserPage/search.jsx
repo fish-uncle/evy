@@ -8,8 +8,8 @@ import {Button, Form} from 'antd';
 class Search extends Component {
 
   componentWillMount() {
-    const {getFieldDecorator} = this.props.form;
-    this.props.drawer_set({getFieldDecorator}); // 传递 antd 的 form 给 model
+    const form = this.props.form;
+    this.props.drawer_set({form}); // 传递 antd 的 form 给 model
   }
 
 
@@ -21,17 +21,15 @@ class Search extends Component {
         {
           drawerType === 'search' ? <Fragment>
             <FormItem label="姓名" title='real_name' required={false}/>
-            <FormItem label="角色" title='role' required={false}/>
-            <FormItem label="职称" title='job_name' required={false}/>
+            <FormItem label="角色" title='role' required={false} type='select' select={{'普通职工': 1, '经理': 2}}/>
             <FormItem label="工号" title='employee_id' required={false}/>
             <FormItem label="手机号" title='phone' required={false}/>
             <FormItem label="性别" title='sex' type='select' select={{'男': 1, '女': 2}} required={false}/>
-            <FormItem label="婚姻情况" title='marriage' type='select' select={{'未婚': 1, '已婚': 2, '离异': 3}}
-                      required={false}/>
-            <FormItem label="状态" title='status' type='select' select={{'可用': 1, '禁用': 2}} required={false}/>
             <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
-            <Button block>清空</Button>
-            <Button type='primary' block>搜索</Button>
+            <div className='pos-a btn-container btn-2'>
+              <Button block>清空</Button>
+              <Button type='primary' block>搜索</Button>
+            </div>
           </Fragment> : null
         }
       </div>

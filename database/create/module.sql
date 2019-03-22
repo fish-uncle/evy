@@ -1,5 +1,5 @@
 -- 模块表
-CREATE TABLE IF NOT EXISTS `ddm-module`
+CREATE TABLE IF NOT EXISTS `evy-module`
 (
   `id` INTEGER auto_increment COMMENT 'id.',
   `module_id` CHAR(36) NOT NULL COMMENT 'id.',

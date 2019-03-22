@@ -2,11 +2,10 @@
 import React, {Fragment} from 'react';
 import {Table, Row, Col, Button, Divider} from 'antd';
 import {connect} from "dva";
-import {SheetActions} from "../models";
-import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../utils/request';
+import {LeftActions, RouterActions, SheetActions} from "../models";
 import './Sheet.less';
 
-@connect((sheet, left) => ({...sheet, ...left}), {...SheetActions})
+@connect((sheet, left) => ({...sheet, ...left}), {...SheetActions, ...RouterActions, ...LeftActions})
 export default class Sheet extends React.Component {
 
   componentWillMount() {
@@ -45,7 +44,15 @@ export default class Sheet extends React.Component {
   exportHandle = () => {
     const {sheet} = this.props;
     const {exportUrl} = sheet;
-    exportUrl ? location.href = exportUrl : void 0;
+    location.href = exportUrl;
+  };
+
+  recoveryHandle = () => {
+    const {sheet, left} = this.props;
+    const {recoveryUrl} = sheet;
+    const {breadcrumb} = left;
+    this.props.push(recoveryUrl);
+    this.props.left_choose({title: `${breadcrumb}-回收站`});
   };
 
   componentDidMount() {
@@ -55,23 +62,29 @@ export default class Sheet extends React.Component {
   }
 
   render() {
-    const {sheet} = this.props;
-    const {dataSource, loading, page, buttonEvent, columns, rowKey, exportUrl} = sheet;
+    const {sheet, button = 'show'} = this.props;
+    const {dataSource, loading, page, buttonEvent, columns, rowKey, exportUrl, recoveryUrl} = sheet;
     return (
       <Fragment>
-        <Row className='btn-container'>
+        <Row className='fun-container'>
           <Col span={6} style={{paddingRight: '5px', height: '44px'}}>
-            <Button icon="edit" type="primary" block onClick={this.insertHandle}>新增</Button>
+            <Button icon="edit" type="primary" block onClick={this.insertHandle}
+                    disabled={button === 'show' ? false : true}>新增</Button>
           </Col>
           <Col span={6} style={{padding: '0 5px'}}>
-            <Button icon="search" type="primary" block onClick={this.searchHandle}>搜索</Button>
+            <Button icon="search" type="primary" block
+                    // disabled={button === 'show' ? false : true}
+                    disabled={true}
+                    onClick={this.searchHandle}>搜索</Button>
           </Col>
           <Col span={6} style={{padding: '0 5px'}}>
-            <Button icon="bar-chart" type="primary" block disabled={exportUrl ? false : true}
+            <Button icon="bar-chart" type="primary" block
+                    disabled={button === 'show' ? exportUrl ? false : true : true}
                     onClick={this.exportHandle}>导出</Button>
           </Col>
           <Col span={6} style={{paddingLeft: '5px'}}>
-            <Button icon="delete" type="primary" block>回收站</Button>
+            <Button icon="delete" type="primary" block disabled={button === 'show' ? recoveryUrl ? false : true : true}
+                    onClick={this.recoveryHandle}>回收站</Button>
           </Col>
         </Row>
         <Divider dashed={true}/>

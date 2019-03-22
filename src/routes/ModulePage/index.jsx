@@ -15,7 +15,6 @@ export default class ModulePage extends Component {
   }
 
   componentDidMount() {
-    this.props.sheet_page({current: 1});
     this.props.left_choose({title: '模块列表-xxx'});
   }
 

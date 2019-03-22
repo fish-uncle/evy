@@ -11,11 +11,10 @@ export default class AppPage extends Component {
 
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'app_id'}); // 初始化 table 列表
-    this.props.sheet_url({listUrl: '/api/app', exportUrl: '/api/export/app'})
+    this.props.sheet_url({listUrl: '/api/app', exportUrl: '/api/export/app', recoveryUrl: '/app/recovery'})
   }
 
   componentDidMount() {
-    this.props.sheet_page({current: 1});
   }
 
   render() {

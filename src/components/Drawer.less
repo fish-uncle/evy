@@ -1,6 +1,14 @@
 .detail-container {
   .ant-form-item {
     margin-bottom: 0;
+
+    &.fn-fl, &.fn-fr {
+      width: 48%;
+    }
+  }
+
+  .ant-form-item-control {
+    line-height: 1;
   }
 
   .ant-select {
@@ -30,14 +38,33 @@
     }
   }
 
+  .btn-container {
+    padding: 0 24px;
+    height: 72px;
+    width: 100%;
+    left: 0;
+    bottom: 0;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.15);
+    background-color: #fff;
+
+    &.btn-2 {
+      height: 124px;
+    }
+  }
+
   .avatar-container {
     display: flex;
     flex-direction: row;
 
+    p {
+      margin-left: 10px;
+      line-height: 50px;
+      margin-right: auto;
+    }
+
     img {
       width: 50px;
       height: 50px;
-      margin-right: auto;
       border-radius: 50%;
     }
 
@@ -45,6 +72,10 @@
       margin-top: 9px;
     }
   }
+}
+
+.ant-drawer-content {
+  padding-bottom: 72px;
 }
 
 .ant-drawer-content-wrapper {

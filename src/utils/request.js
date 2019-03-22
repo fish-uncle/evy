@@ -1,5 +1,6 @@
 import fetch from 'dva/fetch';
 import LoadingInAjax from '../components/LoadingInAjax';
+import {notification} from "antd";
 
 function parseJSON(response) {
   return response.json();
@@ -20,7 +21,7 @@ function checkResult(res) {
   if (success) {
     return data;
   }
-  // toast(message);
+  notification.error({message: '提示', description: msg});
   throw new Error(msg);
 }
 

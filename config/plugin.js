@@ -7,5 +7,5 @@ exports.nunjucks = {
 
 exports.visit = {
   enable: true,
-  package: 'egg-visit'
+  package: 'egg-mysql'
 };

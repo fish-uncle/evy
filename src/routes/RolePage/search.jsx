@@ -8,8 +8,8 @@ import {Button, Form} from 'antd';
 class Search extends Component {
 
   componentWillMount() {
-    const {getFieldDecorator} = this.props.form;
-    this.props.drawer_set({getFieldDecorator}); // 传递 antd 的 form 给 model
+    const form = this.props.form;
+    this.props.drawer_set({form}); // 传递 antd 的 form 给 model
   }
 
 
@@ -23,8 +23,10 @@ class Search extends Component {
             <FormItem label="角色" title='role' required={false}/>
             <FormItem label="是否管理员" title='admin' type='select' select={{'是': 1, '否': 2}} required={false}/>
             <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
-            <Button block>清空</Button>
-            <Button type='primary' block>搜索</Button>
+            <div className='pos-a btn-container btn-2'>
+              <Button block>清空</Button>
+              <Button type='primary' block>搜索</Button>
+            </div>
           </Fragment> : null
         }
       </div>

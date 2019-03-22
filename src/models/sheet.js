@@ -10,8 +10,7 @@ export default {
     drawerVisible: false,
     drawerType: 'detail',
     detailData: {},
-    getFieldDecorator: () => {
-    },
+    form: {},
     // 表格
     dataSource: [],
     buttonEvent: {
@@ -19,14 +18,12 @@ export default {
       },
       search: () => {
       },
-      delete: () => {
-      },
       detail: () => {
       }
     },
     loading: false,
     page: {
-      current: 0,
+      current: 1,
       total: 0
     },
     rowKey: '',
@@ -34,29 +31,16 @@ export default {
     // 请求地址
     listUrl: '/api/user',
     exportUrl: '',
-    insertUrl: '/api/user',
-    updateUrl: '/api/user',
-    deleteUrl: '/api/user',
+    recoveryUrl: '',
+    recoverUrl: '',
+    insertUrl: '',
+    updateUrl: '',
+    deleteUrl: '',
   },
 
   subscriptions: {},
 
   effects: {
-    * sheet_reload({payload, callback}, {call, put}) {
-      try {
-        const {listUrl} = payload;
-        const result = yield call(_ => {
-          return GET(listUrl, {page: 1})
-        });
-        yield put({
-          type: 'r_sheet_load',
-          payload: result
-        });
-        typeof callback === 'function' && callback(result);
-      } catch (e) {
-        console.error('sheet_reload报错了： ', e);
-      }
-    },
     * sheet_load({payload, callback}, {call, put}) {
       try {
         const {page, listUrl} = payload;
@@ -80,8 +64,8 @@ export default {
       return {...state, drawerVisible: true, detailData, drawerType};
     },
     drawer_set(state, {payload}) {
-      const {getFieldDecorator} = payload;
-      return {...state, getFieldDecorator};
+      const {form} = payload;
+      return {...state, form};
     },
     drawer_close(state) {
       return {...state, drawerVisible: false};
@@ -105,8 +89,8 @@ export default {
       return {...state, page};
     },
     sheet_url(state, {payload}) {
-      const {listUrl, insertUrl, updateUrl, deleteUrl, exportUrl} = payload;
-      return {...state, listUrl, insertUrl, updateUrl, deleteUrl, exportUrl};
+      const {listUrl, insertUrl, updateUrl, deleteUrl, exportUrl, recoveryUrl, recoverUrl} = payload;
+      return {...state, listUrl, insertUrl, updateUrl, deleteUrl, exportUrl, recoveryUrl, recoverUrl};
     },
   },
 

@@ -15,7 +15,6 @@ export default class RolePage extends Component {
   }
 
   componentDidMount() {
-    this.props.sheet_page({current: 1});
   }
 
   render() {

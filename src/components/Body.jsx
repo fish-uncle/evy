@@ -39,7 +39,7 @@ export default class Body extends Component {
               {children}
             </Content>
             <Footer className='body-footer text-center'>
-              <a href='https://github.com/fish-uncle/DDM' target='_blank' rel="nofollow"><Icon type='github'/></a>
+              <a href='https://github.com/fish-uncle/evy' target='_blank' rel="nofollow"><Icon type='github'/></a>
               <span dangerouslySetInnerHTML={{__html: config.copyRight}}/>
               <span dangerouslySetInnerHTML={{__html: config.icp}}/>
             </Footer>

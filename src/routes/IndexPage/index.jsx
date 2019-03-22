@@ -1,15 +1,32 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
+import {Statistic} from 'antd';
+import moment from "moment";
 import {Body} from '../../components';
+import './index.less';
 
-
-@connect((config) => ({...config}), {})
+@connect(() => ({}), {})
 export default class IndexPage extends Component {
+
+  state = {
+    deadline: Date.now()
+  };
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        deadline: Date.now()
+      })
+    })
+  }
+
   render() {
-    const {config} = this.props;
+    const {deadline} = this.state;
     return (
       <Body style={{display: 'flex', alignItems: 'center', width: '100%', height: '100%'}}>
-      <img src={config.logo.gray} width={800} style={{margin: '0 auto'}}/>
+      <Statistic style={{margin: '0 auto'}} value={deadline} formatter={(value) => {
+        return moment(value).format('YYYY年MM月DD日 HH:mm:ss')
+      }}/>
       </Body>
     );
   }

@@ -30,27 +30,23 @@ class Operation extends Component {
 }
 
 const columns = [{
-  role: '姓名',
+  title: '姓名',
   key: 'real_name',
 }, {
   title: '手机号',
   key: 'phone',
 }, {
-  title: '角色',
-  key: 'role',
+  title: '薪酬',
+  key: 'pay',
 }, {
   title: '性别',
   key: 'sex',
-  render: item => item.sex === 1 ? '男' : '女',
-}, {
-  title: '状态',
-  key: 'status',
-  render: item => item.status === 1 ? '可用' : '禁用',
+  render: item => item.sex === '2' ? '男' : '女',
 }, {
   title: '更新时间',
   width: 160,
   key: 'update_time',
-  render: item => moment(item.update_time).format('YYYY-MM-DD hh:mm:ss'),
+  render: item => moment(item.update_time).format('YYYY-MM-DD HH:mm:ss'),
 }, {
   title: '操作',
   width: 100,

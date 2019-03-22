@@ -15,7 +15,12 @@ export const AppPage = dynamic({
   component: () => import('./AppPage')
 });
 
-// 应用列表
+// 应用列表回收站
+export const AppRecovery = dynamic({
+  component: () => import('./AppRecovery')
+});
+
+// 模块列表
 export const ModulePage = dynamic({
   component: () => import('./ModulePage')
 });
@@ -24,5 +29,12 @@ export const ModulePage = dynamic({
 export const RolePage = dynamic({
   component: () => import('./RolePage')
 });
+
+// // 消息中心
+// export const NewsPage = dynamic({
+//   component: () => import('./NewsPage')
+// });
+
+
 
 

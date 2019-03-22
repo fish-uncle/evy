@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from "dva";
-import {ModalActions} from "../models";
+// import {ModalActions} from "../models";
 import {Modal} from 'antd';
 import PropTypes from 'prop-types';
 
-@connect((modal) => ({...modal}), {...ModalActions})
+@connect(() => ({}), {})
 export default class _Modal extends Component {
 
   hideModal = () => {

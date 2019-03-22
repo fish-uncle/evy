@@ -2,8 +2,12 @@
 
 
 module.exports = app => {
-  const {router, controller} = app;
 
-  router.get(`/api/export/app`, controller.export.application);
+  const menu = require('./router/menu');
+  const excel = require('./router/excel');
+  const user = require('./router/user');
+  menu(app);
+  excel(app);
+  user(app);
 
 };

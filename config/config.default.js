@@ -3,10 +3,22 @@ const path = require('path');
 module.exports = appInfo => {
   const config = {};
 
-  // use for cookie sign key, should change to your own and keep security
+  config.logger = {
+    appLogName: `app.log`,
+    coreLogName: `core.log`,
+    agentLogName: `agent.log`,
+    errorLogName: `error.log`,
+  };
+
+  config.customLogger = {
+    accessLogger: {
+      file: path.join(appInfo.root, 'logs', appInfo.name, 'access.log'),
+    }
+  };
+
   config.keys = appInfo.name + '_1522136911587_199';
 
-  // config.middleware = ['auth', 'operationRecord'];
+  config.middleware = ['gzip', 'access'];
 
   config.security = {
     csrf: false,
@@ -21,7 +33,7 @@ module.exports = appInfo => {
   };
 
   config.session = {
-    renew: true,  // 延长 Session 的有效期
+    renew: true,
   };
 
   config.static = {
@@ -44,22 +56,6 @@ module.exports = appInfo => {
     app: true,
     agent: false,
   };
-
-  // config.forward = {
-  //   proxy: [{
-  //     target: '127.0.0.1:1314',
-  //     from: '/menu/list'
-  //   }]
-  // };
-
-  // config.auth = {
-  // ignore: [
-  //   `/${name}/login`,
-  //   `/${name}/logout`,
-  //   `/login`,
-  //   `/forgetPassword`
-  // ]
-  // };
 
   return config;
 };

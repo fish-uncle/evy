@@ -1,0 +1,6 @@
+INSERT INTO `evy-menu` VALUES (1, '06ec7f5c-091d-4d84-8e5c-360a2822a891', '仪表盘', 'dashboard', '/', 1, NULL, NULL, 1, '2019-03-22 14:23:34', '2019-03-22 14:23:36', NULL);
+INSERT INTO `evy-menu` VALUES (2, '9c46e81f-6c22-4fa9-aea0-bcf5425e183a', '员工列表', 'user', '/user', 1, NULL, NULL, 1, '2019-03-22 14:24:00', '2019-03-22 14:24:03', NULL);
+
+INSERT INTO `evy-user` VALUES (1, 'd3e934a2-df71-4673-be53-fb1ac7b8dfb8', 'T0001', '', '', NULL, NULL, '张三', '2', '3420', '0', '1', 1, 1, '2009-03-22 17:58:39', '2019-03-22 17:58:07', '汉族', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '13964445123', NULL, NULL, NULL, '1', NULL, 1, '2019-03-22 16:54:31', '2019-03-22 18:35:13', NULL);
+INSERT INTO `evy-user` VALUES (2, 'c7d9dcbe-5c67-4c7c-a0ce-513e6b45dba7', 'T0002', '', '', NULL, NULL, '赵武', '2', '3200', '0', '1', 1, 1, '2004-03-22 17:58:46', '2019-03-22 17:58:05', '汉族', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1@163.com', '15367945313', NULL, NULL, NULL, '1', NULL, 1, '2019-03-22 17:53:54', '2019-03-22 18:29:34', NULL);
+INSERT INTO `evy-user` VALUES (3, 'e5885e9a-6dfa-4082-8e98-ff9a4f7703d3', 'T0003', '', '', NULL, NULL, '李希', '1', '3590', '0', '1', 1, 1, '1999-03-22 17:50:58', '2019-03-22 17:50:58', '汉族', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '18868945733', NULL, NULL, NULL, '1', NULL, 1, '2019-03-22 17:50:58', '2019-03-22 18:35:00', NULL);

@@ -8,8 +8,8 @@ import {SheetActions} from "../../models";
 class Detail extends Component {
 
   componentWillMount() {
-    const {getFieldDecorator} = this.props.form;
-    this.props.drawer_set({getFieldDecorator}); // 传递 antd 的 form 给 model
+    const form = this.props.form;
+    this.props.drawer_set({form}); // 传递 antd 的 form 给 model
   }
 
   render() {
@@ -32,11 +32,13 @@ class Detail extends Component {
               <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
               <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
               <FormItem title='module_id' type='hidden'/>
-              {
-                drawerType === 'insert' ?
-                  <Button type='primary' block>新增</Button> :
-                  <Button type='primary' block>更新</Button>
-              }
+              <div className='pos-a btn-container'>
+                {
+                  drawerType === 'insert' ?
+                    <Button type='primary' block>新增</Button> :
+                    <Button type='primary' block>更新</Button>
+                }
+              </div>
             </Fragment> : null
         }
       </Fragment>

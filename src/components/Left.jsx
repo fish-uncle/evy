@@ -10,7 +10,6 @@ const {Sider} = Layout;
 export default class Default extends Component {
 
   componentWillMount() {
-    // console.log(this.props)
     this.props.left_load();
   }
 
@@ -20,6 +19,12 @@ export default class Default extends Component {
     };
     window.onresize = resize;
     resize();
+  }
+
+  componentWillUnmount() {
+    const {left} = this.props;
+    const {selectedKeys} = left;
+    localStorage.setItem('selectedKeys', selectedKeys.join('#'))
   }
 
   chooseHandle = item => {
@@ -72,7 +77,7 @@ export default class Default extends Component {
         {
           menu ? <Menu theme="dark" mode="inline" defaultOpenKeys={openKeys} selectedKeys={selectedKeys}
                        onOpenChange={openKeys => {
-                         this.props.left_openkey({openKeys})
+                         this.props.left_openKeys({openKeys})
                        }}>
             {this.menuRender()}
           </Menu> : null

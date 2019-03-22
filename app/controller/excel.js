@@ -3,9 +3,9 @@
 const Controller = require('egg').Controller;
 const nodeExcel = require('excel-export');
 
-class ExportController extends Controller {
+class ExcelController extends Controller {
 
-  async application() {
+  async user() {
     const ctx = this.ctx;
     let conf = {};
     let v = [
@@ -49,4 +49,4 @@ class ExportController extends Controller {
 
 }
 
-module.exports = ExportController;
+module.exports = ExcelController;

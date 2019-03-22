@@ -78,5 +78,5 @@ function checkPath(path, config) {
 
 function doAfterMatch(con) {
   const {title} = con;
-  title ? document.title = config.state.title + '-' + title : document.title = config.state.title;
+  title ? document.title = title : document.title = config.state.title;
 }

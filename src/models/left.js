@@ -8,7 +8,7 @@ export default {
   state: {
     collapsed: false, // 左侧导航栏的展开状态
     breadcrumb: [],
-    selectedKey: [],
+    selectedKeys: [],
     openKeys: [],
     menu: null
   },
@@ -19,7 +19,7 @@ export default {
     * left_load({payload, callback}, {call, put}) {
       try {
         const result = yield call(_ => {
-          return GET('/api/left')
+          return GET('/api/menu/list')
         });
         yield put({
           type: 'r_left_load',
@@ -60,21 +60,41 @@ export default {
       if (openKeys) {
         openKeys[0] ? void 0 : openKeys = state.openKeys;
         obj = Object.assign({}, obj, {openKeys: openKeys})
+      } else {
+        const openKeys = localStorage.getItem('openKeys');
+        if (openKeys) {
+          obj = Object.assign({}, obj, {openKeys: openKeys.split('#')})
+        }
       }
       if (selectedKeys.length) {
         obj = Object.assign({}, obj, {selectedKeys: selectedKeys})
+      } else {
+        const selectedKeys = localStorage.getItem('selectedKeys');
+        if (selectedKeys) {
+          obj = Object.assign({}, obj, {selectedKeys: selectedKeys.split('#')})
+        }
       }
       if (breadcrumb.length) {
+        document.title = 'EVY-' + breadcrumb[0];
         obj = Object.assign({}, obj, {breadcrumb: breadcrumb})
+      } else {
+        const title = localStorage.getItem('title');
+        if (title) {
+          document.title = title;
+          obj = Object.assign({}, obj, {breadcrumb: [title]})
+        }
       }
       return {...state, menu, ...obj};
     },
     left_choose(state, {payload}) {
       const {title} = payload;
+      localStorage.setItem('title', title);
+      document.title = title;
       return {...state, breadcrumb: [title]};
     },
-    left_openkey(state, {payload}) {
+    left_openKeys(state, {payload}) {
       const {openKeys} = payload;
+      localStorage.setItem('openKeys', openKeys.join('#'));
       return {...state, openKeys};
     },
     left_toggle(state) {

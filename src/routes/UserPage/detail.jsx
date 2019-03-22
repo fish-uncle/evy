@@ -2,15 +2,48 @@ import React, {Component, Fragment} from 'react';
 import {connect} from 'dva';
 import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
-import {Button, Form, Upload} from 'antd';
+import {Button, Form, Upload, notification} from 'antd';
+import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Detail extends Component {
 
   componentWillMount() {
-    const {getFieldDecorator} = this.props.form;
-    this.props.drawer_set({getFieldDecorator}); // 传递 antd 的 form 给 model
+    const form = this.props.form;
+    this.props.drawer_set({form}); // 传递 antd 的 form 给 model
   }
+
+  insertHandle = () => {
+    const {sheet} = this.props;
+    sheet.form.validateFields((err, values) => {
+      if (!err) {
+        POST(sheet.insertUrl, values);
+        const {page, listUrl} = sheet;
+        this.props.drawer_close();
+        this.props.sheet_load({page, listUrl});
+      } else {
+        for (let item in err) {
+          notification.error({message: '提示', description: err[item].errors[0].message});
+        }
+      }
+    })
+  };
+
+  updateHandle = () => {
+    const {sheet} = this.props;
+    sheet.form.validateFields((err, values) => {
+      if (!err) {
+        POST(sheet.updateUrl, values);
+        const {page, listUrl} = sheet;
+        this.props.drawer_close();
+        this.props.sheet_load({page, listUrl});
+      } else {
+        for (let item in err) {
+          notification.error({message: '提示', description: err[item].errors[0].message});
+        }
+      }
+    })
+  };
 
   render() {
     const {sheet} = this.props;
@@ -19,30 +52,56 @@ class Detail extends Component {
       <Fragment>
         {
           drawerType === 'insert' || drawerType === 'detail' ? <Fragment>
-            <div className='avatar-container'>
+            {/*<div className='avatar-container'>
               <img src={detailData.avatar} alt=""/>
-              <Upload accept=".jpg,.png" action='' name='avatar' withCredentials={true}><Button type='primary'>更换</Button></Upload>
+              <p>200*200</p>
+              <Upload accept=".jpg,.png" action='' name='avatar' withCredentials={true}><Button
+                type='primary'>更换</Button></Upload>
+            </div>*/}
+            <div className="fn-clear">
+              <FormItem className='fn-fl' label="姓名" title='real_name'/>
+              <FormItem className='fn-fr' label="角色" title='role' type='select' select={{'普通职工': '1', '经理': '2'}}
+                        defaultValue={1}/>
             </div>
-            <FormItem label="姓名" title='real_name'/>
-            <FormItem label="角色" title='role'/>
-            <FormItem label="职称" title='job_name'/>
-            <FormItem label="工号" title='employee_id'/>
-            <FormItem label="手机号" title='phone'/>
-            <FormItem label="E-mail" title='email'/>
-            <FormItem label="性别" title='sex' type='select' select={{'男': 1, '女': 2}} defaultValue={1}/>
-            <FormItem label="民族" title='nation' type='select' select={{'汉族': '汉族'}} defaultValue='汉族'/>
-            <FormItem label="婚姻情况" title='marriage' type='select' select={{'未婚': 1, '已婚': 2, '离异': 3}}
-                      defaultValue={0}/>
-            <FormItem label="出生日期" title='birth_time' type='date'/>
-            <FormItem label="状态" title='status' type='select' select={{'可用': 1, '禁用': 2}} defaultValue={1}/>
-            <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
-            <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
-            <FormItem title='user_id' type='hidden'/>
-            {
-              drawerType === 'insert' ?
-                <Button type='primary' block>新增</Button> :
-                <Button type='primary' block>更新</Button>
-            }
+            <div className="fn-clear">
+              <FormItem className='fn-fl' label="薪酬" title='pay' defaultValue={0}/>
+              <FormItem className='fn-fr' label="工号" title='employee_id'/>
+            </div>
+            <div className="fn-clear">
+              <FormItem className='fn-fl' label="手机号" title='phone'/>
+              <FormItem className='fn-fr' label="E-mail" title='email' required={false}/>
+            </div>
+            <div className="fn-clear">
+              <FormItem className='fn-fl' label="性别" title='sex' type='select' select={{'男': '1', '女': '2'}}
+                        defaultValue={1}/>
+              <FormItem className='fn-fr' label="民族" title='nation' type='select' select={{'汉族': '汉族'}}
+                        defaultValue='汉族'/>
+            </div>
+            <div className="fn-clear">
+              <FormItem className='fn-fl' label="婚姻情况" title='marriage' type='select'
+                        select={{'未婚': '1', '已婚': '2', '离异': '3'}}
+                        defaultValue={1}/>
+              <FormItem className='fn-fr' label="出生日期" title='birth_time' type='date'/>
+            </div>
+            <div className="fn-clear">
+              <FormItem className='fn-fl' label="入职时间" title='join_time' type='date'/>
+              <FormItem className='fn-fr' label="银行卡号" title='bank_card' type='input' required={false}/>
+            </div>
+            <FormItem label="开户行地址" title='native_address' type='input' required={false}/>
+            <FormItem label="籍贯详细地址" title='bank_address' type='textarea' required={false}/>
+            <FormItem label="备注" title='remark' type='textarea' required={false}/>
+            <div className="fn-clear">
+              <FormItem className='fn-fl' label="更新时间" title='update_time' type='date' disabled={true}/>
+              <FormItem className='fn-fr' label="创建时间" title='create_time' type='date' disabled={true}/>
+            </div>
+            <FormItem title='user_id' type='hidden' required={false}/>
+            <div className='pos-a btn-container'>
+              {
+                drawerType === 'insert' ?
+                  <Button type='primary' block onClick={this.insertHandle}>新增</Button> :
+                  <Button type='primary' block onClick={this.updateHandle}>更新</Button>
+              }
+            </div>
           </Fragment> : null
         }
       </Fragment>

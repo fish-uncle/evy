@@ -8,8 +8,8 @@ import {Button, Form, Upload} from 'antd';
 class Detail extends Component {
 
   componentWillMount() {
-    const {getFieldDecorator} = this.props.form;
-    this.props.drawer_set({getFieldDecorator}); // 传递 antd 的 form 给 model
+    const form = this.props.form;
+    this.props.drawer_set({form}); // 传递 antd 的 form 给 model
   }
 
   render() {
@@ -21,6 +21,7 @@ class Detail extends Component {
           drawerType === 'insert' || drawerType === 'detail' ? <Fragment>
             <div className='avatar-container'>
               <img src={detailData.icon} alt=""/>
+              <p>200*200</p>
               <Upload accept=".jpg,.png" action='' name='icon' withCredentials={true}><Button type='primary'>更换</Button></Upload>
             </div>
             <FormItem label="中文标题" title='cn_title'/>
@@ -32,11 +33,13 @@ class Detail extends Component {
             <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
             <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
             <FormItem title='app_id' type='hidden'/>
-            {
-              drawerType === 'insert' ?
-                <Button type='primary' block>新增</Button> :
-                <Button type='primary' block>更新</Button>
-            }
+            <div className='pos-a btn-container'>
+              {
+                drawerType === 'insert' ?
+                  <Button type='primary' block>新增</Button> :
+                  <Button type='primary' block>更新</Button>
+              }
+            </div>
           </Fragment> : null
         }
       </Fragment>

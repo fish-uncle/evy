@@ -57,8 +57,8 @@ export default class _Modal extends Component {
 
   render() {
     const {value} = this.state;
-    let {type = 'input', title, label = '', sheet, required = true, maxLength = 0, pattern = '', select = {}, disabled = false} = this.props;
-    const {getFieldDecorator} = sheet;
+    let {type = 'input', title, label = '', sheet, required = true, maxLength = 0, pattern = '', select = {}, disabled = false, className, style} = this.props;
+    const {getFieldDecorator} = sheet.form;
     let html = <Input disabled={disabled}/>,
       rules = {required: required, message: `请${type === 'select' ? '选择' : '输入'}` + label};
     maxLength ? rules = Object.assign({}, rules, {len: maxLength}) : void 0;
@@ -84,7 +84,7 @@ export default class _Modal extends Component {
       valuePropName: 'checked'
     }) : void 0;
     return (
-      <FormItem label={label}>
+      <FormItem label={label} className={className} style={style}>
         <div className={type === 'hidden' || type === 'editor' ? 'fn-hide' : ''}>
           {
             getFieldDecorator(title, options)(html)

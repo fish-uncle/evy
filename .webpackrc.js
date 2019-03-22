@@ -10,6 +10,7 @@ export default {
     index: './src/index.js',
     vendor: ['dva', 'react-dom', 'react', 'styled-components', 'antd']
   },
+  outputPath: path.resolve(__dirname, 'app', 'public'),
   commons: [
     {name: ['vendor']}
   ],
@@ -24,7 +25,6 @@ export default {
     'iOS >= 6',
     'and_uc >= 9.1'
   ],
-  outputPath: path.resolve(__dirname, 'dist', pkg.version),
   hash: false,
   disableCSSModules: true,
   proxy: {
@@ -40,7 +40,9 @@ export default {
     "style": true
   }]],
   env: {
-    development: {},
+    development: {
+      "extraBabelPlugins": ["dva-hmr"]
+    },
     production: {
       publicPath
     }

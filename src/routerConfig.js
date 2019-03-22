@@ -2,8 +2,10 @@ import {
   IndexPage,
   UserPage,
   AppPage,
+  AppRecovery,
   ModulePage,
-  RolePage
+  RolePage,
+  // NewsPage
 } from './routes';
 
 /**
@@ -17,29 +19,32 @@ import {
 const routerConfig = [
   {
     path: '/',
-    title: '',
     component: IndexPage,
   },
   {
     path: '/user',
-    title: '用户中心',
     component: UserPage,
   },
   {
     path: '/role',
-    title: '角色管理',
     component: RolePage,
   },
   {
     path: '/app',
-    title: '应用列表',
     component: AppPage,
   },
   {
+    path: '/app/recovery',
+    component: AppRecovery,
+  },
+  {
     path: '/module/:app_id',
-    title: '模块列表',
     component: ModulePage,
-  }
+  },
+  // {
+  //   path: '/news',
+  //   component: NewsPage,
+  // }
 ];
 
 export default routerConfig;

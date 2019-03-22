@@ -1,6 +1,5 @@
 import dva from 'dva';
 import './index.less';
-import './react-json-schema.less';
 import './utils/always';
 
 // 1. Initialize
@@ -19,7 +18,6 @@ app.model(require('./models/router').default);
 app.model(require('./models/left').default);
 app.model(require('./models/config').default);
 app.model(require('./models/sheet').default);
-app.model(require('./models/modal').default);
 
 window._ = {};
 
