@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `evy-user`
   `bank_address`TEXT DEFAULT NULL COMMENT '银行开户行。',
   `bank_card` CHAR(40) DEFAULT NULL COMMENT '银行卡。',
   `id_card` CHAR(20) DEFAULT NULL COMMENT '身份证。',
-  `avatar` CHAR(100) DEFAULT NULL COMMENT '头像。',
+  `avatar` TEXT DEFAULT NULL COMMENT '头像。',
   `language` CHAR(10) DEFAULT NULL COMMENT '语言。',
   `remark` TEXT DEFAULT NULL COMMENT '备注。',
   `email` CHAR(30) DEFAULT NULL COMMENT 'E-mail。',

@@ -10,6 +10,11 @@ export const UserPage = dynamic({
   component: () => import('./UserPage')
 });
 
+// 用户中心
+export const UserRecovery = dynamic({
+  component: () => import('./UserRecovery')
+});
+
 // 应用列表
 export const AppPage = dynamic({
   component: () => import('./AppPage')

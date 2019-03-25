@@ -10,7 +10,22 @@ class MenuController extends Controller {
     const {page = 1} = ctx.query;
     let result, total;
     try {
-      result = await user.list(page);
+      result = await user.listOrRecovery(page, 1);
+      total = await user.count();
+      ctx.body = ctx.json.success({data: {list: result, total: total}});
+    } catch (err) {
+      console.log(err);
+      ctx.body = ctx.json.error();
+    }
+  }
+
+  async recovery() {
+    const ctx = this.ctx;
+    const {user} = ctx.service;
+    const {page = 1} = ctx.query;
+    let result, total;
+    try {
+      result = await user.listOrRecovery(page, 2);
       total = await user.count();
       ctx.body = ctx.json.success({data: {list: result, total: total}});
     } catch (err) {
@@ -42,6 +57,31 @@ class MenuController extends Controller {
       ctx.body = ctx.json.error();
     }
   }
+
+  async del() {
+    const ctx = this.ctx;
+    const {user} = ctx.service;
+    try {
+      await user.delOrRecover(ctx.request.body, 2);
+      ctx.body = ctx.json.success({msg: '删除成功'});
+    } catch (err) {
+      console.log(err);
+      ctx.body = ctx.json.error();
+    }
+  }
+
+  async recover() {
+    const ctx = this.ctx;
+    const {user} = ctx.service;
+    try {
+      await user.delOrRecover(ctx.request.body, 1);
+      ctx.body = ctx.json.success({msg: '恢复成功'});
+    } catch (err) {
+      console.log(err);
+      ctx.body = ctx.json.error();
+    }
+  }
+
 
 }
 

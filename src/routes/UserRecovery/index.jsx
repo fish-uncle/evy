@@ -12,11 +12,8 @@ export default class UserPage extends Component {
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'user_id'}); // 初始化 table 列表
     this.props.sheet_url({
-      listUrl: '/api/user/list',
-      insertUrl: '/api/user/insert',
-      deleteUrl: '/api/user/delete',
-      updateUrl: '/api/user/update',
-      recoveryUrl: '/user/recovery'
+      listUrl: '/api/user/recovery',
+      recoverUrl: '/api/user/recover'
     })
   }
 

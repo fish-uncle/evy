@@ -29,7 +29,7 @@ export default {
     rowKey: '',
     columns: [],
     // 请求地址
-    listUrl: '/api/user',
+    listUrl: '',
     exportUrl: '',
     recoveryUrl: '',
     recoverUrl: '',

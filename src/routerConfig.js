@@ -1,6 +1,7 @@
 import {
   IndexPage,
   UserPage,
+  UserRecovery,
   AppPage,
   AppRecovery,
   ModulePage,
@@ -24,6 +25,10 @@ const routerConfig = [
   {
     path: '/user',
     component: UserPage,
+  },
+  {
+    path: '/user/recovery',
+    component: UserRecovery,
   },
   {
     path: '/role',

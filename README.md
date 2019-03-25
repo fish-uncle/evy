@@ -11,13 +11,34 @@ Evy(伊菲) 洛奇英雄传
 ![Evy](src/imgs/evy.jpg)
 
 ## 部署
+开发环境
 ```
+git clone https://github.com/fish-uncle/evy.git
+cd evy && npm install
+npm run dev // roadhog 服务
+npm run server // egg服务
 ```
-## 更多
-egg+dva+antd+roadhog 框架文档地址
-* [egg](https://eggjs.org/zh-cn/)
-* [dva](https://dvajs.com/guide/)
-* [antd](https://ant.design/index-cn)
-* [roadhog](https://www.npmjs.com/package/roadhog)
+see at http://127.0.0.1:6601
 
-# coding
+生产环境
+```
+npm run build // roadhog 打包
+npm run start // egg服务
+```
+see at http://127.0.0.1:6602
+
+`记得运行初始化sql` /database/
+## 文档
+整个项目主要是由[egg](https://eggjs.org/zh-cn/)+[dva](https://dvajs.com/guide/)+[antd](https://ant.design/index-cn)+[roadhog](https://www.npmjs.com/package/roadhog) 搭建完成的
+
+框架基础文档这里就不说了
+
+## coding
+* [√] todo 基础框架搭建
+* [√] todo 员工列表
+* [√] todo 仪表盘
+* [√] todo 左侧菜单列表
+* [] todo 表格搜索
+* [] todo 回收站
+* [] todo 登录
+* [] todo 授权管理
