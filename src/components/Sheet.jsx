@@ -43,8 +43,28 @@ export default class Sheet extends React.Component {
 
   exportHandle = () => {
     const {sheet} = this.props;
-    const {exportUrl} = sheet;
-    location.href = exportUrl;
+    const {exportUrl, search} = sheet;
+
+    function http_builder_url(url, data) {
+      if (typeof (url) == 'undefined' || url == null || url == '') {
+        return '';
+      }
+      if (typeof (data) == 'undefined' || data == null || typeof (data) != 'object') {
+        return '';
+      }
+      url += (url.indexOf("?") != -1) ? "" : "?";
+      for (let k in data) {
+        url += ((url.indexOf("=") != -1) ? "&" : "") + k + "=" + encodeURI(data[k]);
+      }
+      return url;
+    }
+
+    location.href = http_builder_url(exportUrl, search);
+  };
+
+  pageChangeHandle = (page, pageSize) => {
+    this.props.sheet_page({page: {current: page, total: pageSize}});
+    this.props.sheet_load();
   };
 
   recoveryHandle = () => {
@@ -56,9 +76,7 @@ export default class Sheet extends React.Component {
   };
 
   componentDidMount() {
-    const {sheet} = this.props;
-    const {page, listUrl} = sheet;
-    this.props.sheet_load({page, listUrl});
+    this.props.sheet_load();
   }
 
   render() {
@@ -73,8 +91,7 @@ export default class Sheet extends React.Component {
           </Col>
           <Col span={6} style={{padding: '0 5px'}}>
             <Button icon="search" type="primary" block
-                    // disabled={button === 'show' ? false : true}
-                    disabled={true}
+                    disabled={button === 'show' ? false : true}
                     onClick={this.searchHandle}>搜索</Button>
           </Col>
           <Col span={6} style={{padding: '0 5px'}}>
@@ -90,7 +107,7 @@ export default class Sheet extends React.Component {
         <Divider dashed={true}/>
         <Table rowKey={rowKey}
                loading={loading}
-               pagination={{total: page.total, current: page.current}}
+               pagination={{total: page.total, current: page.current, onChange: this.pageChangeHandle}}
                onRow={(record) => {
                  return {
                    onClick: (event) => {

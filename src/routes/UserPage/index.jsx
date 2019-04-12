@@ -3,8 +3,7 @@ import {connect} from 'dva';
 import {RouterActions, SheetActions} from '../../models';
 import {Body, Sheet, Drawer} from '../../components';
 import columns from './columns';
-import Detail from './detail';
-import Search from './search';
+import Right from './right';
 
 @connect((sheet) => ({...sheet}), {...RouterActions, ...SheetActions})
 export default class UserPage extends Component {
@@ -28,8 +27,7 @@ export default class UserPage extends Component {
       <Body>
       <Sheet/>
       <Drawer>
-        <Detail/>
-        <Search/>
+        <Right/>
       </Drawer>
       </Body>
     );

@@ -25,13 +25,6 @@ class Detail extends Component {
             <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
             <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
             <FormItem title='role_id' type='hidden'/>
-            <div className='pos-a btn-container'>
-              {
-                drawerType === 'insert' ?
-                  <Button type='primary' block>新增</Button> :
-                  <Button type='primary' block>更新</Button>
-              }
-            </div>
           </Fragment> : null
         }
       </Fragment>

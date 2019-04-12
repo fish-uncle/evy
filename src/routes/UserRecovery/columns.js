@@ -15,8 +15,7 @@ class Operation extends Component {
       onOk: () => {
         try {
           POST(sheet.recoverUrl, item);
-          const {page, listUrl} = sheet;
-          this.props.sheet_load({page, listUrl});
+          this.props.sheet_load();
           notification.success({message: '提示', description: '恢复成功'});
         } catch (e) {
           notification.success({message: '提示', description: '恢复失败'});

@@ -13,38 +13,6 @@ class Detail extends Component {
     this.props.drawer_set({form}); // 传递 antd 的 form 给 model
   }
 
-  insertHandle = () => {
-    const {sheet} = this.props;
-    sheet.form.validateFields((err, values) => {
-      if (!err) {
-        POST(sheet.insertUrl, values);
-        const {page, listUrl} = sheet;
-        this.props.drawer_close();
-        this.props.sheet_load({page, listUrl});
-      } else {
-        for (let item in err) {
-          notification.error({message: '提示', description: err[item].errors[0].message});
-        }
-      }
-    })
-  };
-
-  updateHandle = () => {
-    const {sheet} = this.props;
-    sheet.form.validateFields((err, values) => {
-      if (!err) {
-        POST(sheet.updateUrl, values);
-        const {page, listUrl} = sheet;
-        this.props.drawer_close();
-        this.props.sheet_load({page, listUrl});
-      } else {
-        for (let item in err) {
-          notification.error({message: '提示', description: err[item].errors[0].message});
-        }
-      }
-    })
-  };
-
   render() {
     const {sheet} = this.props;
     const {drawerType, detailData} = sheet;
@@ -95,13 +63,6 @@ class Detail extends Component {
               <FormItem className='fn-fr' label="创建时间" title='create_time' type='date' disabled={true}/>
             </div>
             <FormItem title='user_id' type='hidden' required={false}/>
-            <div className='pos-a btn-container'>
-              {
-                drawerType === 'insert' ?
-                  <Button type='primary' block onClick={this.insertHandle}>新增</Button> :
-                  <Button type='primary' block onClick={this.updateHandle}>更新</Button>
-              }
-            </div>
           </Fragment> : null
         }
       </Fragment>

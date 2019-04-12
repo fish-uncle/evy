@@ -1,0 +1,24 @@
+{
+  "name": "egg-mockjs",
+  "eggPlugin": {
+    "name": "mockjs",
+    "env": [
+      "local",
+      "test",
+      "unittest"
+    ]
+  },
+  "version": "1.0.0",
+  "description": "mock数据",
+  "author": "youe",
+  "keywords": [
+    "egg",
+    "egg-plugin",
+    "eggPlugin",
+    "mock-js",
+    "mockJs"
+  ],
+  "devDependencies": {
+    "mockjs": "^1.0.1-beta3"
+  }
+}

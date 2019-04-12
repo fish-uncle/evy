@@ -15,8 +15,7 @@ class Operation extends Component {
       onOk: () => {
         try {
           POST(sheet.deleteUrl, item);
-          const {page, listUrl} = sheet;
-          this.props.sheet_load({page, listUrl});
+          this.props.sheet_load();
           notification.success({message: '提示', description: '删除成功'});
         } catch (e) {
           notification.success({message: '提示', description: '删除失败'});

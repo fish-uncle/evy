@@ -26,10 +26,6 @@ class Search extends Component {
             <FormItem label="是否上架" title='release' type='switch' required={false}/>
             <FormItem label="是否为定时模块" title='timing' type='switch' required={false}/>
             <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
-            <div className='pos-a btn-container btn-2'>
-              <Button block>清空</Button>
-              <Button type='primary' block>搜索</Button>
-            </div>
           </Fragment> : null
         }
       </div>

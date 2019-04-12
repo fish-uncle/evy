@@ -2,62 +2,19 @@ import React, {Component, Fragment} from 'react';
 import {connect} from 'dva';
 import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
-import {Button, Form, Upload, notification} from 'antd';
-import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
+import {Form} from 'antd';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
-class Detail extends Component {
+class Right extends Component {
 
   componentWillMount() {
     const form = this.props.form;
     this.props.drawer_set({form}); // 传递 antd 的 form 给 model
   }
 
-  insertHandle = () => {
-    const {sheet} = this.props;
-    sheet.form.validateFields((err, values) => {
-      if (!err) {
-        try {
-          POST(sheet.insertUrl, values);
-          const {page, listUrl} = sheet;
-          this.props.drawer_close();
-          this.props.sheet_load({page, listUrl});
-          notification.success({message: '提示', description: '添加成功'});
-        } catch (e) {
-          notification.success({message: '提示', description: '添加失败'});
-        }
-      } else {
-        for (let item in err) {
-          notification.error({message: '提示', description: err[item].errors[0].message});
-        }
-      }
-    })
-  };
-
-  updateHandle = () => {
-    const {sheet} = this.props;
-    sheet.form.validateFields((err, values) => {
-      if (!err) {
-        try {
-          POST(sheet.updateUrl, values);
-          const {page, listUrl} = sheet;
-          this.props.drawer_close();
-          this.props.sheet_load({page, listUrl});
-          notification.success({message: '提示', description: '更新成功'});
-        } catch (e) {
-          notification.success({message: '提示', description: '更新失败'});
-        }
-      } else {
-        for (let item in err) {
-          notification.error({message: '提示', description: err[item].errors[0].message});
-        }
-      }
-    })
-  };
-
   render() {
     const {sheet} = this.props;
-    const {drawerType, detailData} = sheet;
+    const {drawerType, detailData, search} = sheet;
     return (
       <Fragment>
         {
@@ -65,7 +22,7 @@ class Detail extends Component {
             <div className='avatar-container'>
               <img src={detailData.avatar} alt=""/>
               <p>200*200</p>
-            {/*  <Upload data={{user_id: detailData.user_id}}
+              {/*  <Upload data={{user_id: detailData.user_id}}
                       accept=".jpg,.png"
                       name='avatar'
                       action='/api/user/avatar'
@@ -110,13 +67,16 @@ class Detail extends Component {
               <FormItem className='fn-fr' label="创建时间" title='create_time' type='date' disabled={true}/>
             </div>
             <FormItem title='user_id' type='hidden' required={false}/>
-            <div className='pos-a btn-container'>
-              {
-                drawerType === 'insert' ?
-                  <Button type='primary' block onClick={this.insertHandle}>新增</Button> :
-                  <Button type='primary' block onClick={this.updateHandle}>更新</Button>
-              }
-            </div>
+          </Fragment> : null
+        }
+        {
+          drawerType === 'search' ? <Fragment>
+            <FormItem label="姓名" title='real_name' required={false} defaultValue={search.real_name}/>
+            <FormItem label="角色" title='role' required={false} type='select' select={{'普通职工': 1, '经理': 2}} defaultValue={search.role}/>
+            <FormItem label="工号" title='employee_id' required={false} defaultValue={search.employee_id}/>
+            <FormItem label="手机号" title='phone' required={false} defaultValue={search.phone}/>
+            <FormItem label="性别" title='sex' type='select' select={{'男': 1, '女': 2}} required={false} defaultValue={search.sex}/>
+            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false} defaultValue={search.update_time}/>
           </Fragment> : null
         }
       </Fragment>
@@ -124,5 +84,5 @@ class Detail extends Component {
   }
 }
 
-const FormApp = Form.create()(Detail);
+const FormApp = Form.create()(Right);
 export default FormApp;

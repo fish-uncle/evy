@@ -7,10 +7,10 @@ class MenuController extends Controller {
   async list() {
     const ctx = this.ctx;
     const {user} = ctx.service;
-    const {page = 1} = ctx.query;
+    const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await user.listOrRecovery(page, 1);
+      result = await user.listOrRecovery(pageNum, 1);
       total = await user.count();
       ctx.body = ctx.json.success({data: {list: result, total: total}});
     } catch (err) {
@@ -22,10 +22,10 @@ class MenuController extends Controller {
   async recovery() {
     const ctx = this.ctx;
     const {user} = ctx.service;
-    const {page = 1} = ctx.query;
+    const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await user.listOrRecovery(page, 2);
+      result = await user.listOrRecovery(pageNum, 2);
       total = await user.count();
       ctx.body = ctx.json.success({data: {list: result, total: total}});
     } catch (err) {

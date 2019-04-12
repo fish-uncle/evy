@@ -10,6 +10,7 @@ export default {
     drawerVisible: false,
     drawerType: 'detail',
     detailData: {},
+    search: {},
     form: {},
     // 表格
     dataSource: [],
@@ -26,6 +27,8 @@ export default {
       current: 1,
       total: 0
     },
+    loadCallback: () => {
+    },
     rowKey: '',
     columns: [],
     // 请求地址
@@ -41,21 +44,24 @@ export default {
   subscriptions: {},
 
   effects: {
-    * sheet_load({payload, callback}, {call, put}) {
+    * sheet_load({payload, callback}, {call, put, select}) {
       try {
-        const {page, listUrl} = payload;
+        const sheet = yield select(state => state.sheet);
+        const {page, listUrl, search, loadCallback} = sheet;
+        let param = {pageNum: page.current, pageSize: 10};
+        param = Object.assign({}, search, param);
         const result = yield call(_ => {
-          return GET(listUrl, {page: page.current})
+          return GET(listUrl, param)
         });
         yield put({
           type: 'r_sheet_load',
           payload: result
         });
-        typeof callback === 'function' && callback(result);
+        loadCallback(result);
       } catch (e) {
         console.error('sheet_load报错了： ', e);
       }
-    },
+    }
   },
 
   reducers: {
@@ -76,8 +82,15 @@ export default {
       return {...state, page, dataSource: list};
     },
     sheet_set(state, {payload}) {
-      let {columns, rowKey} = payload;
-      return {...state, columns, rowKey, dataSource: []};
+      let {
+        columns, rowKey, loadCallback = () => {
+        }
+      } = payload;
+      return {...state, columns, rowKey, dataSource: [], loadCallback};
+    },
+    sheet_search(state, {payload}) {
+      const {values} = payload;
+      return {...state, search: values};
     },
     sheet_button_event(state, {payload}) {
       let buttonEvent = Object.assign({}, state.buttonEvent, {[payload.type]: payload.callback});

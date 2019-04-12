@@ -26,10 +26,6 @@ class Search extends Component {
             <FormItem label="手机号" title='phone' required={false}/>
             <FormItem label="性别" title='sex' type='select' select={{'男': 1, '女': 2}} required={false}/>
             <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
-            <div className='pos-a btn-container btn-2'>
-              <Button block>清空</Button>
-              <Button type='primary' block>搜索</Button>
-            </div>
           </Fragment> : null
         }
       </div>
