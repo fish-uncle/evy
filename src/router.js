@@ -1,6 +1,7 @@
 import React from 'react';
 import {Router, Route, Switch} from 'dva/router';
 import routerConfig from './routerConfig';
+import NoMatch from './routes/Error404';
 
 function RouterConfig({history}) {
   return (
@@ -11,6 +12,7 @@ function RouterConfig({history}) {
             <Route path={value.path} exact={value.exact || true} component={value.component} key={index}/>
           ))
         }
+        <Route component={NoMatch}/>
       </Switch>
     </Router>
   );

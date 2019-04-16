@@ -56,7 +56,7 @@ module.exports = appInfo => {
     app: true,
     agent: false,
   };
-
   return config;
 };
+
 

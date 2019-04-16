@@ -6,6 +6,10 @@ import {
   AppRecovery,
   ModulePage,
   RolePage,
+  LoginPage,
+  Error403Page,
+  Error404Page,
+  Error500Page,
   // NewsPage
 } from './routes';
 
@@ -21,6 +25,22 @@ const routerConfig = [
   {
     path: '/',
     component: IndexPage,
+  },
+  {
+    path: '/login',
+    component: LoginPage,
+  },
+  {
+    path: '/403',
+    component: Error403Page,
+  },
+  {
+    path: '/404',
+    component: Error404Page,
+  },
+  {
+    path: '/500',
+    component: Error500Page,
   },
   {
     path: '/user',

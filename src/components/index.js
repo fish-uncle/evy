@@ -5,3 +5,5 @@ export {default as Modal} from './Modal';
 export {default as Sheet} from './Sheet';
 export {default as Drawer} from './Drawer';
 export {default as FormItem} from './FormItem';
+export {default as Login} from './Antd_Pro_Login/index.js';
+export {default as Exception} from './Antd_Pro_Exception/index.js';
