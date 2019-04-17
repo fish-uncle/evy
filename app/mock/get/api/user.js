@@ -11,6 +11,7 @@ module.exports = Mock.mock({
       'phone': /1\d{10}/,
       email: '@email',
       'role|1-2': 1,
+      'station|1-2': 1,
       remark: '@ctitle(10,20)',
       bank_address: '@ctitle(10,20)',
       native_address: '@ctitle(10,20)',

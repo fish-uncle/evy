@@ -3,19 +3,17 @@ import {connect} from 'dva';
 import {LeftActions, RouterActions, SheetActions} from '../../models';
 import {Body, Sheet, Drawer} from '../../components';
 import columns from './columns';
-import Detail from './detail';
-import Search from './search';
+import Right from './right';
 
 @connect((sheet, left) => ({...sheet, ...left}), {...RouterActions, ...SheetActions, ...LeftActions})
 export default class ModulePage extends Component {
 
   componentWillMount() {
-    this.props.sheet_set({columns: columns, rowKey: 'app_id'}); // 初始化 table 列表
-    this.props.sheet_url({listUrl: '/api/module'})
+    this.props.sheet_set({columns: columns, rowKey: 'module_id'}); // 初始化 table 列表
+    this.props.sheet_url({listUrl: '/api/module', recoveryUrl: '/module/recovery'})
   }
 
   componentDidMount() {
-    this.props.left_choose({title: '模块列表-xxx'});
   }
 
   render() {
@@ -23,8 +21,7 @@ export default class ModulePage extends Component {
       <Body>
       <Sheet/>
       <Drawer>
-        <Detail/>
-        <Search/>
+        <Right/>
       </Drawer>
       </Body>
     );

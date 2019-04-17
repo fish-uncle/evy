@@ -4,8 +4,8 @@ import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
-import {sex, toColumns, role} from '../../utils/select';
+import {POST} from "../../utils/request";
+import {env, toColumns} from '../../utils/select';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
@@ -39,25 +39,19 @@ class Operation extends Component {
 }
 
 const columns = [{
-  title: '工号',
-  key: 'employee_id',
+  title: '名称',
+  key: 'title',
 }, {
-  title: '姓名',
-  key: 'real_name',
+  title: '版本号',
+  key: 'version',
 }, {
-  title: '手机号',
-  key: 'phone',
+  title: '环境',
+  key: 'env',
+  render: item => toColumns(item.env, env),
 }, {
-  title: 'E-mail',
-  key: 'email',
-}, {
-  title: '角色',
-  key: 'role',
-  render: item => toColumns(item.role, role),
-}, {
-  title: '性别',
-  key: 'sex',
-  render: item => toColumns(item.sex, sex),
+  title: '上架状态',
+  key: 'release',
+  render: item => item.release ? '已上架' : '未上架',
 }, {
   title: '更新时间',
   width: 200,

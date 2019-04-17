@@ -20,10 +20,6 @@ class Operation extends Component {
     const {item} = this.props;
     return (
       <Fragment>
-        <Button className='mr-10' onClick={e => {
-          e.stopPropagation();
-          this.props.push(`/module/${item.app_id}`)
-        }}>模块列表</Button>
         <Button type="danger" onClick={e => {
           e.stopPropagation();
           this.deleteHandle(item)
@@ -40,16 +36,16 @@ const columns = [{
   title: '描述',
   key: 'description',
 }, {
-  title: '版本',
+  title: '版本号',
   key: 'version',
 }, {
   title: '更新时间',
-  width: 160,
+  width: 200,
   key: 'update_time',
   render: item => moment(item.update_time).format('YYYY-MM-DD HH:mm:ss'),
 }, {
   title: '操作',
-  width: 200,
+  width: 100,
   key: 'operation',
   render: (item) => <Operation item={item}/>,
 }];

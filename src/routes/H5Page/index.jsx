@@ -1,25 +1,28 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
 import {LeftActions, RouterActions, SheetActions} from '../../models';
-import {Body, Sheet} from '../../components';
+import {Body, Sheet, Drawer} from '../../components';
 import columns from './columns';
+import Right from './right';
 
 @connect((sheet, left) => ({...sheet, ...left}), {...RouterActions, ...SheetActions, ...LeftActions})
-export default class AppRecovery extends Component {
+export default class ModulePage extends Component {
 
   componentWillMount() {
-    this.props.sheet_set({columns: columns, rowKey: 'app_id'}); // 初始化 table 列表
-    this.props.sheet_url({listUrl: '/api/app'})
+    this.props.sheet_set({columns: columns, rowKey: 'h5_id'}); // 初始化 table 列表
+    this.props.sheet_url({listUrl: '/api/h5', recoveryUrl: '/h5/recovery'})
   }
 
   componentDidMount() {
-
   }
 
   render() {
     return (
       <Body>
-      <Sheet hasAddBtn={false} hasRecoveryBtn={false} hasExportBtn={false} click={false}/>
+      <Sheet/>
+      <Drawer>
+        <Right/>
+      </Drawer>
       </Body>
     );
   }

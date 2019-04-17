@@ -39,6 +39,7 @@ export default {
     insertUrl: '',
     updateUrl: '',
     deleteUrl: '',
+    importUrl: ''
   },
 
   subscriptions: {},
@@ -102,8 +103,8 @@ export default {
       return {...state, page};
     },
     sheet_url(state, {payload}) {
-      const {listUrl, insertUrl, updateUrl, deleteUrl, exportUrl, recoveryUrl, recoverUrl} = payload;
-      return {...state, listUrl, insertUrl, updateUrl, deleteUrl, exportUrl, recoveryUrl, recoverUrl};
+      const {listUrl, insertUrl, updateUrl, deleteUrl, exportUrl, recoveryUrl, recoverUrl, importUrl} = payload;
+      return {...state, listUrl, insertUrl, updateUrl, deleteUrl, exportUrl, recoveryUrl, recoverUrl, importUrl};
     },
   },
 

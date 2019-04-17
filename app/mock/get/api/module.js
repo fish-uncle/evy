@@ -4,8 +4,9 @@ module.exports = Mock.mock({
   code: 200,
   data: {
     'list|10': [{
-      app_id: '@guid',
+      module_id: '@guid',
       cn_title: '@cname',
+      app: 'EVY iOS',
       en_title: '@name',
       release: '@boolean',
       description: '@ctitle(10,20)',

@@ -6,12 +6,12 @@ const format = require('date-fns/format');
 
 class MenuCenterService extends Service {
 
-  async listOrRecovery(page,type) {
+  async listOrRecovery(page, type) {
     const {mysql} = this.app;
     return await mysql.select('evy-user', {
       where: {'soft_delete': type,},
-      columns: ['user_id', 'employee_id', 'sex', 'pay', 'phone', 'email', 'role',
-        'remark', 'bank_address', 'native_address', 'bank_card', 'real_name',
+      columns: ['user_id', 'employee_id', 'sex', 'pay', 'phone', 'email', 'role', 'station',
+        'remark', 'bank_address', 'native_address', 'bank_card', 'real_name', 'type',
         'birth_time', 'join_time', 'nation', 'marriage', 'avatar', 'update_time'
       ],
       limit: 10,    // 返回数据量
@@ -20,7 +20,7 @@ class MenuCenterService extends Service {
     });
   }
 
-  async delOrRecover(options,type) {
+  async delOrRecover(options, type) {
     let {user_id} = options;
     const {mysql} = this.app;
     return await mysql.update('evy-user', {'soft_delete': type}, {
@@ -36,7 +36,7 @@ class MenuCenterService extends Service {
   }
 
   async insert(options) {
-    let {bank_address, bank_card, birth_time, email, employee_id, join_time, marriage, nation, pay, phone, real_name, remark, role, sex} = options;
+    let {bank_address, bank_card, birth_time, email, employee_id, join_time, marriage, nation, pay, phone, real_name, remark, role, sex, station} = options;
     const {mysql} = this.app;
     birth_time = format(birth_time, 'YYYY-MM-DD HH:mm:ss');
     join_time = format(join_time, 'YYYY-MM-DD HH:mm:ss');
@@ -54,6 +54,7 @@ class MenuCenterService extends Service {
         employee_id,
         marriage,
         nation,
+        station,
         pay,
         phone,
         real_name,
@@ -64,8 +65,18 @@ class MenuCenterService extends Service {
     );
   }
 
+  async adminSet(options, type) {
+    let {user_id} = options;
+    const {mysql} = this.app;
+    return await mysql.update('evy-user', {'type': type}, {
+      where: {
+        user_id
+      }
+    });
+  }
+
   async update(options) {
-    let {user_id, bank_address, bank_card, birth_time, email, employee_id, join_time, marriage, nation, pay, phone, real_name, remark, role, sex} = options;
+    let {user_id, bank_address, bank_card, birth_time, email, employee_id, join_time, marriage, nation, pay, phone, real_name, remark, role, sex, station} = options;
     const {mysql} = this.app;
     birth_time = format(birth_time, 'YYYY-MM-DD HH:mm:ss');
     join_time = format(join_time, 'YYYY-MM-DD HH:mm:ss');
@@ -81,6 +92,7 @@ class MenuCenterService extends Service {
         employee_id,
         marriage,
         nation,
+        station,
         pay,
         phone,
         real_name,

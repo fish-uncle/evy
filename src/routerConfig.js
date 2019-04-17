@@ -10,6 +10,11 @@ import {
   Error403Page,
   Error404Page,
   Error500Page,
+  ModuleRecovery,
+  MenuPage,
+  MenuRecovery,
+  H5Page,
+  H5Recovery
   // NewsPage
 } from './routes';
 
@@ -63,8 +68,28 @@ const routerConfig = [
     component: AppRecovery,
   },
   {
-    path: '/module/:app_id',
+    path: '/module',
     component: ModulePage,
+  },
+  {
+    path: '/menu',
+    component: MenuPage,
+  },
+  {
+    path: '/menu/recovery',
+    component: MenuRecovery,
+  },
+  {
+    path: '/module/recovery',
+    component: ModuleRecovery,
+  },
+  {
+    path: '/h5',
+    component: H5Page,
+  },
+  {
+    path: '/h5/recovery',
+    component: H5Recovery,
   },
   // {
   //   path: '/news',

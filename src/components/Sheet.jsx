@@ -75,34 +75,65 @@ export default class Sheet extends React.Component {
     this.props.left_choose({title: `${breadcrumb}-回收站`});
   };
 
+  importHandle = () => {
+
+  };
+
   componentDidMount() {
     this.props.sheet_load();
   }
 
   render() {
-    const {sheet, button = 'show'} = this.props;
-    const {dataSource, loading, page, buttonEvent, columns, rowKey, exportUrl, recoveryUrl} = sheet;
+    const {sheet, button = 'show', hasAddBtn = true, hasSearchBtn = true, hasExportBtn = true, hasRecoveryBtn = true, hasImportBtn = false, click = true} = this.props;
+    const {dataSource, loading, page, buttonEvent, columns, rowKey, exportUrl, recoveryUrl, importUrl} = sheet;
+    let span = 8, buttonLength = 0;
+    hasAddBtn ? buttonLength++ : void 0;
+    hasSearchBtn ? buttonLength++ : void 0;
+    hasExportBtn ? buttonLength++ : void 0;
+    hasImportBtn ? buttonLength++ : void 0;
+    hasRecoveryBtn ? buttonLength++ : void 0;
+    buttonLength === 1 ? span = 24 : void 0;
+    buttonLength === 2 ? span = 12 : void 0;
+    buttonLength === 4 ? span = 6 : void 0;
+    buttonLength === 5 ? span = 4 : void 0;
     return (
       <Fragment>
         <Row className='fun-container'>
-          <Col span={6} style={{paddingRight: '5px', height: '44px'}}>
-            <Button icon="edit" type="primary" block onClick={this.insertHandle}
-                    disabled={button === 'show' ? false : true}>新增</Button>
-          </Col>
-          <Col span={6} style={{padding: '0 5px'}}>
-            <Button icon="search" type="primary" block
-                    disabled={button === 'show' ? false : true}
-                    onClick={this.searchHandle}>搜索</Button>
-          </Col>
-          <Col span={6} style={{padding: '0 5px'}}>
-            <Button icon="bar-chart" type="primary" block
-                    disabled={button === 'show' ? exportUrl ? false : true : true}
-                    onClick={this.exportHandle}>导出</Button>
-          </Col>
-          <Col span={6} style={{paddingLeft: '5px'}}>
-            <Button icon="delete" type="primary" block disabled={button === 'show' ? recoveryUrl ? false : true : true}
-                    onClick={this.recoveryHandle}>回收站</Button>
-          </Col>
+
+          {
+            hasAddBtn && <Col span={span} style={{paddingRight: '5px', height: '44px'}}>
+              <Button icon="edit" type="primary" block onClick={this.insertHandle}
+                      disabled={button === 'show' ? false : true}>新增</Button>
+            </Col>
+          }
+          {
+            hasSearchBtn && <Col span={span} style={{padding: '0 5px'}}>
+              <Button icon="search" type="primary" block
+                      disabled={button === 'show' ? false : true}
+                      onClick={this.searchHandle}>搜索</Button>
+            </Col>
+          }
+          {
+            hasExportBtn && <Col span={span} style={{padding: '0 5px'}}>
+              <Button icon="bar-chart" type="primary" block
+                      disabled={button === 'show' ? exportUrl ? false : true : true}
+                      onClick={this.exportHandle}>导出</Button>
+            </Col>
+          }
+          {
+            hasRecoveryBtn && <Col span={span} style={{paddingLeft: '5px'}}>
+              <Button icon="delete" type="primary" block
+                      disabled={button === 'show' ? recoveryUrl ? false : true : true}
+                      onClick={this.recoveryHandle}>回收站</Button>
+            </Col>
+          }
+          {
+            hasImportBtn && <Col span={span} style={{padding: '0 5px'}}>
+              <Button icon="file-excel" type="primary" block
+                      disabled={button === 'show' ? importUrl ? false : true : true}
+                      onClick={this.importHandle}>导入</Button>
+            </Col>
+          }
         </Row>
         <Divider dashed={true}/>
         <Table rowKey={rowKey}
@@ -111,7 +142,7 @@ export default class Sheet extends React.Component {
                onRow={(record) => {
                  return {
                    onClick: (event) => {
-                     buttonEvent.detail(record, event)
+                     click ? buttonEvent.detail(record, event) : void 0
                    },
                    onDoubleClick: (event) => {
                    },

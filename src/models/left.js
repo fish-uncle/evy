@@ -19,7 +19,7 @@ export default {
     * left_load({payload, callback}, {call, put}) {
       try {
         const result = yield call(_ => {
-          return GET('/api/menu/list')
+          return GET('/api/menu/auth')
         });
         yield put({
           type: 'r_left_load',

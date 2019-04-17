@@ -1,26 +1,18 @@
 import React, {Component, Fragment} from 'react';
 import moment from "moment";
-import {Button, Modal, notification} from "antd";
+import {Button, Modal} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
-import {sex, toColumns, station, boolean} from '../../utils/select';
+import {env, toColumns} from "../../utils/select";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
   deleteHandle = item => {
-    const {sheet} = this.props;
     Modal.confirm({
       content: '确认是否删除？',
       onOk: () => {
-        try {
-          POST(sheet.deleteUrl, item);
-          this.props.sheet_load();
-          notification.success({message: '提示', description: '删除成功'});
-        } catch (e) {
-          notification.success({message: '提示', description: '删除失败'});
-        }
+        console.log(item)
       }
     })
   };
@@ -39,29 +31,19 @@ class Operation extends Component {
 }
 
 const columns = [{
-  title: '工号',
-  key: 'employee_id',
+  title: '名称',
+  key: 'title',
 }, {
-  title: '姓名',
-  key: 'real_name',
+  title: '版本号',
+  key: 'version',
 }, {
-  title: '手机号',
-  key: 'phone',
+  title: '环境',
+  key: 'env',
+  render: item => toColumns(item.env, env),
 }, {
-  title: '管理员',
-  key: 'type',
-  render: item => toColumns(item.type, boolean),
-}, {
-  title: 'E-mail',
-  key: 'email',
-}, {
-  title: '角色',
-  key: 'station',
-  render: item => toColumns(item.station, station),
-}, {
-  title: '性别',
-  key: 'sex',
-  render: item => toColumns(item.sex, sex),
+  title: '上架状态',
+  key: 'release',
+  render: item => item.release ? '已上架' : '未上架',
 }, {
   title: '更新时间',
   width: 200,

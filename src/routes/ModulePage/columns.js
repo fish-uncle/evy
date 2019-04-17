@@ -36,12 +36,15 @@ const columns = [{
   title: '描述',
   key: 'description',
 }, {
-  title: '描述',
+  title: '所属应用',
+  key: 'app',
+}, {
+  title: '上架状态',
   key: 'release',
   render: item => item.release ? '已上架' : '未上架',
 }, {
   title: '更新时间',
-  width: 160,
+  width: 200,
   key: 'update_time',
   render: item => moment(item.update_time).format('YYYY-MM-DD HH:mm:ss'),
 }, {

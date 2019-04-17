@@ -50,6 +50,31 @@ export const ModulePage = dynamic({
   component: () => import('./ModulePage')
 });
 
+// 模块列表回收站
+export const ModuleRecovery = dynamic({
+  component: () => import('./ModuleRecovery')
+});
+
+// 菜单列表
+export const MenuPage = dynamic({
+  component: () => import('./MenuPage')
+});
+
+// 菜单列表回收站
+export const MenuRecovery = dynamic({
+  component: () => import('./MenuRecovery')
+});
+
+// H5列表
+export const H5Page = dynamic({
+  component: () => import('./H5Page')
+});
+
+// H5列表回收站
+export const H5Recovery = dynamic({
+  component: () => import('./H5Recovery')
+});
+
 // 角色管理
 export const RolePage = dynamic({
   component: () => import('./RolePage')
