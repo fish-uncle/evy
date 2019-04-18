@@ -45,6 +45,29 @@ export default {
   subscriptions: {},
 
   effects: {
+    * sheet_page({payload, callback}, {call, put, select}) {
+      try {
+        const sheet = yield select(state => state.sheet);
+        const {page} = payload;
+        const {listUrl, search, loadCallback} = sheet;
+        let param = {pageNum: page.current, pageSize: 10};
+        param = Object.assign({}, search, param);
+        const result = yield call(_ => {
+          return GET(listUrl, param)
+        });
+        yield put({
+          type: 'r_sheet_page',
+          payload: page
+        });
+        yield put({
+          type: 'r_sheet_load',
+          payload: result
+        });
+        loadCallback(result);
+      } catch (e) {
+        console.error('sheet_load报错了： ', e);
+      }
+    },
     * sheet_load({payload, callback}, {call, put, select}) {
       try {
         const sheet = yield select(state => state.sheet);
@@ -98,7 +121,7 @@ export default {
 
       return {...state, buttonEvent};
     },
-    sheet_page(state, {payload = {}}) {
+    r_sheet_page(state, {payload = {}}) {
       let page = Object.assign({}, state.page, payload);
       return {...state, page};
     },

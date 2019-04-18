@@ -10,7 +10,7 @@ export default class AppRecovery extends Component {
 
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'app_id'}); // 初始化 table 列表
-    this.props.sheet_url({listUrl: '/api/app'})
+    this.props.sheet_url({listUrl: '/api/application/recovery', recoverUrl: '/api/application/recover'})
   }
 
   componentDidMount() {

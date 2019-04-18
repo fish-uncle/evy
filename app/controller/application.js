@@ -2,42 +2,16 @@
 
 const Controller = require('egg').Controller;
 
-class MenuController extends Controller {
-
-  async auth() {
-    const ctx = this.ctx;
-    const {menu} = ctx.service;
-    let result;
-    try {
-      result = await menu.auth();
-    } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
-    }
-    ctx.body = ctx.json.success({data: {list: result}});
-  }
-
-  async all() {
-    const ctx = this.ctx;
-    const {menu} = ctx.service;
-    let result;
-    try {
-      result = await menu.all();
-    } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
-    }
-    ctx.body = ctx.json.success({data: {list: result}});
-  }
+class ApplicationController extends Controller {
 
   async list() {
     const ctx = this.ctx;
-    const {menu} = ctx.service;
+    const {application} = ctx.service;
     const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await menu.listOrRecovery(pageNum, 1);
-      total = await menu.count();
+      result = await application.listOrRecovery(pageNum, 1);
+      total = await application.count();
     } catch (err) {
       console.log(err);
       result = ctx.json.error();
@@ -47,12 +21,12 @@ class MenuController extends Controller {
 
   async recovery() {
     const ctx = this.ctx;
-    const {menu} = ctx.service;
+    const {application} = ctx.service;
     const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await menu.listOrRecovery(pageNum, 2);
-      total = await menu.count();
+      result = await application.listOrRecovery(pageNum, 2);
+      total = await application.count();
       ctx.body = ctx.json.success({data: {list: result, total: total}});
     } catch (err) {
       console.log(err);
@@ -62,9 +36,9 @@ class MenuController extends Controller {
 
   async insert() {
     const ctx = this.ctx;
-    const {menu} = ctx.service;
+    const {application} = ctx.service;
     try {
-      await menu.insert(ctx.request.body);
+      await application.insert(ctx.request.body);
       ctx.body = ctx.json.success({msg: '添加成功'});
     } catch (err) {
       console.log(err);
@@ -74,9 +48,9 @@ class MenuController extends Controller {
 
   async update() {
     const ctx = this.ctx;
-    const {menu} = ctx.service;
+    const {application} = ctx.service;
     try {
-      await menu.update(ctx.request.body);
+      await application.update(ctx.request.body);
       ctx.body = ctx.json.success({msg: '更新成功'});
     } catch (err) {
       console.log(err);
@@ -86,9 +60,9 @@ class MenuController extends Controller {
 
   async del() {
     const ctx = this.ctx;
-    const {menu} = ctx.service;
+    const {application} = ctx.service;
     try {
-      await menu.delOrRecover(ctx.request.body, 2);
+      await application.delOrRecover(ctx.request.body, 2);
       ctx.body = ctx.json.success({msg: '删除成功'});
     } catch (err) {
       console.log(err);
@@ -98,9 +72,9 @@ class MenuController extends Controller {
 
   async recover() {
     const ctx = this.ctx;
-    const {menu} = ctx.service;
+    const {application} = ctx.service;
     try {
-      await menu.delOrRecover(ctx.request.body, 1);
+      await application.delOrRecover(ctx.request.body, 1);
       ctx.body = ctx.json.success({msg: '恢复成功'});
     } catch (err) {
       console.log(err);
@@ -110,4 +84,4 @@ class MenuController extends Controller {
 
 }
 
-module.exports = MenuController;
+module.exports = ApplicationController;

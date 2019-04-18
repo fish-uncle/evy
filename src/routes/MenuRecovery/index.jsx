@@ -10,7 +10,7 @@ export default class RolePage extends Component {
 
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'menu_id'}); // 初始化 table 列表
-    this.props.sheet_url({listUrl: '/api/menu/list'})
+    this.props.sheet_url({listUrl: '/api/menu/recovery', recoverUrl: '/api/menu/recover'})
   }
 
   componentDidMount() {

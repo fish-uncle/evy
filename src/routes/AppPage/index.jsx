@@ -10,7 +10,13 @@ export default class AppPage extends Component {
 
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'app_id'}); // 初始化 table 列表
-    this.props.sheet_url({listUrl: '/api/app', exportUrl: '/api/export/app', recoveryUrl: '/app/recovery'})
+    this.props.sheet_url({
+      listUrl: '/api/application/list',
+      insertUrl: '/api/application/insert',
+      deleteUrl: '/api/application/delete',
+      updateUrl: '/api/application/update',
+      recoveryUrl: '/app/recovery'
+    })
   }
 
   componentDidMount() {
@@ -19,7 +25,7 @@ export default class AppPage extends Component {
   render() {
     return (
       <Body>
-      <Sheet/>
+      <Sheet hasExportBtn={false}/>
       <Drawer>
         <Right/>
       </Drawer>

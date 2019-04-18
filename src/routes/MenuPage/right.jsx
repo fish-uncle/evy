@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react';
 import {connect} from 'dva';
 import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
-import {Button, Form} from 'antd';
+import {Form} from 'antd';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Right extends Component {
@@ -13,7 +13,7 @@ class Right extends Component {
   }
 
   render() {
-    const {sheet} = this.props;
+    const {sheet, nexusList} = this.props;
     const {drawerType, search} = sheet;
     return (
       <Fragment>
@@ -24,10 +24,12 @@ class Right extends Component {
                       defaultValue={1}/>
             <FormItem label="链接地址" title='url' required={false}/>
             <FormItem label="排序" title='sort' required={false}/>
+            <FormItem label="所属父级菜单" title='nexus' required={false} type='select' select={nexusList}
+                      defaultValue={null}/>
             <FormItem label="图标" title='icon' required={false}/>
             <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
             <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
-            <FormItem title='role_id' type='hidden'/>
+            <FormItem title='menu_id' type='hidden' required={false}/>
           </Fragment> : null
         }
         {

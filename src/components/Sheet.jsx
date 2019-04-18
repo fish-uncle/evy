@@ -64,7 +64,6 @@ export default class Sheet extends React.Component {
 
   pageChangeHandle = (page, pageSize) => {
     this.props.sheet_page({page: {current: page, total: pageSize}});
-    this.props.sheet_load();
   };
 
   recoveryHandle = () => {

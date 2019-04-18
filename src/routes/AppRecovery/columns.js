@@ -14,9 +14,10 @@ class Operation extends Component {
       content: '确认是否恢复？',
       onOk: () => {
         try {
-          POST(sheet.recoverUrl, item);
-          this.props.sheet_load();
-          notification.success({message: '提示', description: '恢复成功'});
+          POST(sheet.recoverUrl, item).then(() => {
+            this.props.sheet_load();
+            notification.success({message: '提示', description: '恢复成功'});
+          });
         } catch (e) {
           notification.success({message: '提示', description: '恢复失败'});
         }

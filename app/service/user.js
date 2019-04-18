@@ -4,7 +4,7 @@ const Service = require('egg').Service;
 const uuid = require('uuid/v4');
 const format = require('date-fns/format');
 
-class MenuCenterService extends Service {
+class UserService extends Service {
 
   async listOrRecovery(page, type) {
     const {mysql} = this.app;
@@ -109,4 +109,4 @@ class MenuCenterService extends Service {
 
 }
 
-module.exports = MenuCenterService;
+module.exports = UserService;

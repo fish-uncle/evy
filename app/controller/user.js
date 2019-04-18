@@ -2,7 +2,7 @@
 
 const Controller = require('egg').Controller;
 
-class MenuController extends Controller {
+class UserController extends Controller {
 
   async list() {
     const ctx = this.ctx;
@@ -109,4 +109,4 @@ class MenuController extends Controller {
 
 }
 
-module.exports = MenuController;
+module.exports = UserController;

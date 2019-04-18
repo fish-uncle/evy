@@ -12,14 +12,14 @@ class Operation extends Component {
   deleteHandle = item => {
     const {sheet} = this.props;
     Modal.confirm({
-      content: '确认是否删除？',
+      content: '确认是否恢复？',
       onOk: () => {
         try {
-          POST(sheet.deleteUrl, item);
+          POST(sheet.recoverUrl, item);
           this.props.sheet_load();
-          notification.success({message: '提示', description: '删除成功'});
+          notification.success({message: '提示', description: '恢复成功'});
         } catch (e) {
-          notification.success({message: '提示', description: '删除失败'});
+          notification.success({message: '提示', description: '恢复失败'});
         }
       }
     })
@@ -29,10 +29,10 @@ class Operation extends Component {
     const {item} = this.props;
     return (
       <Fragment>
-        <Button type="danger" onClick={e => {
+        <Button onClick={e => {
           e.stopPropagation();
-          this.deleteHandle(item)
-        }}>删除</Button>
+          this.recoverHandle(item)
+        }}>恢复</Button>
       </Fragment>
     )
   }
