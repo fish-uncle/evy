@@ -75,6 +75,11 @@ export const H5Recovery = dynamic({
   component: () => import('./H5Recovery')
 });
 
+// Example列表
+export const ExamplePage = dynamic({
+  component: () => import('./ExamplePage')
+});
+
 // 角色管理
 export const RolePage = dynamic({
   component: () => import('./RolePage')

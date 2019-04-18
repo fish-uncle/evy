@@ -19,21 +19,6 @@ class Right extends Component {
     return (
       <Fragment>
         {
-          drawerType === 'insert' || drawerType === 'detail' ?
-            <Fragment>
-              <FormItem label="名称" title='name'/>
-              <FormItem label="网页标题" title='title'/>
-              <FormItem label="版本号" title='version'/>
-              <FormItem label="是否上架" title='release' type='switch'/>
-              <FormItem label="环境" title='env' type='select' select={env}/>
-              <FormItem label="js" title='js_url' type='textarea'/>
-              <FormItem label="css" title='css_url' type='textarea'/>
-              <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
-              <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
-              <FormItem title='module_id' type='hidden'/>
-            </Fragment> : null
-        }
-        {
           drawerType === 'search' ? <Fragment>
             <FormItem label="名称" title='name' required={false} defaultValue={search.name}/>
             <FormItem label="网页标题" title='title' required={false} defaultValue={search.title}/>

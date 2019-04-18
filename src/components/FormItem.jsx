@@ -148,9 +148,10 @@ export default class _Modal extends Component {
         type === 'color' ?
           <FormItem label={label} className={className} style={style}>
             <div className={`color-picker-container pos-r ${displayColorPicker ? 'active' : ''}`}>
-              <div className="color-picker-current" style={{background: value}} onClick={this.handleClickColorPicker}/>
+              <div className="color-picker-current" style={{background: value || '#000'}}
+                   onClick={this.handleClickColorPicker}/>
               <div className="color-picker pos-a z-index-9">
-                {displayColorPicker ? <ChromePicker color={value} onChange={this.colorChangeHandel}/> : null}
+                {displayColorPicker ? <ChromePicker color={value || '#000'} onChange={this.colorChangeHandel}/> : null}
               </div>
             </div>
 

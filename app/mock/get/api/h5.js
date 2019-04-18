@@ -6,6 +6,7 @@ module.exports = Mock.mock({
     'list|10': [{
       h5_id: '@guid',
       title: '@cname',
+      name: '@cname',
       release: '@boolean',
       env: 'test',
       js_url: ['yy.js', 'xx.js'],

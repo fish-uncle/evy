@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
 import {LeftActions, RouterActions, SheetActions} from '../../models';
-import {Body, Sheet} from '../../components';
+import {Body, Drawer, Sheet} from '../../components';
 import columns from './columns';
+import Right from "../AppPage/right";
 
 @connect((sheet, left) => ({...sheet, ...left}), {...RouterActions, ...SheetActions, ...LeftActions})
 export default class AppRecovery extends Component {
@@ -20,6 +21,9 @@ export default class AppRecovery extends Component {
     return (
       <Body>
       <Sheet hasAddBtn={false} hasRecoveryBtn={false} hasExportBtn={false} click={false}/>
+      <Drawer>
+        <Right/>
+      </Drawer>
       </Body>
     );
   }

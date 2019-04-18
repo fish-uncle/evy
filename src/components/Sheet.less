@@ -1,26 +1,28 @@
+@import '~antd/lib/style/themes/default.less';
+
 .ant-table-body {
   .ant-btn {
     height: 24px;
   }
 
   .ant-btn {
-    color: #40a9ff;
-    border-color: #40a9ff;
+    color: @primary-5;
+    border-color: @primary-5;
 
     &:hover {
       color: #fff;
-      background-color: #40a9ff;
+      background-color: @primary-5;
     }
   }
 
   .ant-btn-danger {
-    color: #ff4d4f;
+    color: @btn-danger-color;
     background-color: #fff;
-    border-color: #ff4d4f;
+    border-color: @btn-danger-color;
 
     &:hover {
       color: #fff;
-      background-color: #ff4d4f;
+      background-color: @btn-danger-color;
     }
   }
 }
@@ -28,5 +30,11 @@
 .fun-container {
   .ant-btn {
     height: 44px;
+  }
+}
+
+.ant-table-tbody {
+  img {
+    max-height: 20px;
   }
 }

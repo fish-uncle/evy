@@ -10,6 +10,8 @@ INSERT INTO `evy-menu` VALUES (9, 'a8039d68-53a8-459d-8874-88191a1ec14f', '关�
 INSERT INTO `evy-menu` VALUES (10, 'd3ed276e-dce4-4dbc-8487-5bb9047deb8a', '菜单列表', 'database', '/menu', 1, 6, '419d6315-10b8-4ef8-a170-9da4a26c663e', 1, '2019-04-17 14:24:00', '2019-04-17 14:24:03', NULL);
 INSERT INTO `evy-menu` VALUES (11, '419d6315-10b8-4ef8-a170-9da4a26c663e', '系统设置', 'setting', '', 1, 6, NULL, 1, '2019-04-17 14:24:00', '2019-04-17 14:24:03', NULL);
 INSERT INTO `evy-menu` VALUES (12, 'a2e494bf-ee3e-4e06-8427-7c5ee2f07289', '应用管理', 'apple', '', 1, 3, NULL, 1, '2019-04-17 14:24:00', '2019-04-17 14:24:03', NULL);
+INSERT INTO `evy-menu` VALUES (13, 'e44e156c-3fce-4076-a74a-6ce51a92c869', 'H5列表', 'apple', '/h5', 1, 3, 'a2e494bf-ee3e-4e06-8427-7c5ee2f07289', 1, '2019-04-17 14:24:00', '2019-04-17 14:24:03', NULL);
+INSERT INTO `evy-menu` VALUES (14, 'c118f311-c956-4fd3-a0c9-059c162fdcd2', 'Example', 'book', '/example', 1, 5, 'bb49372a-c137-478f-9cc6-72f7b9c366d0', 1, '2019-04-18 14:24:00', '2019-04-18 14:24:03', NULL);
 
 INSERT INTO `evy-user` VALUES (1, 'd3e934a2-df71-4673-be53-fb1ac7b8dfb8', 'T0001', '', '', NULL, NULL, '张三', '2', '3420', '0', '1', 1, 1, '2009-03-22 17:58:39', '2019-03-22 17:58:07', '汉族', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '13964445123', NULL, NULL, NULL, '1', NULL, 1, '2019-03-22 16:54:31', '2019-03-22 18:35:13', NULL);
 INSERT INTO `evy-user` VALUES (2, 'c7d9dcbe-5c67-4c7c-a0ce-513e6b45dba7', 'T0002', '', '', NULL, NULL, '赵武', '2', '3200', '0', '1', 1, 1, '2004-03-22 17:58:46', '2019-03-22 17:58:05', '汉族', '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1@163.com', '15367945313', NULL, NULL, NULL, '1', NULL, 1, '2019-03-22 17:53:54', '2019-03-22 18:29:34', NULL);

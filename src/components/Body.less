@@ -1,3 +1,5 @@
+@import '~antd/lib/style/themes/default.less';
+
 .body-header {
   background: #fff;
   padding: 0;
@@ -23,7 +25,7 @@
 
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #40a9ff;
+    background: @primary-5;
   }
 
   &::-webkit-scrollbar-track {
@@ -62,12 +64,12 @@
   transition: color .3s;
 
   &:hover {
-    color: #1890ff;
+    color: @primary-color;
   }
 }
 
 .logo {
   height: 64px;
-  background-color: #002140;
+  background-color: @layout-trigger-background;
   background-size: 200px 64px;
 }

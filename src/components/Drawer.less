@@ -1,3 +1,5 @@
+@import '~antd/lib/style/themes/default.less';
+
 .detail-container {
   .ant-form-item {
     margin-bottom: 0;
@@ -21,20 +23,20 @@
 
   .ant-btn {
     margin-top: 20px;
-    color: #40a9ff;
-    border-color: #40a9ff;
+    color: @primary-5;
+    border-color: @primary-5;
 
     &:hover {
-      background-color: rgba(64, 169, 255, 0.2);
+      background-color: fade(@primary-5, 10%);
     }
   }
 
   .ant-btn-primary {
     color: #fff;
-    background-color: #1890ff;
+    background-color: @primary-5;
 
     &:hover {
-      background-color: #40a9ff;
+      background-color: @primary-5;
     }
   }
 
@@ -51,6 +53,7 @@
       height: 124px;
     }
   }
+
   .color-picker-container {
     padding: 5px;
     background: #fff;
@@ -60,11 +63,11 @@
     transition: all .3s;
 
     &.active {
-      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+      box-shadow: @btn-shadow;
     }
 
     &:hover, &.active {
-      border-color: #40a9ff;
+      border-color: @primary-5;
     }
 
     .color-picker-current {
@@ -94,6 +97,7 @@
       margin-top: 9px;
     }
   }
+
   .avatar-container {
     display: flex;
     flex-direction: row;
@@ -132,7 +136,7 @@
 
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #40a9ff;
+    background: @primary-5;
   }
 
   &::-webkit-scrollbar-track {

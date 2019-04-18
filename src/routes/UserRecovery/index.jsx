@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'dva';
 import {RouterActions, SheetActions} from '../../models';
-import {Body, Sheet} from '../../components';
+import {Body, Drawer, Sheet} from '../../components';
 import columns from './columns';
+import Right from "../UserPage/right";
 
 @connect((sheet) => ({...sheet}), {...RouterActions, ...SheetActions})
 export default class UserPage extends Component {
@@ -22,6 +23,9 @@ export default class UserPage extends Component {
     return (
       <Body>
       <Sheet hasAddBtn={false} hasRecoveryBtn={false} hasExportBtn={false} click={false}/>
+      <Drawer>
+        <Right/>
+      </Drawer>
       </Body>
     );
   }

@@ -14,7 +14,8 @@ import {
   MenuPage,
   MenuRecovery,
   H5Page,
-  H5Recovery
+  H5Recovery,
+  ExamplePage
   // NewsPage
 } from './routes';
 
@@ -90,6 +91,10 @@ const routerConfig = [
   {
     path: '/h5/recovery',
     component: H5Recovery,
+  },
+  {
+    path: '/example',
+    component: ExamplePage,
   },
   // {
   //   path: '/news',

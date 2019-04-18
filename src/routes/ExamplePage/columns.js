@@ -1,18 +1,25 @@
 import React, {Component, Fragment} from 'react';
 import moment from "moment";
-import {Button, Modal} from "antd";
+import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-import {env, toColumns} from "../../utils/select";
+import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
   deleteHandle = item => {
+    const {sheet} = this.props;
     Modal.confirm({
       content: '确认是否删除？',
       onOk: () => {
-        console.log(item)
+        try {
+          POST(sheet.deleteUrl, item);
+          this.props.sheet_load();
+          notification.success({message: '提示', description: '删除成功'});
+        } catch (e) {
+          notification.success({message: '提示', description: '删除失败'});
+        }
       }
     })
   };
@@ -31,22 +38,20 @@ class Operation extends Component {
 }
 
 const columns = [{
-  title: '名称',
-  key: 'name',
+  title: '编号',
+  key: 'id',
 }, {
-  title: '网页标题',
-  key: 'title',
+  title: '字段一',
+  key: 'field1',
 }, {
-  title: '版本号',
-  key: 'version',
+  title: '字段二',
+  key: 'field2',
 }, {
-  title: '环境',
-  key: 'env',
-  render: item => toColumns(item.env, env),
+  title: '字段三',
+  key: 'field3',
 }, {
-  title: '上架状态',
-  key: 'release',
-  render: item => item.release ? '已上架' : '未上架',
+  title: '字段四',
+  key: 'field4',
 }, {
   title: '更新时间',
   width: 200,

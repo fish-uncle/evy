@@ -5,21 +5,21 @@ import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
 import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
-import {sex, toColumns, role} from '../../utils/select';
+import {sex, toColumns, station, boolean} from '../../utils/select';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
-  recoverHandle = item => {
+  deleteHandle = item => {
     const {sheet} = this.props;
     Modal.confirm({
-      content: '确认是否恢复？',
+      content: '确认是否删除？',
       onOk: () => {
         try {
-          POST(sheet.recoverUrl, item);
+          POST(sheet.deleteUrl, item);
           this.props.sheet_load();
-          notification.success({message: '提示', description: '恢复成功'});
+          notification.success({message: '提示', description: '删除成功'});
         } catch (e) {
-          notification.success({message: '提示', description: '恢复失败'});
+          notification.success({message: '提示', description: '删除失败'});
         }
       }
     })
@@ -29,10 +29,10 @@ class Operation extends Component {
     const {item} = this.props;
     return (
       <Fragment>
-        <Button onClick={e => {
+        <Button type="danger" onClick={e => {
           e.stopPropagation();
-          this.recoverHandle(item)
-        }}>恢复</Button>
+          this.deleteHandle(item)
+        }}>删除</Button>
       </Fragment>
     )
   }
@@ -48,12 +48,16 @@ const columns = [{
   title: '手机号',
   key: 'phone',
 }, {
+  title: '管理员',
+  key: 'type',
+  render: item => toColumns(item.type, boolean),
+}, {
   title: 'E-mail',
   key: 'email',
 }, {
   title: '角色',
-  key: 'role',
-  render: item => toColumns(item.role, role),
+  key: 'station',
+  render: item => toColumns(item.station, station),
 }, {
   title: '性别',
   key: 'sex',

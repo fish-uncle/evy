@@ -1,14 +1,16 @@
 import path from 'path';
-import pkg from './package';
 
 const publicPath = `/`;
 export default {
+  theme: {
+    "primary-color": "#1DA57A",
+  },
   define: {
     'process.env.NODE_ENV': process.env.NODE_ENV,
   },
   entry: {
     index: './src/index.js',
-    vendor: ['dva', 'react-dom', 'react', 'styled-components', 'antd']
+    vendor: ['dva', 'react-dom', 'react', 'antd']
   },
   outputPath: path.resolve(__dirname, 'app', 'public'),
   commons: [
