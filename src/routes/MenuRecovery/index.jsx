@@ -6,7 +6,7 @@ import columns from './columns';
 import Right from "../MenuPage/right";
 
 @connect((sheet) => ({...sheet}), {...RouterActions, ...SheetActions})
-export default class RolePage extends Component {
+export default class MenuRecovery extends Component {
 
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'menu_id'}); // 初始化 table 列表

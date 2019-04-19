@@ -85,6 +85,27 @@ export const RolePage = dynamic({
   component: () => import('./RolePage')
 });
 
+// 角色管理回收站
+export const RoleRecovery = dynamic({
+  component: () => import('./RoleRecovery')
+});
+
+// 权限列表
+export const AuthPage = dynamic({
+  component: () => import('./AuthPage')
+});
+
+// 权限列表回收站
+export const AuthRecovery = dynamic({
+  component: () => import('./AuthRecovery')
+});
+
+// 授权管理
+export const PowerPage = dynamic({
+  component: () => import('./PowerPage')
+});
+
+
 // // 消息中心
 // export const NewsPage = dynamic({
 //   component: () => import('./NewsPage')

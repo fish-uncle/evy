@@ -11,7 +11,6 @@ module.exports = app => {
   router.post(`/api/user/update`, user.update);
   router.post(`/api/user/delete`, user.del);
   router.post(`/api/user/recover`, user.recover);
-  router.post(`/api/user/setAdmin`, user.setAdmin);
-  router.post(`/api/user/cancelAdmin`, user.cancelAdmin);
+  router.post(`/api/user/password`, user.password);
 
 };

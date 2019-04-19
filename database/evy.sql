@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `evy-user`
   `sex` CHAR(1) DEFAULT 1 COMMENT '性别：男/女 1/2。',
   `pay` CHAR(10) DEFAULT NULL  COMMENT '薪酬。',
   `type` CHAR(36) DEFAULT 0 COMMENT '用户类别。',
-  `role` CHAR(2) DEFAULT 0 COMMENT '用户角色。',
+  `role` CHAR(36) DEFAULT NULL COMMENT '用户角色。',
   `station` CHAR(2) DEFAULT 0 COMMENT '用户岗位。',
   `status` TINYINT UNSIGNED DEFAULT 1 COMMENT '用户状态：可用/禁用 1/2。',
   `quit` TINYINT UNSIGNED DEFAULT 1 COMMENT '用户状态：在岗/离职 1/2。',
@@ -47,7 +47,8 @@ CREATE TABLE IF NOT EXISTS `evy-user`
   `join_time` DATETIME DEFAULT NULL COMMENT '入职日期。',
   `nation` CHAR(20) DEFAULT NULL COMMENT '民族。',
   `marriage` CHAR(1) DEFAULT 0 COMMENT '婚姻情况：未婚/已婚/离异 1/2/3。',
-  `native_address` TEXT DEFAULT NULL COMMENT '籍贯-详细地址。',
+  `native_address` TEXT DEFAULT NULL COMMENT '籍贯。',
+  `native_address_detail` TEXT DEFAULT NULL COMMENT '籍贯-详细地址。',
   `bank_address`TEXT DEFAULT NULL COMMENT '银行开户行。',
   `bank_card` CHAR(40) DEFAULT NULL COMMENT '银行卡。',
   `id_card` CHAR(20) DEFAULT NULL COMMENT '身份证。',
@@ -91,4 +92,64 @@ CREATE TABLE IF NOT EXISTS `evy-app`
 )
 ENGINE=InnoDB
 COMMENT '应用表'
+DEFAULT CHARSET=utf8;
+
+-- 模块表
+CREATE TABLE IF NOT EXISTS `evy-module`
+(
+  `id` INTEGER auto_increment COMMENT 'id.',
+  `module_id` CHAR(36) NOT NULL COMMENT 'id.',
+  `cn_title` CHAR(30) NOT NULL COMMENT '中文标题。',
+  `en_title` CHAR(30) NOT NULL COMMENT '英文标题。',
+  `description` TEXT NOT NULL COMMENT '描述。',
+  `content` TEXT DEFAULT NULL COMMENT '富文本内容。',
+  `app` CHAR(36) NOT NULL COMMENT '所属应用。',
+  `label` TEXT DEFAULT NULL COMMENT '标签。',
+  `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
+  `timing` TINYINT UNSIGNED DEFAULT 1 COMMENT '是否是定时活动：不是/是：1/2',
+  `start_time` DATETIME NOT NULL COMMENT '开始时间',
+  `end_time` DATETIME NOT NULL COMMENT '结束时间',
+  `create_time` DATETIME NOT NULL COMMENT '创建时间',
+  `update_time` DATETIME NOT NULL COMMENT '更新时间',
+  `delete_time` DATETIME COMMENT '删除时间',
+  PRIMARY KEY (`id`, `module_id`)
+)
+ENGINE=InnoDB
+COMMENT '模块表'
+DEFAULT CHARSET=utf8;
+
+-- 权限角色表
+CREATE TABLE IF NOT EXISTS `evy-role`
+(
+  `id` INTEGER auto_increment COMMENT 'id.',
+  `role_id` CHAR(36) NOT NULL COMMENT 'id.',
+  `title` CHAR(10) NOT NULL COMMENT '角色名。',
+  `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
+  `admin` TINYINT UNSIGNED DEFAULT 2 COMMENT '是否是管理员：是/否：1/2。',
+  `create_time` DATETIME NOT NULL COMMENT '创建时间。',
+  `update_time` DATETIME NOT NULL COMMENT '更新时间。',
+  `delete_time` DATETIME DEFAULT NULL COMMENT '删除时间。',
+  PRIMARY KEY (`id`,`role_id`)
+)
+ENGINE=InnoDB
+COMMENT '权限角色表'
+DEFAULT CHARSET=utf8;
+
+-- 权限表
+CREATE TABLE IF NOT EXISTS `evy-auth`
+(
+  `id` INTEGER auto_increment COMMENT 'id.',
+  `auth_id` CHAR(36) NOT NULL COMMENT 'id.',
+  `title` CHAR(30) NOT NULL COMMENT '权限名。',
+  `url` TEXT DEFAULT NULL COMMENT '链接地址。',
+  `remark` TEXT DEFAULT NULL COMMENT '备注。',
+  `menu` TEXT DEFAULT NULL COMMENT '所属页面。',
+  `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
+  `create_time` DATETIME NOT NULL COMMENT '创建时间',
+  `update_time` DATETIME NOT NULL COMMENT '更新时间',
+  `delete_time` DATETIME COMMENT '删除时间',
+  PRIMARY KEY (`id`, `auth_id`)
+)
+ENGINE=InnoDB
+COMMENT '权限表'
 DEFAULT CHARSET=utf8;

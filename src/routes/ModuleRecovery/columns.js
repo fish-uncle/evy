@@ -4,7 +4,8 @@ import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-import {POST} from "../../utils/request";
+import {GET, POST} from "../../utils/request";
+import {toColumns} from "../../utils/select";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
@@ -37,6 +38,12 @@ class Operation extends Component {
   }
 }
 
+let appList = {};
+GET('/api/application/all').then(data => {
+  data.list.map(item => {
+    appList[item.cn_title] = item['app_id']
+  });
+});
 const columns = [{
   title: '模块名',
   key: 'cn_title',
@@ -46,6 +53,7 @@ const columns = [{
 }, {
   title: '所属应用',
   key: 'app',
+  render: item => toColumns(item.app, appList),
 }, {
   title: '上架状态',
   key: 'release',

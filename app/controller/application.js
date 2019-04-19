@@ -4,6 +4,19 @@ const Controller = require('egg').Controller;
 
 class ApplicationController extends Controller {
 
+  async all() {
+    const ctx = this.ctx;
+    const {application} = ctx.service;
+    let result;
+    try {
+      result = await application.all();
+    } catch (err) {
+      console.log(err);
+      result = ctx.json.error();
+    }
+    ctx.body = ctx.json.success({data: {list: result}});
+  }
+
   async list() {
     const ctx = this.ctx;
     const {application} = ctx.service;

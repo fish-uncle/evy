@@ -5,6 +5,7 @@ import {FormItem} from '../../components';
 import {Form, Button, notification} from 'antd';
 import {label, nation} from '../../utils/select';
 import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
+import cityList from "../../utils/cityList";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Right extends Component {
@@ -42,6 +43,7 @@ class Right extends Component {
             <FormItem label="日期示例" title='field_date' type='date'/>
             <FormItem label="颜色示例" title='field_color' type='color'/>
             <FormItem label="富文本示例" title='field_editor' type='editor'/>
+            <FormItem label="级联示例" title='field_cascader' type='cascader' options={cityList}/>
             <FormItem label="范围日期示例" title='field_rangeDate' type='rangedate'/>
             <FormItem label="开关示例" title='field_switch' type='switch'/>
             <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>

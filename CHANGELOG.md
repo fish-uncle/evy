@@ -1,5 +1,14 @@
 # 更新日志
 
+## [1.0.5] - 2019-04-19
+### 新增
+* 模块页面 增删改
+* 角色列表 增删改
+* 权限列表 增删改
+* 添加级联的表单类型
+### 修复
+* [html-to-draftjs](https://github.com/jpuri/html-to-draftjs/issues/5) npm包一个空内容判断 bug
+
 ## [1.0.4] - 2019-04-18
 ### 新增
 * 示例页面
@@ -7,7 +16,7 @@
 * 应用页面 增删改
 * 应用页面 sql
 ### 优化
-* 样式全使用 antd 配置方便替换主题色
+* 样式使用 [antd](https://ant.design/docs/react/customize-theme-cn) 配置方便替换主题色
 * 文档完善
 ### 修复
 * 回收站搜索 bug

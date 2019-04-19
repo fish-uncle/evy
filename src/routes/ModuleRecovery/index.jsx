@@ -6,11 +6,14 @@ import columns from './columns';
 import Right from "../ModulePage/right";
 
 @connect((sheet, left) => ({...sheet, ...left}), {...RouterActions, ...SheetActions, ...LeftActions})
-export default class ModulePage extends Component {
+export default class ModuleRecovery extends Component {
 
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'module_id'}); // 初始化 table 列表
-    this.props.sheet_url({listUrl: '/api/module'})
+    this.props.sheet_url({
+      listUrl: '/api/module/recovery',
+      recoverUrl: '/api/module/recover'
+    })
   }
 
   componentDidMount() {

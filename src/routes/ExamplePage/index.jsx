@@ -7,13 +7,14 @@ import moment from 'moment';
 import Right from './right';
 
 @connect((sheet) => ({...sheet}), {...RouterActions, ...SheetActions})
-export default class UserPage extends Component {
+export default class ExamplePage extends Component {
 
   componentWillMount() {
     this.props.sheet_set({
       columns: columns, rowKey: 'id', loadCallback: data => {
         data.list.map(item => {
           item['field_rangeDate'] = [moment(item.field_rangeDate[0], 'YYYY-MM-DD'), moment(item.field_rangeDate[1], 'YYYY-MM-DD')];
+          item['field_cascader'] = item.field_cascader ? item.field_cascader.split(',') : [];
         })
       }
     }); // 初始化 table 列表

@@ -2,10 +2,10 @@ import React, {Component, Fragment} from 'react';
 import {connect} from 'dva';
 import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
-import {Button, Form} from 'antd';
+import {Form} from 'antd';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
-class Detail extends Component {
+class Right extends Component {
 
   componentWillMount() {
     const form = this.props.form;
@@ -14,17 +14,24 @@ class Detail extends Component {
 
   render() {
     const {sheet} = this.props;
-    const {drawerType} = sheet;
+    const {drawerType, search} = sheet;
     return (
       <Fragment>
         {
           drawerType === 'insert' || drawerType === 'detail' ? <Fragment>
-            <FormItem label="角色名" title='title'/>
-            <FormItem label="是否管理员" title='admin' type='select' select={{'是': 1, '否': 2}}
-                      defaultValue={2}/>
+            <FormItem label="标题" title='title'/>
+            <FormItem label="链接地址" title='url' required={false}/>
+            <FormItem label="备注" title='remark' type='textArea' required={false}/>
             <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
             <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
-            <FormItem title='role_id' type='hidden'/>
+            <FormItem title='auth_id' type='hidden' required={false}/>
+          </Fragment> : null
+        }
+        {
+          drawerType === 'search' ? <Fragment>
+            <FormItem label="中文标题" title='title' required={false} defaultValue={search.cn_title}/>
+            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}
+                      defaultValue={search.update_time}/>
           </Fragment> : null
         }
       </Fragment>
@@ -32,5 +39,5 @@ class Detail extends Component {
   }
 }
 
-const FormApp = Form.create()(Detail);
+const FormApp = Form.create()(Right);
 export default FormApp;

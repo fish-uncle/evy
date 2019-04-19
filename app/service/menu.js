@@ -37,7 +37,7 @@ class MenuService extends Service {
     const {mysql} = this.app;
     return await mysql.select('evy-menu', {
       where: {'soft_delete': type,},
-      columns: ['menu_id', 'title', 'icon', 'nexus', 'type', 'url', 'sort', 'update_time'],
+      columns: ['menu_id', 'title', 'icon', 'nexus', 'type', 'url', 'sort', 'update_time','create_time'],
       orders: [['sort'], ['update_time', 'desc']],
       limit: 10,    // 返回数据量
       offset: (Number(page) - 1) * 10, // 数据偏移量

@@ -6,7 +6,7 @@ import columns from './columns';
 import Right from './right';
 
 @connect((sheet, left) => ({...sheet, ...left}), {...RouterActions, ...SheetActions, ...LeftActions})
-export default class ModulePage extends Component {
+export default class H5Page extends Component {
 
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'h5_id'}); // 初始化 table 列表

@@ -1,17 +1,26 @@
 import React, {Component, Fragment} from 'react';
 import moment from "moment";
-import {Button, Modal} from "antd";
+import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
+import {toColumns} from '../../utils/select'
+import {GET, POST} from "../../utils/request";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
   deleteHandle = item => {
+    const {sheet} = this.props;
     Modal.confirm({
       content: '确认是否删除？',
       onOk: () => {
-        console.log(item)
+        try {
+          POST(sheet.deleteUrl, item);
+          this.props.sheet_load();
+          notification.success({message: '提示', description: '删除成功'});
+        } catch (e) {
+          notification.success({message: '提示', description: '删除失败'});
+        }
       }
     })
   };
@@ -29,6 +38,12 @@ class Operation extends Component {
   }
 }
 
+let appList = {};
+GET('/api/application/all').then(data => {
+  data.list.map(item => {
+    appList[item.cn_title] = item['app_id']
+  });
+});
 const columns = [{
   title: '模块名',
   key: 'cn_title',
@@ -38,6 +53,7 @@ const columns = [{
 }, {
   title: '所属应用',
   key: 'app',
+  render: item => toColumns(item.app, appList),
 }, {
   title: '上架状态',
   key: 'release',

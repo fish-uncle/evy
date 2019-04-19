@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Input, Select, Form, DatePicker, Switch, Upload, Button} from 'antd';
+import {Input, Select, Form, DatePicker, Switch, Upload, Button, Cascader} from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import {connect} from "dva";
@@ -28,11 +28,15 @@ export default class _Modal extends Component {
     } else if (type === 'date') {
       value = moment(detailData[title])
     } else if (type === 'editor') {
-      const contentBlock = htmlToDraft(detailData[title]);
-      if (contentBlock) {
+      if (detailData[title]) {
+        const contentBlock = htmlToDraft(detailData[title]);
         const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
         editorState = EditorState.createWithContent(contentState);
         value = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+      } else {
+        const contentState = ContentState.createFromText('');
+        editorState = EditorState.createWithContent(contentState);
+        value = '';
       }
     } else {
       value = detailData[title] || defaultValue
@@ -58,6 +62,12 @@ export default class _Modal extends Component {
     this.setState({
       editorState,
       value: editorContent
+    });
+  };
+
+  cascaderChange = value => {
+    this.setState({
+      value
     });
   };
 
@@ -93,16 +103,19 @@ export default class _Modal extends Component {
       required = true,
       maxLength = 0,
       pattern = '',
+      options = {},  // type = cascader 专有
       select = {},  // type = select 专有
       disabled = false,
       className,
+      placeholder = '',
       style,
-      size = '200*200', // type = img 专有
-      action = '/', // type = img 专有
-      name = 'file' // type = img 专有
+      size = '200*200', // type = img,file 专有
+      action = '/', // type = img,file 专有
+      name = 'file', // type = img,file 专有
+      accept = ".jpg,.png" // type = img,file 专有
     } = this.props;
     const {getFieldDecorator} = sheet.form;
-    let html = <Input disabled={disabled}/>,
+    let html = <Input disabled={disabled} placeholder={placeholder}/>,
       rules = {required: required, message: `请${type === 'select' ? '选择' : '输入'}` + label};
     maxLength ? rules = Object.assign({}, rules, {len: maxLength}) : void 0;
     pattern !== '' ? rules = Object.assign({}, rules, {pattern}) : void 0;
@@ -117,21 +130,21 @@ export default class _Modal extends Component {
       selectHtml.push(<Option key={item} value={select[item]}>{item}</Option>)
     }
     type === 'multiple' ? html = <Select disabled={disabled} mode="multiple">{selectHtml}</Select> : void 0;
-    type === 'select' ? html = <Select disabled={disabled}>{selectHtml}</Select> : void 0;
-    let options = {
+    type === 'select' ? html = <Select placeholder={placeholder} disabled={disabled}>{selectHtml}</Select> : void 0;
+    let _options = {
       initialValue: value,
       rules: [rules],
       normalize: this.normalizeHandle
     };
-    type === 'switch' ? options = Object.assign({}, options, {
+    type === 'switch' ? _options = Object.assign({}, _options, {
       valuePropName: 'checked'
     }) : void 0;
     return (
-      type === 'img' ? <div className='upload-container'>
+      type === 'img' || type === 'file' ? <div className='upload-container'>
           <FormItem label={label} className={className} style={style}>
             <img src={value} alt=""/>
             <p>建议 {size}</p>
-            <Upload accept=".jpg,.png"
+            <Upload accept={accept}
                     name={name}
                     action={action}
                     showUploadList={false}
@@ -141,7 +154,7 @@ export default class _Modal extends Component {
                 type='primary'>更换</Button></Upload>
             <div className='fn-hide'>
               {
-                getFieldDecorator(title, options)(html)
+                getFieldDecorator(title, _options)(html)
               }
             </div>
           </FormItem></div> :
@@ -157,15 +170,23 @@ export default class _Modal extends Component {
 
             <div className='fn-hide'>
               {
-                getFieldDecorator(title, options)(html)
+                getFieldDecorator(title, _options)(html)
               }
             </div>
           </FormItem>
-
+          : type === 'cascader' ?
+          <FormItem label={label} className={className} style={style}>
+            <Cascader options={options} placeholder={placeholder} onChange={this.cascaderChange} value={value}/>
+            <div className='fn-hide'>
+              {
+                getFieldDecorator(title, _options)(html)
+              }
+            </div>
+          </FormItem>
           : <FormItem label={label} className={className} style={style}>
             <div className={type === 'hidden' || type === 'editor' ? 'fn-hide' : ''}>
               {
-                getFieldDecorator(title, options)(html)
+                getFieldDecorator(title, _options)(html)
               }
             </div>
             {

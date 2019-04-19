@@ -5,6 +5,7 @@ import {FormItem} from '../../components';
 import {Form, Button, notification} from 'antd';
 import {sex, station, nation, marriage} from '../../utils/select';
 import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
+import cityList from '../../utils/cityList';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Right extends Component {
@@ -14,40 +15,29 @@ class Right extends Component {
     this.props.drawer_set({form}); // 传递 antd 的 form 给 model
   }
 
-  setAdminHandle = (detailData) => {
+  passwordHandle = (detailData) => {
     try {
-      POST('/api/user/setAdmin', detailData);
+      POST('/api/user/password', detailData);
       this.props.sheet_load();
       this.props.drawer_close();
-      notification.success({message: '提示', description: '设置成功'});
+      notification.success({message: '提示', description: '重置成功'});
     } catch (e) {
-      notification.success({message: '提示', description: '设置失败'});
-    }
-  };
-
-  cancelAdminHandle = (detailData) => {
-    try {
-      POST('/api/user/cancelAdmin', detailData);
-      this.props.sheet_load();
-      this.props.drawer_close();
-      notification.success({message: '提示', description: '取消成功'});
-    } catch (e) {
-      notification.success({message: '提示', description: '取消失败'});
+      notification.success({message: '提示', description: '重置失败'});
     }
   };
 
   render() {
-    const {sheet} = this.props;
+    const {sheet, roleList} = this.props;
     const {drawerType, search, detailData} = sheet;
     return (
       <Fragment>
         {
           drawerType === 'insert' || drawerType === 'detail' ? <Fragment>
-            <FormItem label="头像" title='avatar' type='img' action='/' size='200*200' name='img'/>
+            <FormItem label="头像" title='avatar' type='img' action='/' size='200*200' name='img' required={false}/>
             <FormItem label="姓名" title='real_name'/>
             <FormItem label="岗位" title='station' type='select' select={station}
                       defaultValue={'0'}/>
-            <FormItem label="权限角色" title='role'/>
+            <FormItem label="权限角色" title='role' type='select' select={roleList}/>
             <FormItem label="薪酬" title='pay' defaultValue={0}/>
             <FormItem label="工号" title='employee_id'/>
             <FormItem label="手机号" title='phone'/>
@@ -62,17 +52,14 @@ class Right extends Component {
             <FormItem label="出生日期" title='birth_time' type='date'/>
             <FormItem label="入职时间" title='join_time' type='date'/>
             <FormItem label="银行卡号" title='bank_card' type='input' required={false}/>
-            <FormItem label="开户行地址" title='native_address' type='input' required={false}/>
-            <FormItem label="籍贯详细地址" title='bank_address' type='textarea' required={false}/>
+            <FormItem label="开户行地址" title='bank_address' type='input' required={false}/>
+            <FormItem label="籍贯" title='native_address' type='cascader' required={false} options={cityList}/>
+            <FormItem label="籍贯详细地址" title='native_address_detail' type='textarea' required={false}/>
             <FormItem label="备注" title='remark' type='textarea' required={false}/>
             <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
             <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
             <FormItem title='user_id' type='hidden' required={false}/>
-            {
-              detailData.type == 0 ? <Button block onClick={() => this.setAdminHandle(detailData)}>设为管理员</Button> :
-                <Button block onClick={() => this.cancelAdminHandle(detailData)}>取消管理员</Button>
-            }
-
+            <Button block onClick={() => this.passwordHandle(detailData)}>重置密码：888888</Button>
           </Fragment> : null
         }
         {

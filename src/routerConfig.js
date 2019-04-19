@@ -4,8 +4,11 @@ import {
   UserRecovery,
   AppPage,
   AppRecovery,
+  AuthPage,
+  AuthRecovery,
   ModulePage,
   RolePage,
+  RoleRecovery,
   LoginPage,
   Error403Page,
   Error404Page,
@@ -15,7 +18,8 @@ import {
   MenuRecovery,
   H5Page,
   H5Recovery,
-  ExamplePage
+  ExamplePage,
+  PowerPage
   // NewsPage
 } from './routes';
 
@@ -61,12 +65,24 @@ const routerConfig = [
     component: RolePage,
   },
   {
+    path: '/role/recovery',
+    component: RoleRecovery,
+  },
+  {
     path: '/app',
     component: AppPage,
   },
   {
     path: '/app/recovery',
     component: AppRecovery,
+  },
+  {
+    path: '/auth',
+    component: AuthPage,
+  },
+  {
+    path: '/auth/recovery',
+    component: AuthRecovery,
   },
   {
     path: '/module',
@@ -96,6 +112,10 @@ const routerConfig = [
     path: '/example',
     component: ExamplePage,
   },
+  {
+    path: '/power',
+    component: PowerPage
+  }
   // {
   //   path: '/news',
   //   component: NewsPage,

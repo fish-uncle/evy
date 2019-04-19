@@ -83,24 +83,12 @@ class UserController extends Controller {
   }
 
 
-  async setAdmin() {
+  async password() {
     const ctx = this.ctx;
     const {user} = ctx.service;
     try {
-      await user.adminSet(ctx.request.body, 1);
-      ctx.body = ctx.json.success({msg: '设置成功'});
-    } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
-    }
-  }
-
-  async cancelAdmin() {
-    const ctx = this.ctx;
-    const {user} = ctx.service;
-    try {
-      await user.adminSet(ctx.request.body, 0);
-      ctx.body = ctx.json.success({msg: '取消成功'});
+      await user.password(ctx.request.body);
+      ctx.body = ctx.json.success({msg: '重置成功'});
     } catch (err) {
       console.log(err);
       ctx.body = ctx.json.error();

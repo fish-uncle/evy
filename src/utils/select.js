@@ -77,7 +77,7 @@ const label = {
 
 const boolean = {
   '是': 1,
-  '否': 0
+  '否': 2
 };
 const marriage = {
   '未婚': '1',

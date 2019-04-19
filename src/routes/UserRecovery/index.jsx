@@ -6,7 +6,7 @@ import columns from './columns';
 import Right from "../UserPage/right";
 
 @connect((sheet) => ({...sheet}), {...RouterActions, ...SheetActions})
-export default class UserPage extends Component {
+export default class UserRecovery extends Component {
 
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'user_id'}); // 初始化 table 列表

@@ -4,7 +4,8 @@ import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-import {POST} from "../../utils/request";
+import {GET, POST} from "../../utils/request";
+import {toColumns} from "../../utils/select";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
@@ -38,6 +39,12 @@ class Operation extends Component {
   }
 }
 
+let nexusList = {'无父级': null};
+GET('/api/menu/all').then(data => {
+  data.list.map(item => {
+    nexusList[item.title] = item['menu_id']
+  });
+});
 const columns = [{
   title: '菜单名',
   key: 'title',
@@ -45,6 +52,10 @@ const columns = [{
   title: '链接类型',
   key: 'type',
   render: item => item.type === 1 ? '内部地址' : '外部地址',
+}, {
+  title: '父级菜单',
+  key: 'nexus',
+  render: item => toColumns(item.nexus, nexusList),
 }, {
   title: '链接地址',
   key: 'url',

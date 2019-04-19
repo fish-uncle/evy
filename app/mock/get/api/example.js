@@ -12,6 +12,7 @@ module.exports = Mock.mock({
       field_img: '@image(200x200,@color)',
       field_text: '@title',
       field_select: '汉族',
+      field_cascader: '浙江省,杭州市,下城区',
       field_multiple: ['精品', '置顶'],
       field_date: '@datetime',
       field_rangeDate: ['@datetime', '@datetime'],

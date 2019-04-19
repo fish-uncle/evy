@@ -5,11 +5,11 @@ import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
 import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
-import {sex, toColumns, station, boolean} from '../../utils/select';
+import {sex, toColumns, station} from '../../utils/select';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
-  deleteHandle = item => {
+  recoverHandle = item => {
     const {sheet} = this.props;
     Modal.confirm({
       content: '确认是否恢复？',
@@ -47,10 +47,6 @@ const columns = [{
 }, {
   title: '手机号',
   key: 'phone',
-}, {
-  title: '管理员',
-  key: 'type',
-  render: item => toColumns(item.type, boolean),
 }, {
   title: 'E-mail',
   key: 'email',

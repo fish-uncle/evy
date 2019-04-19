@@ -2,33 +2,32 @@ import React, {Component, Fragment} from 'react';
 import {connect} from 'dva';
 import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
-import {Button, Form} from 'antd';
+import {Form} from 'antd';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
-class Search extends Component {
+class Right extends Component {
 
   componentWillMount() {
     const form = this.props.form;
     this.props.drawer_set({form}); // 传递 antd 的 form 给 model
   }
 
-
   render() {
     const {sheet} = this.props;
-    const {drawerType} = sheet;
+    const {drawerType, search} = sheet;
     return (
-      <div>
+      <Fragment>
         {
           drawerType === 'search' ? <Fragment>
-            <FormItem label="角色" title='role' required={false}/>
-            <FormItem label="是否管理员" title='admin' type='select' select={{'是': 1, '否': 2}} required={false}/>
-            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
+            <FormItem label="中文标题" title='title' required={false} defaultValue={search.cn_title}/>
+            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}
+                      defaultValue={search.update_time}/>
           </Fragment> : null
         }
-      </div>
+      </Fragment>
     );
   }
 }
 
-const FormApp = Form.create()(Search);
+const FormApp = Form.create()(Right);
 export default FormApp;
