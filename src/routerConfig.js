@@ -19,7 +19,8 @@ import {
   H5Page,
   H5Recovery,
   ExamplePage,
-  PowerPage
+  PowerPage,
+  ForgetPage,
   // NewsPage
 } from './routes';
 
@@ -39,6 +40,10 @@ const routerConfig = [
   {
     path: '/login',
     component: LoginPage,
+  },
+  {
+    path: '/forget',
+    component: ForgetPage,
   },
   {
     path: '/403',

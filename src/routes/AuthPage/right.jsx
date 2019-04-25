@@ -13,14 +13,15 @@ class Right extends Component {
   }
 
   render() {
-    const {sheet} = this.props;
-    const {drawerType, search} = sheet;
+    const {sheet, menuList} = this.props;
+    const {drawerType} = sheet;
     return (
       <Fragment>
         {
           drawerType === 'insert' || drawerType === 'detail' ? <Fragment>
             <FormItem label="标题" title='title'/>
-            <FormItem label="链接地址" title='url' required={false}/>
+            <FormItem label="链接地址" title='url'/>
+            <FormItem label="所属页面" title='menu' type='select' select={menuList}/>
             <FormItem label="备注" title='remark' type='textArea' required={false}/>
             <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
             <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
@@ -29,9 +30,8 @@ class Right extends Component {
         }
         {
           drawerType === 'search' ? <Fragment>
-            <FormItem label="中文标题" title='title' required={false} defaultValue={search.cn_title}/>
-            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}
-                      defaultValue={search.update_time}/>
+            <FormItem label="中文标题" title='title' required={false}/>
+            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
           </Fragment> : null
         }
       </Fragment>

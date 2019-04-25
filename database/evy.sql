@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `evy-auth`
   `title` CHAR(30) NOT NULL COMMENT '权限名。',
   `url` TEXT DEFAULT NULL COMMENT '链接地址。',
   `remark` TEXT DEFAULT NULL COMMENT '备注。',
-  `menu` TEXT DEFAULT NULL COMMENT '所属页面。',
+  `menu` CHAR(36) DEFAULT NULL COMMENT '所属页面。',
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
   `create_time` DATETIME NOT NULL COMMENT '创建时间',
   `update_time` DATETIME NOT NULL COMMENT '更新时间',
@@ -152,4 +152,16 @@ CREATE TABLE IF NOT EXISTS `evy-auth`
 )
 ENGINE=InnoDB
 COMMENT '权限表'
+DEFAULT CHARSET=utf8;
+
+-- 权限关联表
+CREATE TABLE IF NOT EXISTS `evy-role-auth`
+(
+  `id` INTEGER auto_increment COMMENT 'id.',
+  `auth` CHAR(36) NOT NULL COMMENT 'auth_id.',
+  `role` CHAR(36) NOT NULL COMMENT 'role_id.',
+  PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+COMMENT '权限关联表'
 DEFAULT CHARSET=utf8;

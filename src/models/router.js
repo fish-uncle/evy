@@ -16,6 +16,8 @@ export default {
             doAfterMatch(con);
           }
         }
+        // 变更页面清空搜索
+        dispatch({type: 'sheet/sheet_search', payload: {values: {}}})
       });
     }
   },

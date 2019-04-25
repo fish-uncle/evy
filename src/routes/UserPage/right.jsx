@@ -3,7 +3,7 @@ import {connect} from 'dva';
 import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
 import {Form, Button, notification} from 'antd';
-import {sex, station, nation, marriage} from '../../utils/select';
+import {sex, station, nation, marriage, status} from '../../utils/select';
 import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
 import cityList from '../../utils/cityList';
 
@@ -28,7 +28,7 @@ class Right extends Component {
 
   render() {
     const {sheet, roleList} = this.props;
-    const {drawerType, search, detailData} = sheet;
+    const {drawerType, detailData} = sheet;
     return (
       <Fragment>
         {
@@ -38,6 +38,7 @@ class Right extends Component {
             <FormItem label="岗位" title='station' type='select' select={station}
                       defaultValue={'0'}/>
             <FormItem label="权限角色" title='role' type='select' select={roleList}/>
+            <FormItem label="状态" title='status' type='select' select={status}/>
             <FormItem label="薪酬" title='pay' defaultValue={0}/>
             <FormItem label="工号" title='employee_id'/>
             <FormItem label="手机号" title='phone'/>
@@ -64,13 +65,11 @@ class Right extends Component {
         }
         {
           drawerType === 'search' ? <Fragment>
-            <FormItem label="姓名" title='real_name' required={false} defaultValue={search.real_name}/>
-            <FormItem label="工号" title='employee_id' required={false} defaultValue={search.employee_id}/>
-            <FormItem label="手机号" title='phone' required={false} defaultValue={search.phone}/>
-            <FormItem label="性别" title='sex' type='select' select={sex} required={false}
-                      defaultValue={search.sex}/>
-            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}
-                      defaultValue={search.update_time}/>
+            <FormItem label="姓名" title='real_name' required={false}/>
+            <FormItem label="工号" title='employee_id' required={false}/>
+            <FormItem label="手机号" title='phone' required={false}/>
+            <FormItem label="性别" title='sex' type='select' select={sex} required={false}/>
+            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
           </Fragment> : null
         }
       </Fragment>

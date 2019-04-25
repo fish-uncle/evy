@@ -19,7 +19,7 @@ class AuthService extends Service {
     const {mysql} = this.app;
     return await mysql.select('evy-auth', {
       where: {'soft_delete': type,},
-      columns: ['auth_id', 'title', 'remark', 'url', 'update_time', 'create_time'],
+      columns: ['auth_id', 'title', 'remark', 'url', 'menu', 'update_time', 'create_time'],
       orders: [['update_time', 'desc']],
       limit: 10,    // 返回数据量
       offset: (Number(page) - 1) * 10, // 数据偏移量
@@ -32,7 +32,7 @@ class AuthService extends Service {
   }
 
   async insert(options) {
-    let {title, remark, url} = options;
+    let {title, remark, url, menu} = options;
     const {mysql} = this.app;
     const {literals} = mysql;
     return await mysql.insert('evy-auth',
@@ -40,19 +40,19 @@ class AuthService extends Service {
         auth_id: uuid(),
         create_time: literals.now,
         update_time: literals.now,
-        title, remark, url
+        title, remark, url, menu
       }
     );
   }
 
   async update(options) {
-    let {auth_id, title, remark, url} = options;
+    let {auth_id, title, remark, url, menu} = options;
     const {mysql} = this.app;
     const {literals} = mysql;
     return await mysql.update('evy-auth',
       {
         update_time: literals.now,
-        title, remark, url
+        title, remark, url, menu
       }, {
         where: {
           auth_id

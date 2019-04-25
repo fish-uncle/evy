@@ -5,6 +5,7 @@ import moment from "moment";
 import {Body} from '../../components';
 import './index.less';
 
+let timer;
 @connect(() => ({}), {})
 export default class IndexPage extends Component {
 
@@ -13,11 +14,15 @@ export default class IndexPage extends Component {
   };
 
   componentDidMount() {
-    setInterval(() => {
+    timer = setInterval(() => {
       this.setState({
         deadline: Date.now()
       })
     })
+  }
+
+  componentWillUnmount() {
+    clearTimeout(timer)
   }
 
   render() {

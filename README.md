@@ -29,6 +29,10 @@ see at http://127.0.0.1:6602
 
 `记得运行初始化sql` /database/
 
+测试账号 test@163.com 888888
+
+管理员账号 admin@163.com 888888
+
 ## 文档
 整个项目主要是由[egg](https://eggjs.org/zh-cn/)+[dva](https://dvajs.com/guide/)+[antd](https://ant.design/index-cn)+[roadhog](https://www.npmjs.com/package/roadhog)+[mysql](https://www.mysql.com/) 搭建完成的
 
@@ -63,5 +67,6 @@ evy中的表单组件采用都是已经过封装过的
 
 ## coding
 * [] todo 搜索
-* [] todo 
+* [] todo 登录
+* [] todo 表单参数后端校验
 * [] todo 授权管理

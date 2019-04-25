@@ -1,6 +1,6 @@
 'use strict';
 import React, {Fragment} from 'react';
-import {Table, Row, Col, Button, Divider} from 'antd';
+import {Table, Row, Col, Button, Divider, Upload, notification} from 'antd';
 import {connect} from "dva";
 import {LeftActions, RouterActions, SheetActions} from "../models";
 import './Sheet.less';
@@ -24,7 +24,7 @@ export default class Sheet extends React.Component {
     this.props.sheet_button_event({
       type: 'search', // 自定义按钮 search 事件
       callback: _ => {
-        this.props.drawer_show({drawerType: 'search'});
+        this.props.drawer_show({drawerType: 'search', detailData: this.props.sheet.search});
       }
     });
   }
@@ -74,8 +74,19 @@ export default class Sheet extends React.Component {
     this.props.left_choose({title: `${breadcrumb}-回收站`});
   };
 
-  importHandle = () => {
-
+  importHandle = (info) => {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+    }
+    if (info.file.status === 'done') {
+      notification.success({message: '提示', description: '上传成功'});
+      const {sheet} = this.props;
+      let {page} = sheet;
+      page.current = 1;
+      this.props.sheet_page({page});
+    } else if (info.file.status === 'error') {
+      notification.error({message: '提示', description: '上传失败'});
+    }
   };
 
   componentDidMount() {
@@ -128,9 +139,17 @@ export default class Sheet extends React.Component {
           }
           {
             hasImportBtn && <Col span={span} style={{padding: '0 5px'}}>
-              <Button icon="file-excel" type="primary" block
-                      disabled={button === 'show' ? importUrl ? false : true : true}
-                      onClick={this.importHandle}>导入</Button>
+              <Upload accept=".xlsx,.xls,.csv"
+                      name='file'
+                      data={{type: 'excel'}}
+                      action=''
+                      showUploadList={false}
+                      withCredentials={true}
+                      onChange={this.importHandle}>
+                <Button icon="file-excel" type="primary" block
+                        disabled={button === 'show' ? importUrl ? false : true : true}
+                        onClick={this.importHandle}>导入</Button>
+              </Upload>
             </Col>
           }
         </Row>

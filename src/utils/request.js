@@ -72,15 +72,12 @@ export default function request(url, options) {
   };
   if (!(options.body instanceof FormData)) {
     defaultOpt.headers = new Headers({
-      // 'Content-Type': 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
     });
   }
   const newOpt = {...defaultOpt, ...options};
-
-
   const {body} = newOpt;
-
 
   // 去除多余属性
   if (typeof body === 'object') {
@@ -104,15 +101,13 @@ export default function request(url, options) {
     delete newOpt.body;
   }
 
-
   if (newOpt.body && typeof newOpt.body === 'object') {
     if (newOpt.body instanceof FormData) {
     } else {
-      // newOpt.body = JSON.stringify(newOpt.body);
-      newOpt.body = parseParams(newOpt.body);
+      newOpt.body = JSON.stringify(newOpt.body);
+      // newOpt.body = parseParams(newOpt.body);
     }
   }
-
 
   requestStart();
   return fetch(url, newOpt)

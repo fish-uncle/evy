@@ -90,6 +90,10 @@ const env = {
   '开发环境': 'dev',
   '生产环境': 'prod'
 };
+const status = {
+  '可用': 1,
+  '禁用': 2,
+};
 const toColumns = function (value, obj) {
   for (let item in obj) {
     if (value == obj[item]) {
@@ -97,5 +101,5 @@ const toColumns = function (value, obj) {
     }
   }
 };
-export {sex, station, nation, marriage, toColumns, label, env, boolean}
+export {sex, station, nation, marriage, toColumns, label, env, boolean, status}
 

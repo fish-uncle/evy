@@ -28,7 +28,7 @@ class Right extends Component {
 
   render() {
     const {sheet} = this.props;
-    const {drawerType, search, detailData} = sheet;
+    const {drawerType, detailData} = sheet;
     return (
       <Fragment>
         {
@@ -38,8 +38,7 @@ class Right extends Component {
             <FormItem label="内容示例2" title='field_content' type='textarea'/>
             <FormItem label="选择示例" title='field_select' type='select' select={nation}
                       defaultValue='汉族'/>
-            <FormItem label="标签示例" title='field_multiple' type='multiple' select={label}
-                      defaultValue={'精品'}/>
+            <FormItem label="标签示例" title='field_multiple' type='multiple' select={label}/>
             <FormItem label="日期示例" title='field_date' type='date'/>
             <FormItem label="颜色示例" title='field_color' type='color'/>
             <FormItem label="富文本示例" title='field_editor' type='editor'/>
@@ -54,9 +53,8 @@ class Right extends Component {
         }
         {
           drawerType === 'search' ? <Fragment>
-            <FormItem label="内容示例1" title='field_text' required={false} defaultValue={search.field_text}/>
-            <FormItem label="选择示例" title='field_select' type='select' select={nation}
-                      defaultValue={search.field_select}/>
+            <FormItem label="内容示例1" title='field_text' required={false}/>
+            <FormItem label="选择示例" title='field_select' type='select' select={nation}/>
           </Fragment> : null
         }
       </Fragment>

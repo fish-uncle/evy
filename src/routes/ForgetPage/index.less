@@ -1,0 +1,95 @@
+@import '~antd/lib/style/themes/default.less';
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: auto;
+  background: @layout-body-background;
+  justify-content: center;
+  align-items: center;
+  .login-btn {
+    margin-top: 20px;
+  }
+
+  .main {
+    width: 388px;
+    margin: 0 auto;
+    .icon {
+      margin-left: 16px;
+      color: rgba(0, 0, 0, 0.2);
+      font-size: 24px;
+      vertical-align: middle;
+      cursor: pointer;
+      transition: color 0.3s;
+
+      &:hover {
+        color: @primary-color;
+      }
+    }
+
+    .other {
+      margin-top: 24px;
+      line-height: 22px;
+      text-align: left;
+
+      .register {
+        float: right;
+      }
+    }
+  }
+
+  .top {
+    text-align: center;
+  }
+
+  .header {
+    height: 88px;
+    line-height: 88px;
+
+    a {
+      text-decoration: none;
+    }
+  }
+
+  .logo {
+    height: 88px;
+    vertical-align: top;
+    background-color: transparent;
+  }
+
+  .title {
+    position: relative;
+    top: 2px;
+    color: @heading-color;
+    font-weight: 600;
+    font-size: 33px;
+    font-family: Avenir, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+  }
+
+  .desc {
+    margin-top: 12px;
+    margin-bottom: 40px;
+    color: @text-color-secondary;
+    font-size: @font-size-base;
+  }
+
+}
+
+@media screen and (max-width: @screen-sm) {
+  .login-container {
+    .main {
+      width: 95%;
+    }
+  }
+}
+
+@media (min-width: @screen-md-min) {
+  .login-container {
+    background-image: url('../../imgs/bg.svg');
+    background-repeat: no-repeat;
+    background-position: center 110px;
+    background-size: 100%;
+  }
+}
+

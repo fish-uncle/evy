@@ -5,6 +5,11 @@ export const LoginPage = dynamic({
   component: () => import('./LoginPage')
 });
 
+// 忘记密码
+export const ForgetPage = dynamic({
+  component: () => import('./ForgetPage')
+});
+
 // 错误403
 export const Error403Page = dynamic({
   component: () => import('./Error403')

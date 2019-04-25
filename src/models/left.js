@@ -41,8 +41,8 @@ export default {
           for (let j = 0; j < list.length; j++) {
             let obj = menu[list[i]['menu_id']] ? menu[list[i]['menu_id']] || list[i] : list[i];
             if (list[j]['url'] === location.hash.replace('#', '')) {
-              openKeys = [list[j]['nexus']];
-              selectedKeys = [list[j]['menu_id']];
+              openKeys = [list[j]['nexus'] + ''];
+              selectedKeys = [list[j]['menu_id'] + ''];
               breadcrumb = [list[j]['title']];
             }
             if (list[j]['nexus'] === list[i]['menu_id']) {

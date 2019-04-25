@@ -4,7 +4,8 @@ import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {RouterActions, SheetActions} from "../../models";
-import {POST} from "../../utils/request";
+import {GET, POST} from "../../utils/request";
+import {toColumns} from "../../utils/select";
 
 @connect((sheet, left) => ({...sheet, ...left}), {...RouterActions, ...SheetActions})
 class Operation extends Component {
@@ -38,12 +39,22 @@ class Operation extends Component {
   }
 }
 
+let menuList = {};
+GET('/api/menu/all').then(data => {
+  data.list.map(item => {
+    menuList[item.title] = item['menu_id']
+  });
+});
 const columns = [{
   title: '权限名',
   key: 'title',
 }, {
   title: '链接地址',
   key: 'url',
+}, {
+  title: '所属页面',
+  key: 'menu',
+  render: item => toColumns(item.menu, menuList),
 }, {
   title: '备注',
   key: 'remark',

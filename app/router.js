@@ -10,6 +10,8 @@ module.exports = app => {
   const module = require('./router/module');
   const role = require('./router/role');
   const auth = require('./router/auth');
+  const power = require('./router/power');
+  const login = require('./router/login');
   menu(app);
   excel(app);
   user(app);
@@ -17,5 +19,7 @@ module.exports = app => {
   module(app);
   role(app);
   auth(app);
+  power(app);
+  login(app);
 
 };

@@ -3,6 +3,7 @@ import React, {Component, Fragment} from 'react';
 import {Layout, Menu, Icon} from 'antd';
 import {connect} from 'dva';
 import {LeftActions, RouterActions} from "../models";
+import './Left.less';
 
 const {SubMenu} = Menu;
 const {Sider} = Layout;
@@ -73,7 +74,7 @@ export default class Default extends Component {
         collapsible
         collapsed={collapsed}
       >
-        <div className="logo" style={{backgroundImage: `url(${logo.white})`}}/>
+        <div className={`logo ${collapsed ? 'active' : ''}`} style={{backgroundImage: `url(${logo.white})`}}/>
         {
           menu ? <Menu theme="dark" mode="inline" defaultOpenKeys={openKeys} selectedKeys={selectedKeys}
                        onOpenChange={openKeys => {

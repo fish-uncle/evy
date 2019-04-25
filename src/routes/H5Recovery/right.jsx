@@ -3,7 +3,6 @@ import {connect} from 'dva';
 import {FormItem} from '../../components';
 import {Form} from 'antd';
 import {SheetActions} from "../../models";
-import {env} from '../../utils/select';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Right extends Component {
@@ -15,16 +14,15 @@ class Right extends Component {
 
   render() {
     const {sheet} = this.props;
-    const {drawerType, search} = sheet;
+    const {drawerType} = sheet;
     return (
       <Fragment>
         {
           drawerType === 'search' ? <Fragment>
-            <FormItem label="名称" title='name' required={false} defaultValue={search.name}/>
-            <FormItem label="网页标题" title='title' required={false} defaultValue={search.title}/>
-            <FormItem label="是否上架" title='release' type='switch' required={false} defaultValue={search.release}/>
-            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}
-                      defaultValue={search.update_time}/>
+            <FormItem label="名称" title='name' required={false}/>
+            <FormItem label="网页标题" title='title' required={false}/>
+            <FormItem label="是否上架" title='release' type='switch' required={false}/>
+            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
           </Fragment> : null
         }
       </Fragment>

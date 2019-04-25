@@ -6,12 +6,15 @@ const insert = (props) => {
   sheet.form.validateFields((err, values) => {
     if (!err) {
       try {
-        POST(sheet.insertUrl, values);
-        props.drawer_close();
-        props.sheet_load();
-        notification.success({message: '提示', description: '添加成功'});
+        POST(sheet.insertUrl, values).then(data => {
+          if (data && data.success) {
+            props.drawer_close();
+            props.sheet_load();
+            notification.success({message: '提示', description: '添加成功'});
+          }
+        });
       } catch (e) {
-        notification.success({message: '提示', description: '添加失败'});
+        notification.error({message: '提示', description: '添加失败'});
       }
     } else {
       for (let item in err) {
@@ -26,12 +29,15 @@ const update = (props) => {
   sheet.form.validateFields((err, values) => {
     if (!err) {
       try {
-        POST(sheet.updateUrl, values);
-        props.drawer_close();
-        props.sheet_load();
-        notification.success({message: '提示', description: '更新成功'});
+        POST(sheet.updateUrl, values).then(data => {
+          if (data && data.success) {
+            props.drawer_close();
+            props.sheet_load();
+            notification.success({message: '提示', description: '更新成功'});
+          }
+        });
       } catch (e) {
-        notification.success({message: '提示', description: '更新失败'});
+        notification.error({message: '提示', description: '更新失败'});
       }
     } else {
       for (let item in err) {
@@ -46,12 +52,14 @@ const search = (props) => {
   sheet.form.validateFields((err, values) => {
     if (!err) {
       try {
+        let {page} = sheet;
+        page.current = 1;
         props.sheet_search({values});
         props.drawer_close();
-        props.sheet_load();
+        props.sheet_page({page});
         notification.success({message: '提示', description: '搜索成功'});
       } catch (e) {
-        notification.success({message: '提示', description: '搜索失败'});
+        notification.error({message: '提示', description: '搜索失败'});
       }
     } else {
       for (let item in err) {
@@ -62,9 +70,11 @@ const search = (props) => {
 };
 
 const clear = (props) => {
+  const {sheet} = props;
+  let {page} = sheet;
   props.sheet_search({values: {}});
   props.drawer_close();
-  props.sheet_load();
+  props.sheet_page({page});
   notification.success({message: '提示', description: '清空成功'});
 };
 export {insert, update, search, clear};

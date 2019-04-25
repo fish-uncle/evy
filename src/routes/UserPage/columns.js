@@ -5,7 +5,7 @@ import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
 import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
-import {sex, toColumns, station} from '../../utils/select';
+import {sex, toColumns, station, status} from '../../utils/select';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
@@ -54,6 +54,10 @@ const columns = [{
   title: '角色',
   key: 'station',
   render: item => toColumns(item.station, station),
+}, {
+  title: '状态',
+  key: 'status',
+  render: item => toColumns(item.status, status),
 }, {
   title: '性别',
   key: 'sex',

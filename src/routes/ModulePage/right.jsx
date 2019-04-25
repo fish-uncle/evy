@@ -15,7 +15,7 @@ class Right extends Component {
 
   render() {
     const {sheet, appList} = this.props;
-    const {drawerType, search} = sheet;
+    const {drawerType} = sheet;
     return (
       <Fragment>
         {
@@ -38,14 +38,12 @@ class Right extends Component {
         }
         {
           drawerType === 'search' ? <Fragment>
-            <FormItem label="中文标题" title='cn_title' required={false} defaultValue={search.cn_title}/>
-            <FormItem label="英文标题" title='en_title' required={false} defaultValue={search.en_title}/>
-            <FormItem label="描述" title='description' type='textArea' required={false}
-                      defaultValue={search.description}/>
-            <FormItem label="是否上架" title='release' type='switch' required={false} defaultValue={search.release}/>
-            <FormItem label="是否为定时模块" title='timing' type='switch' required={false} defaultValue={search.timing}/>
-            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}
-                      defaultValue={search.update_time}/>
+            <FormItem label="中文标题" title='cn_title' required={false}/>
+            <FormItem label="英文标题" title='en_title' required={false}/>
+            <FormItem label="描述" title='description' type='textArea' required={false}/>
+            <FormItem label="是否上架" title='release' type='switch' required={false}/>
+            <FormItem label="是否为定时模块" title='timing' type='switch' required={false}/>
+            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
           </Fragment> : null
         }
       </Fragment>

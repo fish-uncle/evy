@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Input, Select, Form, DatePicker, Switch, Upload, Button, Cascader} from 'antd';
+import {Input, Select, Form, DatePicker, Switch, Upload, Button, Cascader, notification, Empty} from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import {connect} from "dva";
@@ -26,7 +26,7 @@ export default class _Modal extends Component {
     if (type === 'switch') {
       value = detailData[title];
     } else if (type === 'date') {
-      value = moment(detailData[title])
+      value = moment(detailData[title]).format('YYYY-MM-DD HH:mm:ss')
     } else if (type === 'editor') {
       if (detailData[title]) {
         const contentBlock = htmlToDraft(detailData[title]);
@@ -81,9 +81,9 @@ export default class _Modal extends Component {
       console.log(info.file, info.fileList);
     }
     if (info.file.status === 'done') {
-      console.log(`${info.file.name} file uploaded successfully`);
+      notification.success({message: '提示', description: '上传成功'});
     } else if (info.file.status === 'error') {
-      console.log(`${info.file.name} file upload failed.`);
+      notification.error({message: '提示', description: '上传失败'});
     }
 
     // todo 上传后修改数据 需要与后端联调
@@ -103,12 +103,14 @@ export default class _Modal extends Component {
       required = true,
       maxLength = 0,
       pattern = '',
+      showTime = {format: 'HH:mm:ss'}, // type = date 专有
       options = {},  // type = cascader 专有
       select = {},  // type = select 专有
       disabled = false,
       className,
       placeholder = '',
       style,
+      fromData = {}, // type = img,file 专有
       size = '200*200', // type = img,file 专有
       action = '/', // type = img,file 专有
       name = 'file', // type = img,file 专有
@@ -120,32 +122,46 @@ export default class _Modal extends Component {
     maxLength ? rules = Object.assign({}, rules, {len: maxLength}) : void 0;
     pattern !== '' ? rules = Object.assign({}, rules, {pattern}) : void 0;
     type = type.toLowerCase();
-    type === 'date' ? html = <DatePicker disabled={disabled}/> : void 0;
-    type === 'rangedate' ? html = <RangePicker disabled={disabled}/> : void 0;
-    type === 'textarea' ? html = <TextArea disabled={disabled}/> : void 0;
-    type === 'switch' ? html = <Switch disabled={disabled}/> : void 0;
-
     let selectHtml = [];
     for (let item in select) {
       selectHtml.push(<Option key={item} value={select[item]}>{item}</Option>)
     }
-    type === 'multiple' ? html = <Select disabled={disabled} mode="multiple">{selectHtml}</Select> : void 0;
-    type === 'select' ? html = <Select placeholder={placeholder} disabled={disabled}>{selectHtml}</Select> : void 0;
     let _options = {
       initialValue: value,
       rules: [rules],
       normalize: this.normalizeHandle
     };
-    type === 'switch' ? _options = Object.assign({}, _options, {
-      valuePropName: 'checked'
-    }) : void 0;
+    switch (type) {
+      case 'date':
+        html = <DatePicker disabled={disabled} showTime={showTime}/>;
+        break;
+      case 'rangedate':
+        html = <RangePicker disabled={disabled}/>;
+        break;
+      case 'textarea':
+        html = <TextArea placeholder={placeholder} disabled={disabled}/>;
+        break;
+      case 'switch':
+        html = <Switch disabled={disabled}/>;
+        _options = Object.assign({}, _options, {
+          valuePropName: 'checked'
+        });
+        break;
+      case 'multiple':
+        html = html = <Select disabled={disabled} mode="multiple">{selectHtml}</Select>;
+        break;
+      case 'select':
+        html = html = <Select placeholder={placeholder} disabled={disabled}>{selectHtml}</Select>;
+        break;
+    }
     return (
       type === 'img' || type === 'file' ? <div className='upload-container'>
           <FormItem label={label} className={className} style={style}>
-            <img src={value} alt=""/>
-            <p>建议 {size}</p>
+            <img src={value ? value : Empty.PRESENTED_IMAGE_DEFAULT} alt=""/>
+            {type === 'img' ? <p>建议 {size}</p> : null}
             <Upload accept={accept}
                     name={name}
+                    data={fromData}
                     action={action}
                     showUploadList={false}
                     withCredentials={true}
@@ -157,7 +173,8 @@ export default class _Modal extends Component {
                 getFieldDecorator(title, _options)(html)
               }
             </div>
-          </FormItem></div> :
+          </FormItem>
+        </div> :
         type === 'color' ?
           <FormItem label={label} className={className} style={style}>
             <div className={`color-picker-container pos-r ${displayColorPicker ? 'active' : ''}`}>

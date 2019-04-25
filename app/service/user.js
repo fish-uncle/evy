@@ -10,7 +10,7 @@ class UserService extends Service {
     const {mysql} = this.app;
     return await mysql.select('evy-user', {
       where: {'soft_delete': type,},
-      columns: ['user_id', 'employee_id', 'sex', 'pay', 'phone', 'email', 'role', 'station',
+      columns: ['user_id', 'employee_id', 'sex', 'pay', 'phone', 'email', 'role', 'station', 'status',
         'remark', 'bank_address', 'native_address', 'native_address_detail', 'bank_card', 'real_name', 'type',
         'birth_time', 'join_time', 'nation', 'marriage', 'avatar', 'update_time', 'create_time'
       ],
@@ -36,7 +36,7 @@ class UserService extends Service {
   }
 
   async insert(options) {
-    let {bank_address, bank_card, birth_time, email, employee_id, join_time, native_address, native_address_detail, marriage, nation, pay, phone, real_name, remark, role, sex, station} = options;
+    let {bank_address, bank_card, birth_time, email, employee_id, join_time, status, native_address, native_address_detail, marriage, nation, pay, phone, real_name, remark, role, sex, station} = options;
     const {mysql} = this.app;
     birth_time = format(birth_time, 'YYYY-MM-DD HH:mm:ss');
     join_time = format(join_time, 'YYYY-MM-DD HH:mm:ss');
@@ -52,7 +52,7 @@ class UserService extends Service {
         bank_card,
         native_address_detail,
         native_address,
-        email,
+        email, status,
         employee_id,
         marriage,
         nation,
@@ -79,10 +79,11 @@ class UserService extends Service {
   }
 
   async update(options) {
-    let {user_id, bank_address, bank_card, birth_time, email, employee_id, join_time, native_address, native_address_detail, marriage, nation, pay, phone, real_name, remark, role, sex, station} = options;
+    let {user_id, bank_address, bank_card, birth_time, email, employee_id, join_time, status, native_address, native_address_detail, marriage, nation, pay, phone, real_name, remark, role, sex, station} = options;
     const {mysql} = this.app;
     birth_time = format(birth_time, 'YYYY-MM-DD HH:mm:ss');
     join_time = format(join_time, 'YYYY-MM-DD HH:mm:ss');
+    native_address.length <= 0 ? native_address = null : void 0;
     const {literals} = mysql;
     return await mysql.update('evy-user',
       {
@@ -90,7 +91,7 @@ class UserService extends Service {
         join_time,
         update_time: literals.now,
         bank_address,
-        bank_card,
+        bank_card, status,
         email,
         employee_id,
         marriage,

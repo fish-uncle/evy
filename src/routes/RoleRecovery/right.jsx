@@ -15,16 +15,14 @@ class Right extends Component {
 
   render() {
     const {sheet} = this.props;
-    const {drawerType, search} = sheet;
+    const {drawerType} = sheet;
     return (
       <Fragment>
         {
           drawerType === 'search' ? <Fragment>
-            <FormItem label="角色名" title='title' required={false} defaultValue={search.title}/>
-            <FormItem label="是否管理员" title='admin' type='select' select={boolean} required={false}
-                      defaultValue={search.admin}/>
-            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}
-                      defaultValue={search.update_time}/>
+            <FormItem label="角色名" title='title' required={false}/>
+            <FormItem label="是否管理员" title='admin' type='select' select={boolean} required={false}/>
+            <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
           </Fragment> : null
         }
       </Fragment>

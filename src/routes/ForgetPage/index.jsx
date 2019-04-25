@@ -3,17 +3,16 @@ import {Checkbox, notification} from 'antd';
 import {RouterActions} from '../../models';
 import {Login, Default} from '../../components';
 import {connect} from "dva";
-import {Link} from "dva/router";
 import './index.less';
 import {POST} from "../../utils/request";
+import {Link} from "react-router-dom";
 
 const {Tab, UserName, Password, Submit} = Login;
 
 @connect((config) => ({...config}), {...RouterActions})
 class LoginPage extends Component {
   state = {
-    type: 'login',
-    autoLogin: true,
+    type: 'forget',
   };
 
   loginSubmit = (err, values) => {
@@ -28,16 +27,10 @@ class LoginPage extends Component {
     })
   };
 
-  changeAutoLogin = e => {
-    this.setState({
-      autoLogin: e.target.checked,
-    });
-  };
-
   render() {
     const {config} = this.props;
     const {logo} = config;
-    const {type, autoLogin} = this.state;
+    const {type} = this.state;
     return (
       <Default>
         <div className='login-container'>
@@ -58,7 +51,7 @@ class LoginPage extends Component {
                   this.loginForm = form;
                 }}
               >
-                <Tab key="login" tab='登录'>
+                <Tab key="forget" tab='忘记密码'>
                   <UserName
                     name="userName"
                     placeholder={`手机号/邮箱`}
@@ -85,15 +78,12 @@ class LoginPage extends Component {
                   />
                 </Tab>
                 <div className='fn-clear'>
-                  <Checkbox checked={autoLogin} onChange={this.changeAutoLogin}>
-                    自动登录
-                  </Checkbox>
-                  <Link className='fn-fr' to="/forget">
-                    忘记密码?
+                  <Link className='fn-fr' to="/login">
+                    去登录>
                   </Link>
                 </div>
                 <Submit className='login-btn'>
-                  登录
+                  修改
                 </Submit>
               </Login>
             </div>
