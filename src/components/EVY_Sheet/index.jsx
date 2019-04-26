@@ -2,8 +2,8 @@
 import React, {Fragment} from 'react';
 import {Table, Row, Col, Button, Divider, Upload, notification} from 'antd';
 import {connect} from "dva";
-import {LeftActions, RouterActions, SheetActions} from "../models";
-import './Sheet.less';
+import {LeftActions, RouterActions, SheetActions} from "../../models";
+import './index.less';
 
 @connect((sheet, left) => ({...sheet, ...left}), {...SheetActions, ...RouterActions, ...LeftActions})
 export default class Sheet extends React.Component {
@@ -94,8 +94,18 @@ export default class Sheet extends React.Component {
   }
 
   render() {
-    const {sheet, button = 'show', hasAddBtn = true, hasSearchBtn = true, hasExportBtn = true, hasRecoveryBtn = true, hasImportBtn = false, click = true} = this.props;
-    const {dataSource, loading, page, buttonEvent, columns, rowKey, exportUrl, recoveryUrl, importUrl} = sheet;
+    const {
+      button = 'show',
+      hasAddBtn = true,
+      hasSearchBtn = true,
+      hasExportBtn = true,
+      hasRecoveryBtn = true,
+      hasImportBtn = false,
+      defaultPageSize = 10,
+      click = true
+    } = this.props;
+    const {sheet} = this.props;
+    const {dataSource, loading, page, buttonEvent, columns, rowKey, exportUrl, recoveryUrl, importUrl, insertUrl} = sheet;
     let span = 8, buttonLength = 0;
     hasAddBtn ? buttonLength++ : void 0;
     hasSearchBtn ? buttonLength++ : void 0;
@@ -113,7 +123,7 @@ export default class Sheet extends React.Component {
           {
             hasAddBtn && <Col span={span} style={{paddingRight: '5px', height: '44px'}}>
               <Button icon="edit" type="primary" block onClick={this.insertHandle}
-                      disabled={button === 'show' ? false : true}>新增</Button>
+                      disabled={insertUrl === 'show' ? false : true}>新增</Button>
             </Col>
           }
           {
@@ -126,14 +136,14 @@ export default class Sheet extends React.Component {
           {
             hasExportBtn && <Col span={span} style={{padding: '0 5px'}}>
               <Button icon="bar-chart" type="primary" block
-                      disabled={button === 'show' ? exportUrl ? false : true : true}
+                      disabled={exportUrl ? false : true}
                       onClick={this.exportHandle}>导出</Button>
             </Col>
           }
           {
             hasRecoveryBtn && <Col span={span} style={{paddingLeft: '5px'}}>
               <Button icon="delete" type="primary" block
-                      disabled={button === 'show' ? recoveryUrl ? false : true : true}
+                      disabled={recoveryUrl ? false : true}
                       onClick={this.recoveryHandle}>回收站</Button>
             </Col>
           }
@@ -156,7 +166,7 @@ export default class Sheet extends React.Component {
         <Divider dashed={true}/>
         <Table rowKey={rowKey}
                loading={loading}
-               pagination={{total: page.total, current: page.current, onChange: this.pageChangeHandle}}
+               pagination={{total: page.total, current: page.current, defaultPageSize, onChange: this.pageChangeHandle}}
                onRow={(record) => {
                  return {
                    onClick: (event) => {

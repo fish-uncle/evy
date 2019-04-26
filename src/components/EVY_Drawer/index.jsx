@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from "dva";
-import {SheetActions} from "../models";
+import {SheetActions} from "../../models";
 import {Drawer, Button} from 'antd';
 import PropTypes from 'prop-types';
-import './Drawer.less';
-import {insert, search, update, clear} from "../utils/handle";
+import './index.less';
+import {insert, search, update, clear} from "../../utils/handle";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 export default class _Drawer extends Component {

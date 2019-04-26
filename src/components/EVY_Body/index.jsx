@@ -1,9 +1,9 @@
 'use strict';
 import React, {Component} from 'react';
-import {Default, Left} from './index';
+import {Default, Left} from '..';
 import {Layout, Icon, Breadcrumb} from 'antd';
-import {LeftActions} from '../models';
-import './Body.less';
+import {LeftActions} from '../../models';
+import './index.less';
 import {connect} from 'dva';
 
 const {Header, Content, Footer} = Layout;

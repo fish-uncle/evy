@@ -1,5 +1,5 @@
 import fetch from 'dva/fetch';
-import LoadingInAjax from '../components/LoadingInAjax';
+import LoadingInAjax from '../components/EVY_LoadingInAjax';
 import {notification} from "antd";
 
 function parseJSON(response) {

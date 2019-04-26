@@ -9,7 +9,7 @@ import {POST} from "../../utils/request";
 
 const {Tab, UserName, Password, Submit} = Login;
 
-@connect((config) => ({...config}), {...RouterActions})
+@connect((config, login) => ({...config, ...login}), {...RouterActions})
 class LoginPage extends Component {
   state = {
     type: 'login',
@@ -18,12 +18,16 @@ class LoginPage extends Component {
 
   loginSubmit = (err, values) => {
     const {userName, password} = values;
+    const callBackUrl = this.props.match.params.callBackUrl;
     let data = {};
     /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(userName) ? data.email = userName : data.phone = userName;
     data.password = password;
     POST('/api/login', data).then(data => {
       if (data && data.success) {
         notification.success({message: '提示', description: '登录成功'});
+        if (callBackUrl) {
+          this.props.push(decodeURIComponent(callBackUrl))
+        }
       }
     })
   };

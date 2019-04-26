@@ -36,7 +36,7 @@ see at http://127.0.0.1:6602
 ## 文档
 整个项目主要是由[egg](https://eggjs.org/zh-cn/)+[dva](https://dvajs.com/guide/)+[antd](https://ant.design/index-cn)+[roadhog](https://www.npmjs.com/package/roadhog)+[mysql](https://www.mysql.com/) 搭建完成的
 
-框架基础文档这里就不说了
+### [基础](./doc/基础.md)
 
 ### [定制主题色](./doc/定制主题色.md)
 
@@ -46,10 +46,12 @@ see at http://127.0.0.1:6602
 
 ### [使用mock数据](./doc/使用mock数据.md)
 
-### 表单组件
-evy中的表单组件采用都是已经过封装过的
+### 表单
 
-* [input](./doc/表单组件/input.md)
+#### [增删改查](./doc/表单/增删改查.md)
+
+#### 组件
+* [input](doc/表单/组件/input.md)
 * textarea
 * select
 * multiple
@@ -62,6 +64,8 @@ evy中的表单组件采用都是已经过封装过的
 * cascader
 * editor
 * hidden
+
+#### [其他](./doc/表单/其他.md)
 
 ## [更新日志](./CHANGELOG.md)
 

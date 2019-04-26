@@ -1,7 +1,6 @@
 import dva from 'dva';
 import './index.less';
 import './utils/always';
-
 // 1. Initialize
 const app = dva({
   onError: function (e) {

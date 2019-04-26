@@ -87,10 +87,11 @@ export default {
       return {...state, menu, ...obj};
     },
     left_choose(state, {payload}) {
-      const {title} = payload;
+      const {title, selectedKeys} = payload;
       localStorage.setItem('title', title);
+      localStorage.setItem('selectedKeys', selectedKeys);
       document.title = title;
-      return {...state, breadcrumb: [title]};
+      return {...state, breadcrumb: [title], selectedKeys: [selectedKeys + '']};
     },
     left_openKeys(state, {payload}) {
       const {openKeys} = payload;

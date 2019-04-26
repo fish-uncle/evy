@@ -72,6 +72,7 @@ const search = (props) => {
 const clear = (props) => {
   const {sheet} = props;
   let {page} = sheet;
+  page.current = 1;
   props.sheet_search({values: {}});
   props.drawer_close();
   props.sheet_page({page});

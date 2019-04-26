@@ -3,7 +3,7 @@ import {Input, Select, Form, DatePicker, Switch, Upload, Button, Cascader, notif
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import {connect} from "dva";
-import {SheetActions} from "../models";
+import {SheetActions} from "../../models";
 import {EditorState, convertToRaw, ContentState} from 'draft-js';
 import {Editor} from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
@@ -15,8 +15,9 @@ const {RangePicker} = DatePicker;
 const Option = Select.Option;
 const FormItem = Form.Item;
 const TextArea = Input.TextArea;
+
 @connect((sheet) => ({...sheet}), {...SheetActions})
-export default class _Modal extends Component {
+export default class _FormItem extends Component {
   constructor(props) {
     super(props);
     let {type = 'input', title, sheet, defaultValue = null} = props;
@@ -26,7 +27,7 @@ export default class _Modal extends Component {
     if (type === 'switch') {
       value = detailData[title];
     } else if (type === 'date') {
-      value = moment(detailData[title]).format('YYYY-MM-DD HH:mm:ss')
+      value = detailData[title] ? moment(detailData[title]) : null
     } else if (type === 'editor') {
       if (detailData[title]) {
         const contentBlock = htmlToDraft(detailData[title]);
@@ -82,24 +83,25 @@ export default class _Modal extends Component {
     }
     if (info.file.status === 'done') {
       notification.success({message: '提示', description: '上传成功'});
+
+      // todo 上传后修改数据
+      // this.setState({
+      //   value: ''
+      // })
     } else if (info.file.status === 'error') {
       notification.error({message: '提示', description: '上传失败'});
     }
-
-    // todo 上传后修改数据 需要与后端联调
-    // this.setState({
-    //   value: ''
-    // })
-
   };
 
   render() {
     const {value, displayColorPicker} = this.state;
+    const {sheet} = this.props;
+    const {getFieldDecorator} = sheet.form;
+    let selectHtml = [];
     let {
       type = 'input',
       title,
       label = '',
-      sheet,
       required = true,
       maxLength = 0,
       pattern = '',
@@ -116,13 +118,11 @@ export default class _Modal extends Component {
       name = 'file', // type = img,file 专有
       accept = ".jpg,.png" // type = img,file 专有
     } = this.props;
-    const {getFieldDecorator} = sheet.form;
-    let html = <Input disabled={disabled} placeholder={placeholder}/>,
-      rules = {required: required, message: `请${type === 'select' ? '选择' : '输入'}` + label};
+    let html = <Input disabled={disabled} placeholder={placeholder}/>;
+    let rules = {required: required, message: `请${type === 'select' ? '选择' : '输入'}` + label};
     maxLength ? rules = Object.assign({}, rules, {len: maxLength}) : void 0;
     pattern !== '' ? rules = Object.assign({}, rules, {pattern}) : void 0;
     type = type.toLowerCase();
-    let selectHtml = [];
     for (let item in select) {
       selectHtml.push(<Option key={item} value={select[item]}>{item}</Option>)
     }
@@ -220,7 +220,7 @@ export default class _Modal extends Component {
   }
 }
 
-_Modal.propTypes = {
+_FormItem.propTypes = {
   label: PropTypes.string,
   key: PropTypes.string,
   maxLength: PropTypes.number,

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {render} from 'react-dom';
-import './LoadingInAjax.less';
+import './index.less';
 import {Spin, Icon} from 'antd';
 
 

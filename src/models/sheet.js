@@ -14,6 +14,7 @@ export default {
     form: {},
     // 表格
     dataSource: [],
+    formatter: value => value,
     buttonEvent: {
       insert: () => {
       },
@@ -108,9 +109,9 @@ export default {
     sheet_set(state, {payload}) {
       let {
         columns, rowKey, loadCallback = () => {
-        }
+        }, dataSource = [], formatter = value => value
       } = payload;
-      return {...state, columns, rowKey, dataSource: [], loadCallback};
+      return {...state, columns, rowKey, dataSource, loadCallback, formatter};
     },
     sheet_search(state, {payload}) {
       const {values} = payload;

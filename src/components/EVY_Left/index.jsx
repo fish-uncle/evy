@@ -2,16 +2,18 @@
 import React, {Component, Fragment} from 'react';
 import {Layout, Menu, Icon} from 'antd';
 import {connect} from 'dva';
-import {LeftActions, RouterActions} from "../models";
+import {LeftActions, RouterActions} from "../../models";
 import './Left.less';
 
 const {SubMenu} = Menu;
 const {Sider} = Layout;
 @connect((left, config, sheet) => ({...left, ...config, ...sheet}), {...LeftActions, ...RouterActions})
-export default class Default extends Component {
+export default class Left extends Component {
 
   componentWillMount() {
-    this.props.left_load();
+    const {left} = this.props;
+    const {menu} = left;
+    menu ? void 0 : this.props.left_load();
   }
 
   componentDidMount() {
@@ -31,7 +33,7 @@ export default class Default extends Component {
   chooseHandle = item => {
     if (item.type === 1) {
       this.props.push(item.url);
-      this.props.left_choose({title: item.title})
+      this.props.left_choose({title: item.title, selectedKeys: item.menu_id})
     }
     if (item.type === 2) {
       window.open(item.url)

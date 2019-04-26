@@ -36,11 +36,13 @@ export default {
       secure: true,
     }
   },
-  extraBabelPlugins: [["import", {
-    "libraryName": "antd",
-    "libraryDirectory": "es",
-    "style": true
-  }]],
+  extraBabelPlugins: [
+    ["import", {
+      "libraryName": "antd",
+      "libraryDirectory": "es",
+      "style": true
+    }]
+  ],
   env: {
     development: {
       "extraBabelPlugins": ["dva-hmr"]

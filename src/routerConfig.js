@@ -42,6 +42,10 @@ const routerConfig = [
     component: LoginPage,
   },
   {
+    path: '/login/:callBackUrl',
+    component: LoginPage,
+  },
+  {
     path: '/forget',
     component: ForgetPage,
   },

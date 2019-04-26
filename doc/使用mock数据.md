@@ -5,7 +5,7 @@ app/mock
 
 生成的路由为 [GET] /api/example
 
-附 mockjs 简单例子
+附 mockjs 简单例子 语法参照 [mockjs](http://mockjs.com/examples.html)
 ```javascript
 const Mock = require('mockjs');
 module.exports = Mock.mock({
