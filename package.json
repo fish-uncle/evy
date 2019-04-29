@@ -1,6 +1,6 @@
 {
   "name": "evy",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "后台数据管理平台",
   "main": "",
   "scripts": {
@@ -30,6 +30,7 @@
     "egg-view-nunjucks": "^2.2.0",
     "eruda": "^1.5.4",
     "excel-export": "^0.5.1",
+    "history": "^4.7.2",
     "html-to-draftjs": "^1.4.0",
     "moment": "^2.24.0",
     "prop-types": "^15.7.2",

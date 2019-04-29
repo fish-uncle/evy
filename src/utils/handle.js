@@ -1,10 +1,43 @@
 import {POST} from "./request";
 import {notification} from "antd";
 
+const validate = (props, values, callback) => {
+  const {sheet} = props;
+  const {validate} = sheet;
+  let v = true;
+  for (let i in validate) {
+    let item = validate[i];
+    let title = item.title;
+    if (item.maxLength !== 0) {
+      if ((values[title] + '').length >= item.maxLength) {
+        notification.error({message: '提示', description: '请填写正确长度的' + item.label});
+        v = false;
+        break;
+      }
+    }
+    if (item.pattern !== '') {
+      if (item.pattern.test(values[title])) {
+        notification.error({message: '提示', description: '请填写格式的' + item.label});
+        v = false;
+        break;
+      }
+    }
+    if (item.required) {
+      if (!values[title]) {
+        notification.error({message: '提示', description: '请填写' + item.label});
+        v = false;
+        break;
+      }
+    }
+  }
+  if (v) {
+    callback()
+  }
+};
 const insert = (props) => {
   const {sheet} = props;
   sheet.form.validateFields((err, values) => {
-    if (!err) {
+    const ajax = () => {
       try {
         POST(sheet.insertUrl, values).then(data => {
           if (data && data.success) {
@@ -16,18 +49,15 @@ const insert = (props) => {
       } catch (e) {
         notification.error({message: '提示', description: '添加失败'});
       }
-    } else {
-      for (let item in err) {
-        notification.error({message: '提示', description: err[item].errors[0].message});
-      }
-    }
+    };
+    validate(props, values, ajax);
   })
 };
 
 const update = (props) => {
   const {sheet} = props;
   sheet.form.validateFields((err, values) => {
-    if (!err) {
+    const ajax = () => {
       try {
         POST(sheet.updateUrl, values).then(data => {
           if (data && data.success) {
@@ -39,32 +69,23 @@ const update = (props) => {
       } catch (e) {
         notification.error({message: '提示', description: '更新失败'});
       }
-    } else {
-      for (let item in err) {
-        notification.error({message: '提示', description: err[item].errors[0].message});
-      }
-    }
+    };
+    validate(props, values, ajax);
   })
 };
 
 const search = (props) => {
   const {sheet} = props;
   sheet.form.validateFields((err, values) => {
-    if (!err) {
-      try {
-        let {page} = sheet;
-        page.current = 1;
-        props.sheet_search({values});
-        props.drawer_close();
-        props.sheet_page({page});
-        notification.success({message: '提示', description: '搜索成功'});
-      } catch (e) {
-        notification.error({message: '提示', description: '搜索失败'});
-      }
-    } else {
-      for (let item in err) {
-        notification.error({message: '提示', description: err[item].errors[0].message});
-      }
+    try {
+      let {page} = sheet;
+      page.current = 1;
+      props.sheet_search({values});
+      props.drawer_close();
+      props.sheet_page({page});
+      notification.success({message: '提示', description: '搜索成功'});
+    } catch (e) {
+      notification.error({message: '提示', description: '搜索失败'});
     }
   })
 };

@@ -17,7 +17,9 @@ export default {
           }
         }
         // 变更页面清空搜索
-        dispatch({type: 'sheet/sheet_search', payload: {values: {}}})
+        dispatch({type: 'sheet/sheet_search', payload: {values: {}}});
+        // 变更页面清空校验
+        dispatch({type: 'sheet/clear_validate', payload: {}})
       });
     }
   },

@@ -4,7 +4,7 @@ import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
+import {POST} from '../../utils/request';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {

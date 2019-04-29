@@ -12,6 +12,7 @@ export default {
     detailData: {},
     search: {},
     form: {},
+    validate: {},
     // 表格
     dataSource: [],
     formatter: value => value,
@@ -119,7 +120,6 @@ export default {
     },
     sheet_button_event(state, {payload}) {
       let buttonEvent = Object.assign({}, state.buttonEvent, {[payload.type]: payload.callback});
-
       return {...state, buttonEvent};
     },
     r_sheet_page(state, {payload = {}}) {
@@ -129,6 +129,13 @@ export default {
     sheet_url(state, {payload}) {
       const {listUrl, insertUrl, updateUrl, deleteUrl, exportUrl, recoveryUrl, recoverUrl, importUrl} = payload;
       return {...state, listUrl, insertUrl, updateUrl, deleteUrl, exportUrl, recoveryUrl, recoverUrl, importUrl};
+    },
+    set_validate(state, {payload}) {
+      let validate = Object.assign({}, state.validate, payload.validate);
+      return {...state, validate};
+    },
+    clear_validate(state, {payload}) {
+      return {...state, validate: {}};
     },
   },
 

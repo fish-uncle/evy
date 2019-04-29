@@ -93,6 +93,15 @@ export default class _FormItem extends Component {
     }
   };
 
+  componentDidMount() {
+    const {required = true, maxLength = 0, pattern = '', title, label} = this.props;
+    let obj = {};
+    obj[title] = {maxLength, required, title, pattern, label};
+    this.props.set_validate({
+      validate: obj
+    })
+  }
+
   render() {
     const {value, displayColorPicker} = this.state;
     const {sheet} = this.props;
@@ -102,9 +111,6 @@ export default class _FormItem extends Component {
       type = 'input',
       title,
       label = '',
-      required = true,
-      maxLength = 0,
-      pattern = '',
       showTime = {format: 'HH:mm:ss'}, // type = date 专有
       options = {},  // type = cascader 专有
       select = {},  // type = select 专有
@@ -119,16 +125,13 @@ export default class _FormItem extends Component {
       accept = ".jpg,.png" // type = img,file 专有
     } = this.props;
     let html = <Input disabled={disabled} placeholder={placeholder}/>;
-    let rules = {required: required, message: `请${type === 'select' ? '选择' : '输入'}` + label};
-    maxLength ? rules = Object.assign({}, rules, {len: maxLength}) : void 0;
-    pattern !== '' ? rules = Object.assign({}, rules, {pattern}) : void 0;
     type = type.toLowerCase();
     for (let item in select) {
       selectHtml.push(<Option key={item} value={select[item]}>{item}</Option>)
     }
     let _options = {
       initialValue: value,
-      rules: [rules],
+      rules: [{required: false}],
       normalize: this.normalizeHandle
     };
     switch (type) {
@@ -220,7 +223,8 @@ export default class _FormItem extends Component {
   }
 }
 
-_FormItem.propTypes = {
+_FormItem
+  .propTypes = {
   label: PropTypes.string,
   key: PropTypes.string,
   maxLength: PropTypes.number,

@@ -20,9 +20,14 @@ class PowerController extends Controller {
   async select() {
     const ctx = this.ctx;
     const {power} = ctx.service;
-    let result;
+    let result, checkAdmin;
     try {
-      result = await power.select(ctx.request.body);
+      checkAdmin = await power.check(ctx.request.body);
+      if (checkAdmin > 0) {
+        result = await power.selectAll();
+      } else {
+        result = await power.select(ctx.request.body);
+      }
     } catch (err) {
       console.log(err);
       result = ctx.json.error();
@@ -33,14 +38,17 @@ class PowerController extends Controller {
   async update() {
     const ctx = this.ctx;
     const {power} = ctx.service;
-    let result;
+    let checkAdmin;
     try {
-      result = await power.update(ctx.request.body);
+      checkAdmin = await power.check(ctx.request.body);
+      if (checkAdmin <= 0) {
+        await power.update(ctx.request.body);
+      }
     } catch (err) {
       console.log(err);
-      result = ctx.json.error();
+      ctx.json.error();
     }
-    ctx.body = ctx.json.success({data: {list: result}});
+    ctx.body = ctx.json.success({msg: '修改成功'});
   }
 
 }

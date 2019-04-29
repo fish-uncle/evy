@@ -135,7 +135,7 @@ ENGINE=InnoDB
 COMMENT '权限角色表'
 DEFAULT CHARSET=utf8;
 
--- 权限表
+-- 功能表
 CREATE TABLE IF NOT EXISTS `evy-auth`
 (
   `id` INTEGER auto_increment COMMENT 'id.',
@@ -151,10 +151,10 @@ CREATE TABLE IF NOT EXISTS `evy-auth`
   PRIMARY KEY (`id`, `auth_id`)
 )
 ENGINE=InnoDB
-COMMENT '权限表'
+COMMENT '功能表'
 DEFAULT CHARSET=utf8;
 
--- 权限关联表
+-- 功能权限关联表
 CREATE TABLE IF NOT EXISTS `evy-role-auth`
 (
   `id` INTEGER auto_increment COMMENT 'id.',
@@ -163,5 +163,17 @@ CREATE TABLE IF NOT EXISTS `evy-role-auth`
   PRIMARY KEY (`id`)
 )
 ENGINE=InnoDB
-COMMENT '权限关联表'
+COMMENT '功能权限关联表'
+DEFAULT CHARSET=utf8;
+
+-- 菜单权限关联表
+CREATE TABLE IF NOT EXISTS `evy-role-menu`
+(
+  `id` INTEGER auto_increment COMMENT 'id.',
+  `menu` CHAR(36) NOT NULL COMMENT 'menu_id.',
+  `role` CHAR(36) NOT NULL COMMENT 'role_id.',
+  PRIMARY KEY (`id`)
+)
+ENGINE=InnoDB
+COMMENT '菜单权限关联表'
 DEFAULT CHARSET=utf8;

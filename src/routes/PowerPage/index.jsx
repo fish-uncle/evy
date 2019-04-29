@@ -20,6 +20,7 @@ class PowerPage extends Component {
     autoExpandParent: true,
     checkedKeys: [],
     selectedKeys: [],
+    role: null
   };
 
   componentWillMount() {
@@ -67,10 +68,14 @@ class PowerPage extends Component {
     sheet.form.validateFields((err, values) => {
       if (!err) {
         try {
+          this.setState({
+            role: values.role
+          });
           POST('/api/power/select', values).then(data => {
-            const list = this.ruleHandle(data.list);
+            let checkedKeys = [];
+            data.list.map(item => checkedKeys.push(item.menu_id || item.menu));
             this.setState({
-              treeData: list
+              checkedKeys
             })
           });
         } catch (e) {
@@ -113,6 +118,12 @@ class PowerPage extends Component {
     this.setState({selectedKeys});
   };
 
+  updateTreeHandle = () => {
+    const {checkedKeys, role} = this.state;
+    POST('/api/power/update', {list: checkedKeys, role}).then(() => {
+    });
+  };
+
   render() {
     const {roleList, treeData} = this.state;
     return (
@@ -135,6 +146,7 @@ class PowerPage extends Component {
           >
             {this.renderTreeNodes(treeData)}
           </Tree>
+          <Button type='primary' onClick={this.updateTreeHandle}>更新</Button>
         </TabPane>
         <TabPane key="2" tab='页面内部权限设置'>
 
