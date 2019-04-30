@@ -12,6 +12,7 @@ module.exports = app => {
   const auth = require('./router/auth');
   const power = require('./router/power');
   const login = require('./router/login');
+  const h5 = require('./router/h5');
   menu(app);
   excel(app);
   user(app);
@@ -21,5 +22,6 @@ module.exports = app => {
   auth(app);
   power(app);
   login(app);
+  h5(app);
 
 };

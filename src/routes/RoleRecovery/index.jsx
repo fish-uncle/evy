@@ -4,7 +4,6 @@ import {RouterActions, SheetActions} from '../../models';
 import {Body, Sheet, Drawer} from '../../components';
 import columns from './columns';
 import Right from './right';
-import moment from "moment";
 
 @connect((sheet) => ({...sheet}), {...RouterActions, ...SheetActions})
 export default class RoleRecovery extends Component {

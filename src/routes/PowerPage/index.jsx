@@ -3,7 +3,7 @@ import {connect} from 'dva';
 import {RouterActions, SheetActions} from '../../models';
 import {Body} from '../../components';
 import {FormItem} from '../../components';
-import {Form, Button, notification, Tree, Tabs} from 'antd';
+import {Form, Button, notification, Tree, Tabs, Transfer} from 'antd';
 import {GET, POST} from "../../utils/request";
 import './index.less';
 
@@ -14,19 +14,20 @@ const TabPane = Tabs.TabPane;
 class PowerPage extends Component {
 
   state = {
-    treeData: [],
+    menuData: [],
     roleList: {},
     expandedKeys: [],
     autoExpandParent: true,
     checkedKeys: [],
     selectedKeys: [],
-    role: null
+    role: null,
+    authData: [],
+    targetKeys: [],
   };
 
   componentWillMount() {
     const form = this.props.form;
     this.props.drawer_set({form}); // 传递 antd 的 form 给 model
-
     GET('/api/role/all').then(data => {
       let roleList = {};
       data.list.map(item => {
@@ -34,10 +35,19 @@ class PowerPage extends Component {
       });
       this.setState({roleList})
     });
-    POST('/api/power/all').then(data => {
+    GET('/api/power/all').then(data => {
       const list = this.ruleHandle(data.list);
       this.setState({
-        treeData: list
+        menuData: list
+      })
+    });
+    GET('/api/auth/all').then(data => {
+      let list = [];
+      data.list.map(item => {
+        list.push({key: item.auth_id, title: item.title})
+      });
+      this.setState({
+        authData: list
       })
     });
   }
@@ -71,11 +81,18 @@ class PowerPage extends Component {
           this.setState({
             role: values.role
           });
-          POST('/api/power/select', values).then(data => {
+          POST('/api/power/select/menu', values).then(data => {
             let checkedKeys = [];
             data.list.map(item => checkedKeys.push(item.menu_id || item.menu));
             this.setState({
               checkedKeys
+            })
+          });
+          POST('/api/power/select/auth', values).then(data => {
+            let targetKeys = [];
+            data.list.map(item => targetKeys.push(item.auth_id || item.auth));
+            this.setState({
+              targetKeys
             })
           });
         } catch (e) {
@@ -101,7 +118,6 @@ class PowerPage extends Component {
   });
 
   onExpand = (expandedKeys) => {
-    console.log('onExpand', expandedKeys);
     this.setState({
       expandedKeys,
       autoExpandParent: false,
@@ -109,23 +125,41 @@ class PowerPage extends Component {
   };
 
   onCheck = (checkedKeys) => {
-    console.log('onCheck', checkedKeys);
     this.setState({checkedKeys});
   };
 
-  onSelect = (selectedKeys, info) => {
-    console.log('onSelect', info);
+  onSelect = (selectedKeys) => {
     this.setState({selectedKeys});
   };
 
-  updateTreeHandle = () => {
+  updateMenuHandle = () => {
     const {checkedKeys, role} = this.state;
-    POST('/api/power/update', {list: checkedKeys, role}).then(() => {
+    if (!role) {
+      notification.error({message: '提示', description: '请先选择角色'});
+      return false
+    }
+    POST('/api/power/update/menu', {list: checkedKeys, role}).then(() => {
+      notification.success({message: '提示', description: '更新成功'});
     });
   };
 
+  updateAuthHandle = () => {
+    const {role, targetKeys} = this.state;
+    if (!role) {
+      notification.error({message: '提示', description: '请先选择角色'});
+      return false
+    }
+    POST('/api/power/update/auth', {list: targetKeys, role}).then(() => {
+      notification.success({message: '提示', description: '更新成功'});
+    });
+  };
+
+  handleChange = (targetKeys) => {
+    this.setState({targetKeys});
+  };
+
   render() {
-    const {roleList, treeData} = this.state;
+    const {roleList, menuData, authData, targetKeys} = this.state;
     return (
       <Body>
       <div className="fn-clear power-role-select">
@@ -144,12 +178,18 @@ class PowerPage extends Component {
             onSelect={this.onSelect}
             selectedKeys={this.state.selectedKeys}
           >
-            {this.renderTreeNodes(treeData)}
+            {this.renderTreeNodes(menuData)}
           </Tree>
-          <Button type='primary' onClick={this.updateTreeHandle}>更新</Button>
+          <Button type='primary' className='update-btn' onClick={this.updateMenuHandle}>更新</Button>
         </TabPane>
         <TabPane key="2" tab='页面内部权限设置'>
-
+          <Transfer
+            dataSource={authData}
+            targetKeys={targetKeys}
+            onChange={this.handleChange}
+            render={item => <span>{item.title}</span>}
+          />
+          <Button type='primary' className='update-btn' onClick={this.updateAuthHandle}>更新</Button>
         </TabPane>
       </Tabs>
       </Body>

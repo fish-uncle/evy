@@ -1,4 +1,4 @@
-src/models/config.js
+`src/models/config.js`
 ```javascript
 state: {
   title: 'EVY',

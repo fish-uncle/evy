@@ -23,8 +23,6 @@ class Right extends Component {
             <FormItem label="链接地址" title='url'/>
             <FormItem label="所属页面" title='menu' type='select' select={menuList}/>
             <FormItem label="备注" title='remark' type='textArea' required={false}/>
-            <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
-            <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
             <FormItem title='auth_id' type='hidden' required={false}/>
           </Fragment> : null
         }

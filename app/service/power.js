@@ -20,16 +20,7 @@ class PowerService extends Service {
     return await mysql.count('evy-role', {'soft_delete': 1, admin: 1, role_id: role});
   }
 
-  async selectAll() {
-    const {mysql} = this.app;
-    return await mysql.select('evy-menu', {
-      where: {'soft_delete': 1,},
-      columns: ['menu_id'],
-      orders: [['sort'], ['update_time', 'desc']],
-    });
-  }
-
-  async select(options) {
+  async selectMenu(options) {
     const {mysql} = this.app;
     const {role} = options;
     return await mysql.select('evy-role-menu', {
@@ -38,14 +29,31 @@ class PowerService extends Service {
     });
   }
 
-  async update(options) {
+  async selectAuth(options) {
+    const {mysql} = this.app;
+    const {role} = options;
+    return await mysql.select('evy-role-auth', {
+      where: {'role': role},
+      columns: ['auth']
+    });
+  }
+
+  async updateMenu(options) {
     const {mysql} = this.app;
     const {role, list} = options;
     await mysql.delete('evy-role-menu', {'role': role});
     list.map(async item => {
       await mysql.insert('evy-role-menu', {'role': role, menu: item});
     });
+  }
 
+  async updateAuth(options) {
+    const {mysql} = this.app;
+    const {role, list} = options;
+    await mysql.delete('evy-role-auth', {'role': role});
+    list.map(async item => {
+      await mysql.insert('evy-role-auth', {'role': role, auth: item});
+    });
   }
 
 }

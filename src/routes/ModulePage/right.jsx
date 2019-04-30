@@ -31,8 +31,6 @@ class Right extends Component {
               <FormItem label="模块结束时间" title='end_time' type='date'/>
               <FormItem label="是否上架" title='release' type='switch' required={false}/>
               <FormItem label="详细内容" title='content' type='editor' required={false}/>
-              <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
-              <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
               <FormItem title='module_id' type='hidden' required={false}/>
             </Fragment> : null
         }

@@ -1,18 +1,27 @@
 import React, {Component, Fragment} from 'react';
 import moment from "moment";
-import {Button, Modal} from "antd";
+import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
 import {env, toColumns} from "../../utils/select";
+import {POST} from "../../utils/request";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
   deleteHandle = item => {
+    const {sheet} = this.props;
     Modal.confirm({
       content: '确认是否删除？',
       onOk: () => {
-        console.log(item)
+        try {
+          POST(sheet.deleteUrl, item).then(() => {
+            this.props.sheet_load();
+            notification.success({message: '提示', description: '删除成功'});
+          });
+        } catch (e) {
+          notification.success({message: '提示', description: '删除失败'});
+        }
       }
     })
   };

@@ -1,4 +1,4 @@
-# Input
+# Multiple
 
 ## 基础API
 | 参数 | 含义 | 类型 | 默认值 | 备注 |
@@ -15,7 +15,13 @@
 |maxLength|最长长度|number|0|0为不做限制|
 |pattern|正则匹配值的有效性|regex|''||
 
+## 该类型特殊API
+| 参数 | 含义 | 类型 | 默认值 | 备注 |
+| --------- | --------- | --------- | --------- | --------- |
+|select|可选值配置|object|{}||
+
 ## e.g.
-```         
-<FormItem label="内容示例1" title='field_text'/>
+```     
+const sex={'上新':1,'爆款':2,'精品':3,'置顶':4};    
+<FormItem label="选择示例" title='field_select' type='multiple' select={sex} defaultValue={[1,2]}/>
 ```

@@ -15,7 +15,7 @@ export default class _Drawer extends Component {
 
   render() {
     const {sheet, children, title = '', ...others} = this.props;
-    const {drawerVisible, drawerType} = sheet;
+    const {drawerVisible, drawerType, updateUrl, insertUrl} = sheet;
     return (
       <Drawer
         destroyOnClose={true}
@@ -31,8 +31,8 @@ export default class _Drawer extends Component {
           drawerType === 'insert' || drawerType === 'detail' ? <div className='pos-a btn-container'>
             {
               drawerType === 'insert' ?
-                <Button type='primary' block onClick={() => insert(this.props)}>新增</Button> :
-                <Button type='primary' block onClick={() => update(this.props)}>更新</Button>
+                insertUrl !== '' ? <Button type='primary' block onClick={() => insert(this.props)}>新增</Button> : null :
+                updateUrl !== '' ? <Button type='primary' block onClick={() => update(this.props)}>更新</Button> : null
             }
           </div> : null
         }

@@ -10,7 +10,7 @@ export default class H5Recovery extends Component {
 
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'h5_id'}); // 初始化 table 列表
-    this.props.sheet_url({listUrl: '/api/h5'})
+    this.props.sheet_url({listUrl: '/api/h5/recovery', recoverUrl: '/api/h5/recover'})
   }
 
   componentDidMount() {

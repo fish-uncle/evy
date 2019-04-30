@@ -10,7 +10,13 @@ export default class H5Page extends Component {
 
   componentWillMount() {
     this.props.sheet_set({columns: columns, rowKey: 'h5_id'}); // 初始化 table 列表
-    this.props.sheet_url({listUrl: '/api/h5', recoveryUrl: '/h5/recovery'})
+    this.props.sheet_url({
+      listUrl: '/api/h5/list',
+      recoveryUrl: '/h5/recovery',
+      insertUrl: '/api/h5/insert',
+      deleteUrl: '/api/h5/delete',
+      updateUrl: '/api/h5/update'
+    })
   }
 
   componentDidMount() {
@@ -19,7 +25,7 @@ export default class H5Page extends Component {
   render() {
     return (
       <Body>
-      <Sheet/>
+      <Sheet hasExportBtn={false}/>
       <Drawer>
         <Right/>
       </Drawer>

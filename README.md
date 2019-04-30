@@ -51,19 +51,19 @@ see at http://127.0.0.1:6602
 #### [增删改查](./doc/表单/增删改查.md)
 
 #### 组件
-* [input](doc/表单/组件/input.md)
-* textarea
-* select
-* multiple
-* color
-* switch
-* date
-* rangedate
-* file
-* img
-* cascader
-* editor
-* hidden
+* [input 输入框](./doc/表单/组件/input.md)
+* [textarea 输入框](./doc/表单/组件/textarea.md) 
+* [select 选择框](./doc/表单/组件/select.md)
+* [multiple 多选框](./doc/表单/组件/multiple.md)
+* [color 拾色器](./doc/表单/组件/color.md)
+* [switch 开关](./doc/表单/组件/switch.md)
+* [date 日期选择框](./doc/表单/组件/date.md)
+* [rangedate 范围日期选择框](./doc/表单/组件/rangedate.md)
+* [file 文件上传](./doc/表单/组件/file.md)
+* [img 图片上传](./doc/表单/组件/img.md)
+* [cascader 多级联动选择框](./doc/表单/组件/cascader.md)
+* [editor 富文本编辑器](./doc/表单/组件/editor.md)
+* [hidden 不显示的](./doc/表单/组件/hidden.md)
 
 #### [其他](./doc/表单/其他.md)
 
@@ -71,6 +71,5 @@ see at http://127.0.0.1:6602
 
 ## coding
 * [] todo 搜索
-* [] todo 登录
+* [] todo 导出
 * [] todo 表单参数后端校验
-* [] todo 授权管理

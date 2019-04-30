@@ -15,12 +15,21 @@ class AuthService extends Service {
     });
   }
 
+  async all() {
+    const {mysql} = this.app;
+    return await mysql.select('evy-auth', {
+      where: {'soft_delete': 1,},
+      columns: ['auth_id', 'title'],
+      orders: [['update_time', 'desc'], ['menu', 'desc']],
+    });
+  }
+
   async listOrRecovery(page, type) {
     const {mysql} = this.app;
     return await mysql.select('evy-auth', {
       where: {'soft_delete': type,},
       columns: ['auth_id', 'title', 'remark', 'url', 'menu', 'update_time', 'create_time'],
-      orders: [['update_time', 'desc']],
+      orders: [['update_time', 'desc'], ['menu', 'desc']],
       limit: 10,    // 返回数据量
       offset: (Number(page) - 1) * 10, // 数据偏移量
     });

@@ -39,12 +39,10 @@ const insert = (props) => {
   sheet.form.validateFields((err, values) => {
     const ajax = () => {
       try {
-        POST(sheet.insertUrl, values).then(data => {
-          if (data && data.success) {
-            props.drawer_close();
-            props.sheet_load();
-            notification.success({message: '提示', description: '添加成功'});
-          }
+        POST(sheet.insertUrl, values).then(() => {
+          props.drawer_close();
+          props.sheet_load();
+          notification.success({message: '提示', description: '添加成功'});
         });
       } catch (e) {
         notification.error({message: '提示', description: '添加失败'});
@@ -59,12 +57,10 @@ const update = (props) => {
   sheet.form.validateFields((err, values) => {
     const ajax = () => {
       try {
-        POST(sheet.updateUrl, values).then(data => {
-          if (data && data.success) {
-            props.drawer_close();
-            props.sheet_load();
-            notification.success({message: '提示', description: '更新成功'});
-          }
+        POST(sheet.updateUrl, values).then(() => {
+          props.drawer_close();
+          props.sheet_load();
+          notification.success({message: '提示', description: '更新成功'});
         });
       } catch (e) {
         notification.error({message: '提示', description: '更新失败'});

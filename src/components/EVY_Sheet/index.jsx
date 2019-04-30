@@ -119,17 +119,15 @@ export default class Sheet extends React.Component {
     return (
       <Fragment>
         <Row className='fun-container'>
-
           {
             hasAddBtn && <Col span={span} style={{paddingRight: '5px', height: '44px'}}>
               <Button icon="edit" type="primary" block onClick={this.insertHandle}
-                      disabled={insertUrl === 'show' ? false : true}>新增</Button>
+                      disabled={insertUrl ? false : true}>新增</Button>
             </Col>
           }
           {
             hasSearchBtn && <Col span={span} style={{padding: '0 5px'}}>
               <Button icon="search" type="primary" block
-                      disabled={button === 'show' ? false : true}
                       onClick={this.searchHandle}>搜索</Button>
             </Col>
           }

@@ -1,4 +1,5 @@
-app/mock
+`app/mock`
+
 根据目录结构生成
 
 例: 目录为 app/mock/get/api/example.js 

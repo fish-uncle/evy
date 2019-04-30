@@ -23,7 +23,6 @@ export default class _FormItem extends Component {
     let {type = 'input', title, sheet, defaultValue = null} = props;
     const {detailData} = sheet;
     let value, editorState;
-
     if (type === 'switch') {
       value = detailData[title];
     } else if (type === 'date') {
@@ -39,8 +38,10 @@ export default class _FormItem extends Component {
         editorState = EditorState.createWithContent(contentState);
         value = '';
       }
+    } else if (type === 'multiple') {
+      !value ? value = [] : void 0;
     } else {
-      value = detailData[title] || defaultValue
+      value = typeof detailData[title] === 'number' || typeof detailData[title] === 'boolean' ? detailData[title] : detailData[title] || defaultValue
     }
     this.state = {
       value,
@@ -112,14 +113,15 @@ export default class _FormItem extends Component {
       title,
       label = '',
       showTime = {format: 'HH:mm:ss'}, // type = date 专有
-      options = {},  // type = cascader 专有
+      options = [],  // type = cascader 专有
       select = {},  // type = select 专有
       disabled = false,
       className,
       placeholder = '',
+      uploadCallBack = this.uploadHandle,
       style,
-      fromData = {}, // type = img,file 专有
-      size = '200*200', // type = img,file 专有
+      formData = {}, // type = img,file 专有
+      size = '', // type = img,file 专有
       action = '/', // type = img,file 专有
       name = 'file', // type = img,file 专有
       accept = ".jpg,.png" // type = img,file 专有
@@ -151,24 +153,24 @@ export default class _FormItem extends Component {
         });
         break;
       case 'multiple':
-        html = html = <Select disabled={disabled} mode="multiple">{selectHtml}</Select>;
+        html = <Select disabled={disabled} mode="multiple">{selectHtml}</Select>;
         break;
       case 'select':
-        html = html = <Select placeholder={placeholder} disabled={disabled}>{selectHtml}</Select>;
+        html = <Select placeholder={placeholder} disabled={disabled}>{selectHtml}</Select>;
         break;
     }
     return (
       type === 'img' || type === 'file' ? <div className='upload-container'>
           <FormItem label={label} className={className} style={style}>
             <img src={value ? value : Empty.PRESENTED_IMAGE_DEFAULT} alt=""/>
-            {type === 'img' ? <p>建议 {size}</p> : null}
+            {size !== '' ? <p>建议 {size}</p> : null}
             <Upload accept={accept}
                     name={name}
-                    data={fromData}
+                    data={formData}
                     action={action}
                     showUploadList={false}
                     withCredentials={true}
-                    onChange={this.uploadHandle}>
+                    onChange={uploadCallBack}>
               <Button
                 type='primary'>更换</Button></Upload>
             <div className='fn-hide'>
@@ -203,20 +205,24 @@ export default class _FormItem extends Component {
               }
             </div>
           </FormItem>
-          : <FormItem label={label} className={className} style={style}>
-            <div className={type === 'hidden' || type === 'editor' ? 'fn-hide' : ''}>
+          : type === 'editor' ? <FormItem label={label} className={className} style={style}>
+            <div className='fn-hide'>
               {
                 getFieldDecorator(title, _options)(html)
               }
             </div>
-            {
-              type === 'editor' ? <Editor
-                editorState={this.state.editorState}
-                wrapperClassName="editor-wrapper"
-                editorClassName="editor"
-                onEditorStateChange={this.onEditorStateChange}
-              /> : null
-            }
+            <Editor
+              editorState={this.state.editorState}
+              wrapperClassName="editor-wrapper"
+              editorClassName="editor"
+              onEditorStateChange={this.onEditorStateChange}
+            />
+          </FormItem> : <FormItem label={label} className={className} style={style}>
+            <div className={type === 'hidden' ? 'fn-hide' : ''}>
+              {
+                getFieldDecorator(title, _options)(html)
+              }
+            </div>
           </FormItem>
 
     )

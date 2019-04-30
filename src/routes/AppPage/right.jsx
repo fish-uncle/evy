@@ -26,8 +26,6 @@ class Right extends Component {
             <FormItem label="关联网址" title='associate_url' required={false}/>
             <FormItem label="版本号" title='version'/>
             <FormItem label="强制更新" title='update' type='switch' required={false}/>
-            <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
-            <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
             <FormItem title='app_id' type='hidden' required={false}/>
           </Fragment> : null
         }

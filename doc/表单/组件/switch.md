@@ -1,4 +1,4 @@
-# Input
+# Switch
 
 ## 基础API
 | 参数 | 含义 | 类型 | 默认值 | 备注 |
@@ -17,5 +17,5 @@
 
 ## e.g.
 ```         
-<FormItem label="内容示例1" title='field_text'/>
+ <FormItem label="开关示例" title='field_switch' type='switch'/>
 ```

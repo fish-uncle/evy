@@ -24,11 +24,10 @@ class Right extends Component {
                       defaultValue={1}/>
             <FormItem label="链接地址" title='url' required={false}/>
             <FormItem label="排序" title='sort' required={false}/>
+            <FormItem label="是否显示在左侧菜单" title='display' type='select' select={{'显示': 2, '隐藏': 1}} defaultValue={1}/>
             <FormItem label="所属父级菜单" title='nexus' required={false} type='select' select={nexusList}
                       defaultValue={null}/>
             <FormItem label="图标" title='icon' required={false}/>
-            <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
-            <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
             <FormItem title='menu_id' type='hidden' required={false}/>
           </Fragment> : null
         }

@@ -57,8 +57,6 @@ class Right extends Component {
             <FormItem label="籍贯" title='native_address' type='cascader' required={false} options={cityList}/>
             <FormItem label="籍贯详细地址" title='native_address_detail' type='textarea' required={false}/>
             <FormItem label="备注" title='remark' type='textarea' required={false}/>
-            <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
-            <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
             <FormItem title='user_id' type='hidden' required={false}/>
             <Button block onClick={() => this.passwordHandle(detailData)}>重置密码：888888</Button>
           </Fragment> : null

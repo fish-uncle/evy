@@ -1,4 +1,4 @@
-# Input
+# Editor
 
 ## 基础API
 | 参数 | 含义 | 类型 | 默认值 | 备注 |
@@ -16,6 +16,6 @@
 |pattern|正则匹配值的有效性|regex|''||
 
 ## e.g.
-```         
-<FormItem label="内容示例1" title='field_text'/>
+```   
+<FormItem label="富文本示例" title='field_editor' type='editor'/>
 ```

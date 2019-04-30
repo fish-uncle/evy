@@ -17,16 +17,16 @@ class PowerController extends Controller {
     ctx.body = ctx.json.success({data: {list: result}});
   }
 
-  async select() {
+  async selectMenu() {
     const ctx = this.ctx;
-    const {power} = ctx.service;
+    const {power, menu} = ctx.service;
     let result, checkAdmin;
     try {
       checkAdmin = await power.check(ctx.request.body);
       if (checkAdmin > 0) {
-        result = await power.selectAll();
+        result = await menu.all();
       } else {
-        result = await power.select(ctx.request.body);
+        result = await power.selectMenu(ctx.request.body);
       }
     } catch (err) {
       console.log(err);
@@ -35,14 +35,48 @@ class PowerController extends Controller {
     ctx.body = ctx.json.success({data: {list: result}});
   }
 
-  async update() {
+  async selectAuth() {
+    const ctx = this.ctx;
+    const {power, auth} = ctx.service;
+    let result, checkAdmin;
+    try {
+      checkAdmin = await power.check(ctx.request.body);
+      if (checkAdmin > 0) {
+        result = await auth.all();
+      } else {
+        result = await power.selectAuth(ctx.request.body);
+      }
+    } catch (err) {
+      console.log(err);
+      result = ctx.json.error();
+    }
+    ctx.body = ctx.json.success({data: {list: result}});
+  }
+
+  async updateMenu() {
     const ctx = this.ctx;
     const {power} = ctx.service;
     let checkAdmin;
     try {
       checkAdmin = await power.check(ctx.request.body);
       if (checkAdmin <= 0) {
-        await power.update(ctx.request.body);
+        await power.updateMenu(ctx.request.body);
+      }
+    } catch (err) {
+      console.log(err);
+      ctx.json.error();
+    }
+    ctx.body = ctx.json.success({msg: '修改成功'});
+  }
+
+  async updateAuth() {
+    const ctx = this.ctx;
+    const {power} = ctx.service;
+    let checkAdmin;
+    try {
+      checkAdmin = await power.check(ctx.request.body);
+      if (checkAdmin <= 0) {
+        await power.updateAuth(ctx.request.body);
       }
     } catch (err) {
       console.log(err);

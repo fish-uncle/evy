@@ -8,7 +8,7 @@ class MenuService extends Service {
   async auth() {
     const {mysql} = this.app;
     return await mysql.select('evy-menu', {
-      where: {'soft_delete': 1,},
+      where: {'soft_delete': 1, 'display': 2},
       columns: ['menu_id', 'title', 'icon', 'nexus', 'type', 'url'],
       orders: [['sort'], ['update_time', 'desc']],
     });
@@ -37,7 +37,7 @@ class MenuService extends Service {
     const {mysql} = this.app;
     return await mysql.select('evy-menu', {
       where: {'soft_delete': type,},
-      columns: ['menu_id', 'title', 'icon', 'nexus', 'type', 'url', 'sort', 'update_time','create_time'],
+      columns: ['menu_id', 'title', 'icon', 'nexus', 'type', 'url', 'sort', 'update_time', 'create_time', 'display'],
       orders: [['sort'], ['update_time', 'desc']],
       limit: 10,    // 返回数据量
       offset: (Number(page) - 1) * 10, // 数据偏移量
@@ -50,7 +50,7 @@ class MenuService extends Service {
   }
 
   async insert(options) {
-    let {title, type, url, sort, icon, nexus} = options;
+    let {title, type, url, sort, icon, nexus, display} = options;
     const {mysql} = this.app;
     const {literals} = mysql;
     return await mysql.insert('evy-menu',
@@ -58,19 +58,20 @@ class MenuService extends Service {
         menu_id: uuid(),
         create_time: literals.now,
         update_time: literals.now,
+        display,
         title, type, url, sort, icon, nexus
       }
     );
   }
 
   async update(options) {
-    let {menu_id, title, type, url, sort, icon, nexus} = options;
+    let {menu_id, title, type, url, sort, icon, nexus, display} = options;
     const {mysql} = this.app;
     const {literals} = mysql;
     return await mysql.update('evy-menu',
       {
         update_time: literals.now,
-        title, type, url, sort, icon, nexus
+        title, type, url, sort, icon, nexus, display
       }, {
         where: {
           menu_id

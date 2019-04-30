@@ -17,5 +17,5 @@
 
 ## e.g.
 ```         
-<FormItem label="内容示例1" title='field_text'/>
+<FormItem title='id' type='hidden'/>
 ```

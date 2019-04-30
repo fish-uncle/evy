@@ -13,6 +13,7 @@ CREATE TABLE IF NOT EXISTS `evy-menu`
   `icon` CHAR(30) COMMENT '图标。',
   `url` TEXT NOT NULL COMMENT '链接地址。',
   `type` TINYINT UNSIGNED DEFAULT 1 COMMENT '跳转类型：内部/外部 ：1/2',
+  `display` TINYINT UNSIGNED DEFAULT 1 COMMENT '菜单显示问题：显示/隐藏 2/1。',
   `sort` CHAR(30) DEFAULT NULL COMMENT '排序。',
   `nexus` CHAR(36) DEFAULT NULL COMMENT '关联菜单',
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
@@ -176,4 +177,27 @@ CREATE TABLE IF NOT EXISTS `evy-role-menu`
 )
 ENGINE=InnoDB
 COMMENT '菜单权限关联表'
+DEFAULT CHARSET=utf8;
+
+-- H5表
+CREATE TABLE IF NOT EXISTS `evy-h5`
+(
+  `id` INTEGER auto_increment COMMENT 'id.',
+  `h5_id` CHAR(36) NOT NULL COMMENT 'id.',
+  `name` CHAR(30) NOT NULL COMMENT '名称。',
+  `title` CHAR(30) NOT NULL COMMENT '网页标题。',
+  `version` CHAR(30) NOT NULL COMMENT '版本。',
+  `description` TEXT NOT NULL COMMENT '描述。',
+  `release` TINYINT UNSIGNED DEFAULT 1 COMMENT '上架：未上架/已上架：1/2。',
+  `env` CHAR(30) NOT NULL COMMENT '环境：测试环境/本地环境/开发环境/生产环境:test/local/dev/prod',
+  `js_url` TEXT DEFAULT NULL COMMENT 'js',
+  `css_url` TEXT DEFAULT NULL COMMENT 'css',
+  `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
+  `create_time` DATETIME NOT NULL COMMENT '创建时间',
+  `update_time` DATETIME NOT NULL COMMENT '更新时间',
+  `delete_time` DATETIME COMMENT '删除时间',
+  PRIMARY KEY (`id`, `h5_id`)
+)
+ENGINE=InnoDB
+COMMENT 'H5表'
 DEFAULT CHARSET=utf8;
