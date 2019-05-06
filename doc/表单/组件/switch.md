@@ -16,6 +16,8 @@
 |pattern|正则匹配值的有效性|regex|''||
 
 ## e.g.
-```         
- <FormItem label="开关示例" title='field_switch' type='switch'/>
+```   
+import {FormItem} from '../../components';
+      
+<FormItem label="开关示例" title='field_switch' type='switch'/>
 ```

@@ -8,7 +8,7 @@ class PowerService extends Service {
     const {mysql} = this.app;
     const {role} = options;
     return await mysql.select('evy-menu', {
-      where: {'soft_delete': 1,},
+      where: {'soft_delete': 0,},
       columns: ['menu_id', 'title', 'nexus'],
       orders: [['sort'], ['update_time', 'desc']],
     });
@@ -17,7 +17,7 @@ class PowerService extends Service {
   async check(options) {
     const {mysql} = this.app;
     const {role} = options;
-    return await mysql.count('evy-role', {'soft_delete': 1, admin: 1, role_id: role});
+    return await mysql.count('evy-role', {'soft_delete': 0, admin: 1, role_id: role});
   }
 
   async selectMenu(options) {

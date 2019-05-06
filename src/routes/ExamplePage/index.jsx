@@ -15,7 +15,8 @@ export default class ExamplePage extends Component {
         data.list.map(item => {
           item['field_rangeDate'] = [moment(item.field_rangeDate[0], 'YYYY-MM-DD'), moment(item.field_rangeDate[1], 'YYYY-MM-DD')];
           item['field_cascader'] = item.field_cascader ? item.field_cascader.split(',') : [];
-        })
+        });
+        return data;
       }
     }); // 初始化 table 列表
     this.props.sheet_url({

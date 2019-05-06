@@ -5,7 +5,7 @@ import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
 import {POST} from "../../utils/request";
-import {env, toColumns} from '../../utils/select';
+import {boolean, env, toColumns} from '../../utils/select';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
@@ -50,8 +50,8 @@ const columns = [{
   render: item => toColumns(item.env, env),
 }, {
   title: '上架状态',
-  key: 'release',
-  render: item => item.release ? '已上架' : '未上架',
+  key: 'put',
+  render: item =>  toColumns(item.put, boolean),
 }, {
   title: '更新时间',
   width: 200,

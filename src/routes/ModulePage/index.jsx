@@ -22,7 +22,8 @@ export default class ModulePage extends Component {
           item['end_time'] = moment(item.end_time).format('YYYY-MM-DD HH:mm:ss');
           item['update_time'] = moment(item.update_time).format('YYYY-MM-DD HH:mm:ss');
           item['create_time'] = moment(item.create_time).format('YYYY-MM-DD HH:mm:ss');
-        })
+        });
+        return data
       }
     }); // 初始化 table 列表
     this.props.sheet_url({

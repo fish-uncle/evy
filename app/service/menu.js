@@ -8,7 +8,7 @@ class MenuService extends Service {
   async auth() {
     const {mysql} = this.app;
     return await mysql.select('evy-menu', {
-      where: {'soft_delete': 1, 'display': 2},
+      where: {'soft_delete': 0, 'display': 1},
       columns: ['menu_id', 'title', 'icon', 'nexus', 'type', 'url'],
       orders: [['sort'], ['update_time', 'desc']],
     });
@@ -17,7 +17,7 @@ class MenuService extends Service {
   async all() {
     const {mysql} = this.app;
     return await mysql.select('evy-menu', {
-      where: {'soft_delete': 1,},
+      where: {'soft_delete': 0},
       columns: ['menu_id', 'title'],
       orders: [['sort'], ['update_time', 'desc']],
     });
@@ -33,10 +33,17 @@ class MenuService extends Service {
     });
   }
 
-  async listOrRecovery(page, type) {
+  async listOrRecovery(options, _type) {
+    const {page = 1, title = null, url = null, type = null} = options;
+    let where = {'soft_delete': _type};
+    let like = {};
+    title ? like = Object.assign({}, like, {title}) : void 0;
+    url ? like = Object.assign({}, like, {url}) : void 0;
+    type ? where = Object.assign({}, where, {type}) : void 0;
     const {mysql} = this.app;
     return await mysql.select('evy-menu', {
-      where: {'soft_delete': type,},
+      where,
+      like,
       columns: ['menu_id', 'title', 'icon', 'nexus', 'type', 'url', 'sort', 'update_time', 'create_time', 'display'],
       orders: [['sort'], ['update_time', 'desc']],
       limit: 10,    // 返回数据量
@@ -44,9 +51,9 @@ class MenuService extends Service {
     });
   }
 
-  async count() {
+  async count(type) {
     const {mysql} = this.app;
-    return await mysql.count('evy-menu', {'soft_delete': 1});
+    return await mysql.count('evy-menu', {'soft_delete': type});
   }
 
   async insert(options) {

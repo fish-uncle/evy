@@ -29,8 +29,13 @@ export default {
       current: 1,
       total: 0
     },
-    loadCallback: () => {
+    insertCallBack: () => {
     },
+    updateCallBack: () => {
+    },
+    deleteCallBack: () => {
+    },
+    loadCallback: data => data,
     rowKey: '',
     columns: [],
     // 请求地址
@@ -63,9 +68,8 @@ export default {
         });
         yield put({
           type: 'r_sheet_load',
-          payload: result
+          payload: loadCallback(result)
         });
-        loadCallback(result);
       } catch (e) {
         console.error('sheet_load报错了： ', e);
       }
@@ -81,9 +85,8 @@ export default {
         });
         yield put({
           type: 'r_sheet_load',
-          payload: result
+          payload: loadCallback(result)
         });
-        loadCallback(result);
       } catch (e) {
         console.error('sheet_load报错了： ', e);
       }
@@ -109,10 +112,22 @@ export default {
     },
     sheet_set(state, {payload}) {
       let {
-        columns, rowKey, loadCallback = () => {
-        }, dataSource = [], formatter = value => value
+        columns, rowKey, loadCallback = data => data, dataSource = [], formatter = value => value, insertCallBack = () => {
+        }, updateCallBack = () => {
+        }, deleteCallBack = () => {
+        }
       } = payload;
-      return {...state, columns, rowKey, dataSource, loadCallback, formatter};
+      return {
+        ...state,
+        columns,
+        rowKey,
+        dataSource,
+        loadCallback,
+        formatter,
+        insertCallBack,
+        updateCallBack,
+        deleteCallBack
+      };
     },
     sheet_search(state, {payload}) {
       const {values} = payload;

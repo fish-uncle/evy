@@ -7,11 +7,10 @@ class ModuleController extends Controller {
   async list() {
     const ctx = this.ctx;
     const {module} = ctx.service;
-    const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await module.listOrRecovery(pageNum, 1);
-      total = await module.count();
+      result = await module.listOrRecovery(ctx.query, 0);
+      total = await module.count(0);
     } catch (err) {
       console.log(err);
       result = ctx.json.error();
@@ -22,11 +21,10 @@ class ModuleController extends Controller {
   async recovery() {
     const ctx = this.ctx;
     const {module} = ctx.service;
-    const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await module.listOrRecovery(pageNum, 2);
-      total = await module.count();
+      result = await module.listOrRecovery(ctx.query, 1);
+      total = await module.count(1);
       ctx.body = ctx.json.success({data: {list: result, total: total}});
     } catch (err) {
       console.log(err);
@@ -62,7 +60,7 @@ class ModuleController extends Controller {
     const ctx = this.ctx;
     const {module} = ctx.service;
     try {
-      await module.delOrRecover(ctx.request.body, 2);
+      await module.delOrRecover(ctx.request.body, 1);
       ctx.body = ctx.json.success({msg: '删除成功'});
     } catch (err) {
       console.log(err);
@@ -74,7 +72,7 @@ class ModuleController extends Controller {
     const ctx = this.ctx;
     const {module} = ctx.service;
     try {
-      await module.delOrRecover(ctx.request.body, 1);
+      await module.delOrRecover(ctx.request.body, 0);
       ctx.body = ctx.json.success({msg: '恢复成功'});
     } catch (err) {
       console.log(err);

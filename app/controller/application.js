@@ -20,11 +20,10 @@ class ApplicationController extends Controller {
   async list() {
     const ctx = this.ctx;
     const {application} = ctx.service;
-    const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await application.listOrRecovery(pageNum, 1);
-      total = await application.count();
+      result = await application.listOrRecovery(ctx.query, 0);
+      total = await application.count(0);
     } catch (err) {
       console.log(err);
       result = ctx.json.error();
@@ -35,11 +34,10 @@ class ApplicationController extends Controller {
   async recovery() {
     const ctx = this.ctx;
     const {application} = ctx.service;
-    const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await application.listOrRecovery(pageNum, 2);
-      total = await application.count();
+      result = await application.listOrRecovery(ctx.query, 1);
+      total = await application.count(1);
       ctx.body = ctx.json.success({data: {list: result, total: total}});
     } catch (err) {
       console.log(err);
@@ -75,7 +73,7 @@ class ApplicationController extends Controller {
     const ctx = this.ctx;
     const {application} = ctx.service;
     try {
-      await application.delOrRecover(ctx.request.body, 2);
+      await application.delOrRecover(ctx.request.body, 1);
       ctx.body = ctx.json.success({msg: '删除成功'});
     } catch (err) {
       console.log(err);
@@ -87,7 +85,7 @@ class ApplicationController extends Controller {
     const ctx = this.ctx;
     const {application} = ctx.service;
     try {
-      await application.delOrRecover(ctx.request.body, 1);
+      await application.delOrRecover(ctx.request.body, 0);
       ctx.body = ctx.json.success({msg: '恢复成功'});
     } catch (err) {
       console.log(err);

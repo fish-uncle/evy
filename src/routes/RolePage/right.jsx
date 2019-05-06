@@ -22,7 +22,7 @@ class Right extends Component {
           drawerType === 'insert' || drawerType === 'detail' ? <Fragment>
             <FormItem label="角色名" title='title'/>
             <FormItem label="是否管理员" title='admin' type='select' select={boolean}
-                      defaultValue={2}/>
+                      defaultValue={0}/>
             <FormItem label="更新时间" title='update_time' type='date' disabled={true}/>
             <FormItem label="创建时间" title='create_time' type='date' disabled={true}/>
             <FormItem title='role_id' type='hidden' required={false}/>

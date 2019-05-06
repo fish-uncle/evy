@@ -44,12 +44,12 @@ class Right extends Component {
             <FormItem label="手机号" title='phone'/>
             <FormItem label="E-mail" title='email' required={false}/>
             <FormItem label="性别" title='sex' type='select' select={sex}
-                      defaultValue={'1'}/>
+                      defaultValue={1}/>
             <FormItem label="民族" title='nation' type='select' select={nation}
                       defaultValue='汉族'/>
             <FormItem label="婚姻情况" title='marriage' type='select'
                       select={marriage}
-                      defaultValue={'1'}/>
+                      defaultValue={1}/>
             <FormItem label="出生日期" title='birth_time' type='date'/>
             <FormItem label="入职时间" title='join_time' type='date'/>
             <FormItem label="银行卡号" title='bank_card' type='input' required={false}/>

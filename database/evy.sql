@@ -1,4 +1,5 @@
-CREATE database EVY DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE database EVY DEFAULT CHARACTER
+SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- 所有id 都是 自然数排序
 -- 所有xx_id 都是 36位uuid
@@ -19,12 +20,9 @@ CREATE TABLE IF NOT EXISTS `evy-menu`
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
   `create_time` DATETIME NOT NULL COMMENT '创建时间',
   `update_time` DATETIME NOT NULL COMMENT '更新时间',
-  `delete_time` DATETIME COMMENT '删除时间',
-  PRIMARY KEY (`id`, `menu_id`)
+  `delete_time` DATETIME COMMENT '删除时间', PRIMARY KEY(`id`, `menu_id`)
 )
-ENGINE=InnoDB
-COMMENT '菜单表'
-DEFAULT CHARSET=utf8;
+ENGINE = InnoDB COMMENT '菜单表' DEFAULT CHARSET = utf8;
 
 -- 员工表
 CREATE TABLE IF NOT EXISTS `evy-user`
@@ -66,12 +64,9 @@ CREATE TABLE IF NOT EXISTS `evy-user`
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
   `create_time` DATETIME NOT NULL COMMENT '创建时间。',
   `update_time` DATETIME NOT NULL COMMENT '更新时间。',
-  `delete_time` DATETIME DEFAULT NULL COMMENT '删除时间。',
-  PRIMARY KEY (`id`,`user_id`)
+  `delete_time` DATETIME DEFAULT NULL COMMENT '删除时间。', PRIMARY KEY(`id`, `user_id`)
 )
-ENGINE=InnoDB
-COMMENT '员工表'
-DEFAULT CHARSET=utf8;
+ENGINE = InnoDB COMMENT '员工表' DEFAULT CHARSET = utf8;
 
 -- 应用表
 CREATE TABLE IF NOT EXISTS `evy-app`
@@ -83,17 +78,14 @@ CREATE TABLE IF NOT EXISTS `evy-app`
   `version` CHAR(30) NOT NULL COMMENT '版本。',
   `icon` TEXT COMMENT '图标。',
   `description` TEXT NOT NULL COMMENT '描述。',
-  `update` TINYINT UNSIGNED DEFAULT 1 COMMENT '强制更新：不强制/强制：1/2。',
+  `update` CHAR(1) DEFAULT 1 COMMENT '强制更新：不强制/强制：1/2。',
   `associate_url` TEXT DEFAULT NULL COMMENT '关联网址',
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
   `create_time` DATETIME NOT NULL COMMENT '创建时间',
   `update_time` DATETIME NOT NULL COMMENT '更新时间',
-  `delete_time` DATETIME COMMENT '删除时间',
-  PRIMARY KEY (`id`, `app_id`)
+  `delete_time` DATETIME COMMENT '删除时间', PRIMARY KEY(`id`, `app_id`)
 )
-ENGINE=InnoDB
-COMMENT '应用表'
-DEFAULT CHARSET=utf8;
+ENGINE = InnoDB COMMENT '应用表' DEFAULT CHARSET = utf8;
 
 -- 模块表
 CREATE TABLE IF NOT EXISTS `evy-module`
@@ -105,19 +97,17 @@ CREATE TABLE IF NOT EXISTS `evy-module`
   `description` TEXT NOT NULL COMMENT '描述。',
   `content` TEXT DEFAULT NULL COMMENT '富文本内容。',
   `app` CHAR(36) NOT NULL COMMENT '所属应用。',
+  `put`  CHAR(1) DEFAULT 1 COMMENT '上架：未上架/已上架：1/2。',
   `label` TEXT DEFAULT NULL COMMENT '标签。',
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
-  `timing` TINYINT UNSIGNED DEFAULT 1 COMMENT '是否是定时活动：不是/是：1/2',
+  `timing`  CHAR(1) DEFAULT 1 COMMENT '是否是定时活动：不是/是：1/2',
   `start_time` DATETIME NOT NULL COMMENT '开始时间',
   `end_time` DATETIME NOT NULL COMMENT '结束时间',
   `create_time` DATETIME NOT NULL COMMENT '创建时间',
   `update_time` DATETIME NOT NULL COMMENT '更新时间',
-  `delete_time` DATETIME COMMENT '删除时间',
-  PRIMARY KEY (`id`, `module_id`)
+  `delete_time` DATETIME COMMENT '删除时间', PRIMARY KEY(`id`, `module_id`)
 )
-ENGINE=InnoDB
-COMMENT '模块表'
-DEFAULT CHARSET=utf8;
+ENGINE = InnoDB COMMENT '模块表' DEFAULT CHARSET = utf8;
 
 -- 权限角色表
 CREATE TABLE IF NOT EXISTS `evy-role`
@@ -126,15 +116,12 @@ CREATE TABLE IF NOT EXISTS `evy-role`
   `role_id` CHAR(36) NOT NULL COMMENT 'id.',
   `title` CHAR(10) NOT NULL COMMENT '角色名。',
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
-  `admin` TINYINT UNSIGNED DEFAULT 2 COMMENT '是否是管理员：是/否：1/2。',
+  `admin` CHAR(1) DEFAULT 2 COMMENT '是否是管理员：是/否：1/2。',
   `create_time` DATETIME NOT NULL COMMENT '创建时间。',
   `update_time` DATETIME NOT NULL COMMENT '更新时间。',
-  `delete_time` DATETIME DEFAULT NULL COMMENT '删除时间。',
-  PRIMARY KEY (`id`,`role_id`)
+  `delete_time` DATETIME DEFAULT NULL COMMENT '删除时间。', PRIMARY KEY(`id`, `role_id`)
 )
-ENGINE=InnoDB
-COMMENT '权限角色表'
-DEFAULT CHARSET=utf8;
+ENGINE = InnoDB COMMENT '权限角色表' DEFAULT CHARSET = utf8;
 
 -- 功能表
 CREATE TABLE IF NOT EXISTS `evy-auth`
@@ -148,36 +135,27 @@ CREATE TABLE IF NOT EXISTS `evy-auth`
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
   `create_time` DATETIME NOT NULL COMMENT '创建时间',
   `update_time` DATETIME NOT NULL COMMENT '更新时间',
-  `delete_time` DATETIME COMMENT '删除时间',
-  PRIMARY KEY (`id`, `auth_id`)
+  `delete_time` DATETIME COMMENT '删除时间', PRIMARY KEY(`id`, `auth_id`)
 )
-ENGINE=InnoDB
-COMMENT '功能表'
-DEFAULT CHARSET=utf8;
+ENGINE = InnoDB COMMENT '功能表' DEFAULT CHARSET = utf8;
 
 -- 功能权限关联表
 CREATE TABLE IF NOT EXISTS `evy-role-auth`
 (
   `id` INTEGER auto_increment COMMENT 'id.',
   `auth` CHAR(36) NOT NULL COMMENT 'auth_id.',
-  `role` CHAR(36) NOT NULL COMMENT 'role_id.',
-  PRIMARY KEY (`id`)
+  `role` CHAR(36) NOT NULL COMMENT 'role_id.', PRIMARY KEY(`id`)
 )
-ENGINE=InnoDB
-COMMENT '功能权限关联表'
-DEFAULT CHARSET=utf8;
+ENGINE = InnoDB COMMENT '功能权限关联表' DEFAULT CHARSET = utf8;
 
 -- 菜单权限关联表
 CREATE TABLE IF NOT EXISTS `evy-role-menu`
 (
   `id` INTEGER auto_increment COMMENT 'id.',
   `menu` CHAR(36) NOT NULL COMMENT 'menu_id.',
-  `role` CHAR(36) NOT NULL COMMENT 'role_id.',
-  PRIMARY KEY (`id`)
+  `role` CHAR(36) NOT NULL COMMENT 'role_id.', PRIMARY KEY(`id`)
 )
-ENGINE=InnoDB
-COMMENT '菜单权限关联表'
-DEFAULT CHARSET=utf8;
+ENGINE = InnoDB COMMENT '菜单权限关联表' DEFAULT CHARSET = utf8;
 
 -- H5表
 CREATE TABLE IF NOT EXISTS `evy-h5`
@@ -188,16 +166,13 @@ CREATE TABLE IF NOT EXISTS `evy-h5`
   `title` CHAR(30) NOT NULL COMMENT '网页标题。',
   `version` CHAR(30) NOT NULL COMMENT '版本。',
   `description` TEXT NOT NULL COMMENT '描述。',
-  `release` TINYINT UNSIGNED DEFAULT 1 COMMENT '上架：未上架/已上架：1/2。',
+  `put` CHAR(1) DEFAULT 1 COMMENT '上架：未上架/已上架：1/2。',
   `env` CHAR(30) NOT NULL COMMENT '环境：测试环境/本地环境/开发环境/生产环境:test/local/dev/prod',
   `js_url` TEXT DEFAULT NULL COMMENT 'js',
   `css_url` TEXT DEFAULT NULL COMMENT 'css',
   `soft_delete` TINYINT UNSIGNED DEFAULT 1 COMMENT '记录：未删除/已删除：1/2。',
   `create_time` DATETIME NOT NULL COMMENT '创建时间',
   `update_time` DATETIME NOT NULL COMMENT '更新时间',
-  `delete_time` DATETIME COMMENT '删除时间',
-  PRIMARY KEY (`id`, `h5_id`)
+  `delete_time` DATETIME COMMENT '删除时间', PRIMARY KEY(`id`, `h5_id`)
 )
-ENGINE=InnoDB
-COMMENT 'H5表'
-DEFAULT CHARSET=utf8;
+ENGINE = InnoDB COMMENT 'H5表' DEFAULT CHARSET = utf8;

@@ -36,6 +36,7 @@ class Right extends Component {
             <FormItem label="图片示例" title='field_img' type='img' action='/' size='200*200' name='img'/>
             <FormItem label="内容示例1" title='field_text'/>
             <FormItem label="内容示例2" title='field_content' type='textarea'/>
+            <FormItem label="版本示例" title='field_version' type='version'/>
             <FormItem label="选择示例" title='field_select' type='select' select={nation}
                       defaultValue='汉族'/>
             <FormItem label="标签示例" title='field_multiple' type='multiple' select={label}/>

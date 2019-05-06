@@ -8,7 +8,7 @@ class RoleService extends Service {
   async all() {
     const {mysql} = this.app;
     return await mysql.select('evy-role', {
-      where: {'soft_delete': 1,},
+      where: {'soft_delete': 0,},
       columns: ['role_id', 'title'],
       orders: [['update_time', 'desc']],
     });
@@ -24,20 +24,26 @@ class RoleService extends Service {
     });
   }
 
-  async listOrRecovery(page, type) {
-    const {mysql} = this.app;
-    return await mysql.select('evy-role', {
-      where: {'soft_delete': type,},
+  async listOrRecovery(options, type) {
+    const {page = 1, admin = null, title = null} = options;
+    const {sql} = this.app;
+    let where = {'soft_delete': type};
+    let like = {};
+    admin ? where = Object.assign({}, where, {admin}) : void 0;
+    title ? like = Object.assign({}, like, {title}) : void 0;
+    return await sql('evy-role', {
+      where,
+      like,
       columns: ['role_id', 'title', 'admin', 'update_time', 'create_time'],
       orders: [['update_time', 'desc']],
-      limit: 10,    // 返回数据量
-      offset: (Number(page) - 1) * 10, // 数据偏移量
+      limit: 10,
+      offset: (Number(page) - 1) * 10,
     });
   }
 
-  async count() {
+  async count(type) {
     const {mysql} = this.app;
-    return await mysql.count('evy-role', {'soft_delete': 1});
+    return await mysql.count('evy-role', {'soft_delete': type});
   }
 
   async insert(options) {

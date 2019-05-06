@@ -16,6 +16,8 @@
 |pattern|正则匹配值的有效性|regex|''||
 
 ## e.g.
-```         
+```    
+import {FormItem} from '../../components';
+     
 <FormItem title='id' type='hidden'/>
 ```

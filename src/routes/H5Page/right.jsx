@@ -3,7 +3,7 @@ import {connect} from 'dva';
 import {FormItem} from '../../components';
 import {Form} from 'antd';
 import {SheetActions} from "../../models";
-import {env} from '../../utils/select';
+import {boolean, env} from '../../utils/select';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Right extends Component {
@@ -23,9 +23,9 @@ class Right extends Component {
             <Fragment>
               <FormItem label="名称" title='name'/>
               <FormItem label="网页标题" title='title'/>
-              <FormItem label="版本号" title='version'/>
+              <FormItem label="版本号" title='version' type='version'/>
               <FormItem label="描述" title='description' type='textarea'/>
-              <FormItem label="是否上架" title='release' type='select' select={{'已上架': 2, '未上架': 1}} defaultValue={1}/>
+              <FormItem label="是否上架" title='put' type='select' select={boolean} defaultValue={1}/>
               <FormItem label="环境" title='env' type='select' select={env} defaultValue='prod'/>
               <FormItem label="js" title='js_url' type='textarea'/>
               <FormItem label="css" title='css_url' type='textarea'/>
@@ -36,7 +36,7 @@ class Right extends Component {
           drawerType === 'search' ? <Fragment>
             <FormItem label="名称" title='name' required={false}/>
             <FormItem label="网页标题" title='title' required={false}/>
-            <FormItem label="是否上架" title='release' type='switch' required={false}/>
+            <FormItem label="是否上架" title='put' type='select' select={boolean}/>
             <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
           </Fragment> : null
         }

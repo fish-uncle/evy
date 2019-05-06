@@ -1,0 +1,88 @@
+@import '../../../node_modules/antd/lib/style/themes/default.less';
+
+.version-form {
+  .ant-form-item-children {
+    display: flex;
+    flex-direction: row;
+
+    .ant-input-number {
+      width: 30%;
+    }
+
+    .ant-input-number-input {
+      text-align: center;
+    }
+
+    .version-span {
+      height: 32px;
+      width: 20px;
+      text-align: center;
+      line-height: 45px;
+    }
+  }
+}
+
+.color-picker-container {
+  padding: 5px;
+  background: #fff;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  cursor: pointer;
+  transition: all .3s;
+
+  &.active {
+    box-shadow: @btn-shadow;
+  }
+
+  &:hover, &.active {
+    border-color: @primary-5;
+  }
+
+  .color-picker-current {
+    height: 20px;
+    border-radius: 4px;
+  }
+}
+
+.upload-container {
+  .ant-form-item-children {
+    display: flex;
+    flex-direction: row;
+  }
+
+  p {
+    margin-left: 10px;
+    line-height: 50px;
+    margin-right: auto;
+  }
+
+  img {
+    max-width: 50px;
+    max-height: 50px;
+  }
+
+  button {
+    margin-top: 9px;
+  }
+}
+
+.avatar-container {
+  display: flex;
+  flex-direction: row;
+
+  p {
+    margin-left: 10px;
+    line-height: 50px;
+    margin-right: auto;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+
+  button {
+    margin-top: 9px;
+  }
+}

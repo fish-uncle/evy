@@ -18,16 +18,24 @@ class ApplicationService extends Service {
   async all() {
     const {mysql} = this.app;
     return await mysql.select('evy-app', {
-      where: {'soft_delete': 1,},
+      where: {'soft_delete': 0},
       columns: ['app_id', 'cn_title', 'en_title'],
       orders: [['update_time', 'desc']],
     });
   }
 
-  async listOrRecovery(page, type) {
-    const {mysql} = this.app;
-    return await mysql.select('evy-app', {
-      where: {'soft_delete': type,},
+  async listOrRecovery(options, type) {
+    const {page = 1, cn_title = null, en_title = null, version = null, update = null} = options;
+    const {sql} = this.app;
+    let where = {'soft_delete': type};
+    let like = {};
+    cn_title ? like = Object.assign({}, like, {cn_title}) : void 0;
+    en_title ? like = Object.assign({}, like, {en_title}) : void 0;
+    version ? where = Object.assign({}, where, {version}) : void 0;
+    update ? where = Object.assign({}, where, {update}) : void 0;
+    return await sql('evy-app', {
+      where,
+      like,
       columns: ['app_id', 'cn_title', 'en_title', 'version', 'icon', 'description', 'update', 'associate_url', 'update_time', 'create_time'],
       orders: [['update_time', 'desc']],
       limit: 10,    // 返回数据量
@@ -35,9 +43,9 @@ class ApplicationService extends Service {
     });
   }
 
-  async count() {
+  async count(type) {
     const {mysql} = this.app;
-    return await mysql.count('evy-app', {'soft_delete': 1});
+    return await mysql.count('evy-app', {'soft_delete': type});
   }
 
   async insert(options) {

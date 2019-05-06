@@ -1,5 +1,16 @@
 # 更新日志
 
+## [0.1.0] - 2019-05-05
+### 新增
+* 添加 insertCallBack,updateCallBack,deleteCallBack 方法处理表单提交前数据
+* 添加 version 组件
+* 添加 favicon
+* 在 app 下添加 sql 方法解决 [egg-mysql](https://github.com/eggjs/egg/issues/2868) 无法支持模糊查询
+### 修复
+* 修复 loadCallBack 更新表格数据后，延迟显示问题
+### 更新
+* 字段 char(1) 改为 tinyint(3)
+
 ## [0.0.9] - 2019-04-30
 ### 新增
 * H5 列表 增删改

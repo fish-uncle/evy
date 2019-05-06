@@ -4,7 +4,7 @@ import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-import {toColumns} from '../../utils/select'
+import {boolean, toColumns} from '../../utils/select'
 import {GET, POST} from "../../utils/request";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
@@ -56,8 +56,8 @@ const columns = [{
   render: item => toColumns(item.app, appList),
 }, {
   title: '上架状态',
-  key: 'release',
-  render: item => item.release ? '已上架' : '未上架',
+  key: 'put',
+  render: item => toColumns(item.put, boolean),
 }, {
   title: '更新时间',
   width: 200,

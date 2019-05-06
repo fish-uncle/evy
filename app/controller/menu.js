@@ -33,11 +33,10 @@ class MenuController extends Controller {
   async list() {
     const ctx = this.ctx;
     const {menu} = ctx.service;
-    const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await menu.listOrRecovery(pageNum, 1);
-      total = await menu.count();
+      result = await menu.listOrRecovery(ctx.query, 0);
+      total = await menu.count(0);
     } catch (err) {
       console.log(err);
       result = ctx.json.error();
@@ -48,11 +47,10 @@ class MenuController extends Controller {
   async recovery() {
     const ctx = this.ctx;
     const {menu} = ctx.service;
-    const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await menu.listOrRecovery(pageNum, 2);
-      total = await menu.count();
+      result = await menu.listOrRecovery(ctx.query, 1);
+      total = await menu.count(1);
       ctx.body = ctx.json.success({data: {list: result, total: total}});
     } catch (err) {
       console.log(err);
@@ -88,7 +86,7 @@ class MenuController extends Controller {
     const ctx = this.ctx;
     const {menu} = ctx.service;
     try {
-      await menu.delOrRecover(ctx.request.body, 2);
+      await menu.delOrRecover(ctx.request.body, 1);
       ctx.body = ctx.json.success({msg: '删除成功'});
     } catch (err) {
       console.log(err);
@@ -100,7 +98,7 @@ class MenuController extends Controller {
     const ctx = this.ctx;
     const {menu} = ctx.service;
     try {
-      await menu.delOrRecover(ctx.request.body, 1);
+      await menu.delOrRecover(ctx.request.body, 0);
       ctx.body = ctx.json.success({msg: '恢复成功'});
     } catch (err) {
       console.log(err);

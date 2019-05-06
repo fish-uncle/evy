@@ -16,6 +16,8 @@
 |pattern|正则匹配值的有效性|regex|''||
 
 ## e.g.
-```     
+```    
+import {FormItem} from '../../components';
+ 
 <FormItem label="颜色示例" title='field_color' type='color'/>
  ```

@@ -23,10 +23,12 @@ const validate = (props, values, callback) => {
       }
     }
     if (item.required) {
-      if (!values[title]) {
-        notification.error({message: '提示', description: '请填写' + item.label});
-        v = false;
-        break;
+      if (typeof values[title] !== 'boolean' && typeof values[title] !== 'number') {
+        if (!values[title]) {
+          notification.error({message: '提示', description: '请填写' + item.label});
+          v = false;
+          break;
+        }
       }
     }
   }
@@ -36,13 +38,16 @@ const validate = (props, values, callback) => {
 };
 const insert = (props) => {
   const {sheet} = props;
+  const {formatter, insertCallBack} = sheet;
   sheet.form.validateFields((err, values) => {
     const ajax = () => {
       try {
+        values = formatter(values);
         POST(sheet.insertUrl, values).then(() => {
           props.drawer_close();
           props.sheet_load();
           notification.success({message: '提示', description: '添加成功'});
+          insertCallBack();
         });
       } catch (e) {
         notification.error({message: '提示', description: '添加失败'});
@@ -54,13 +59,16 @@ const insert = (props) => {
 
 const update = (props) => {
   const {sheet} = props;
+  const {formatter, updateCallBack} = sheet;
   sheet.form.validateFields((err, values) => {
     const ajax = () => {
       try {
+        values = formatter(values);
         POST(sheet.updateUrl, values).then(() => {
           props.drawer_close();
           props.sheet_load();
           notification.success({message: '提示', description: '更新成功'});
+          updateCallBack();
         });
       } catch (e) {
         notification.error({message: '提示', description: '更新失败'});

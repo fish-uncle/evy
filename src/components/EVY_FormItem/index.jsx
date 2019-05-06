@@ -1,5 +1,17 @@
 import React, {Component} from 'react';
-import {Input, Select, Form, DatePicker, Switch, Upload, Button, Cascader, notification, Empty} from 'antd';
+import {
+  Input,
+  Select,
+  Form,
+  DatePicker,
+  Switch,
+  Upload,
+  Button,
+  Cascader,
+  notification,
+  Empty,
+  InputNumber
+} from 'antd';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import {connect} from "dva";
@@ -10,6 +22,7 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import {ChromePicker} from 'react-color';
+import './index.less';
 
 const {RangePicker} = DatePicker;
 const Option = Select.Option;
@@ -22,7 +35,7 @@ export default class _FormItem extends Component {
     super(props);
     let {type = 'input', title, sheet, defaultValue = null} = props;
     const {detailData} = sheet;
-    let value, editorState;
+    let value, editorState, _version;
     if (type === 'switch') {
       value = detailData[title];
     } else if (type === 'date') {
@@ -40,18 +53,22 @@ export default class _FormItem extends Component {
       }
     } else if (type === 'multiple') {
       !value ? value = [] : void 0;
+    } else if (type === 'version') {
+      value = detailData[title] || defaultValue;
+      _version = value ? value.split('.') : [0, 0, 0]
     } else {
       value = typeof detailData[title] === 'number' || typeof detailData[title] === 'boolean' ? detailData[title] : detailData[title] || defaultValue
     }
     this.state = {
       value,
-      editorState: editorState,
-      displayColorPicker: false,
+      _version: _version,
+      _editorState: editorState,
+      _displayColorPicker: false,
     };
   }
 
   handleClickColorPicker = () => {
-    this.setState({displayColorPicker: !this.state.displayColorPicker})
+    this.setState({_displayColorPicker: !this.state._displayColorPicker})
   };
 
   normalizeHandle = (value) => {
@@ -59,10 +76,10 @@ export default class _FormItem extends Component {
     return value
   };
 
-  onEditorStateChange = (editorState) => {
-    const editorContent = draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()));
+  onEditorStateChange = (_editorState) => {
+    const editorContent = draftToHtml(convertToRaw(this.state._editorState.getCurrentContent()));
     this.setState({
-      editorState,
+      _editorState,
       value: editorContent
     });
   };
@@ -71,6 +88,15 @@ export default class _FormItem extends Component {
     this.setState({
       value
     });
+  };
+
+  versionChange = (data, index) => {
+    const {_version} = this.state;
+    _version[index] = data;
+    const value = _version.join('.');
+    this.setState({
+      value
+    })
   };
 
   colorChangeHandel = (color) => {
@@ -104,7 +130,7 @@ export default class _FormItem extends Component {
   }
 
   render() {
-    const {value, displayColorPicker} = this.state;
+    const {value, _displayColorPicker, _editorState, _version} = this.state;
     const {sheet} = this.props;
     const {getFieldDecorator} = sheet.form;
     let selectHtml = [];
@@ -182,11 +208,11 @@ export default class _FormItem extends Component {
         </div> :
         type === 'color' ?
           <FormItem label={label} className={className} style={style}>
-            <div className={`color-picker-container pos-r ${displayColorPicker ? 'active' : ''}`}>
+            <div className={`color-picker-container pos-r ${_displayColorPicker ? 'active' : ''}`}>
               <div className="color-picker-current" style={{background: value || '#000'}}
                    onClick={this.handleClickColorPicker}/>
               <div className="color-picker pos-a z-index-9">
-                {displayColorPicker ? <ChromePicker color={value || '#000'} onChange={this.colorChangeHandel}/> : null}
+                {_displayColorPicker ? <ChromePicker color={value || '#000'} onChange={this.colorChangeHandel}/> : null}
               </div>
             </div>
 
@@ -206,24 +232,36 @@ export default class _FormItem extends Component {
             </div>
           </FormItem>
           : type === 'editor' ? <FormItem label={label} className={className} style={style}>
-            <div className='fn-hide'>
-              {
-                getFieldDecorator(title, _options)(html)
-              }
-            </div>
-            <Editor
-              editorState={this.state.editorState}
-              wrapperClassName="editor-wrapper"
-              editorClassName="editor"
-              onEditorStateChange={this.onEditorStateChange}
-            />
-          </FormItem> : <FormItem label={label} className={className} style={style}>
-            <div className={type === 'hidden' ? 'fn-hide' : ''}>
-              {
-                getFieldDecorator(title, _options)(html)
-              }
-            </div>
-          </FormItem>
+              <div className='fn-hide'>
+                {
+                  getFieldDecorator(title, _options)(html)
+                }
+              </div>
+              <Editor
+                editorState={_editorState}
+                wrapperClassName="editor-wrapper"
+                editorClassName="editor"
+                onEditorStateChange={this.onEditorStateChange}
+              />
+            </FormItem>
+            : type === 'version' ? <FormItem label={label} className={`version-form ${className}`} style={style}>
+              <div className='fn-hide'>
+                {
+                  getFieldDecorator(title, _options)(html)
+                }
+              </div>
+              <InputNumber defaultValue={_version[0]} onChange={value => this.versionChange(value, 0)}/>
+              <div className='version-span'>.</div>
+              <InputNumber defaultValue={_version[1]} onChange={value => this.versionChange(value, 1)}/>
+              <div className='version-span'>.</div>
+              <InputNumber defaultValue={_version[2]} onChange={value => this.versionChange(value, 2)}/>
+            </FormItem> : <FormItem label={label} className={className} style={style}>
+              <div className={type === 'hidden' ? 'fn-hide' : ''}>
+                {
+                  getFieldDecorator(title, _options)(html)
+                }
+              </div>
+            </FormItem>
 
     )
   }

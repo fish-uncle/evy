@@ -3,6 +3,7 @@ import {connect} from 'dva';
 import {FormItem} from '../../components';
 import {Form} from 'antd';
 import {SheetActions} from "../../models";
+import {boolean} from "../../utils/select";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Right extends Component {
@@ -21,7 +22,7 @@ class Right extends Component {
           drawerType === 'search' ? <Fragment>
             <FormItem label="名称" title='name' required={false}/>
             <FormItem label="网页标题" title='title' required={false}/>
-            <FormItem label="是否上架" title='release' type='switch' required={false}/>
+            <FormItem label="是否上架" title='put' type='select' select={boolean}/>
             <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
           </Fragment> : null
         }

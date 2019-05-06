@@ -26,6 +26,8 @@
 |uploadCallBack|自定义上传事件|function|function(info){<br/>}|info.file.status分为<br/>done,uploading,error<br/>可用于判断状态|
 
 ## e.g.
-```         
+```        
+import {FormItem} from '../../components';
+ 
 <FormItem label="图片示例" title='field_img' type='img' action='/' size='200*200' name='img'/>
 ```

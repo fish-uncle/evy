@@ -17,5 +17,7 @@
 
 ## e.g.
 ```   
+import {FormItem} from '../../components';
+
 <FormItem label="富文本示例" title='field_editor' type='editor'/>
 ```

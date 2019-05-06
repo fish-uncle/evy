@@ -20,11 +20,10 @@ class AuthController extends Controller {
   async list() {
     const ctx = this.ctx;
     const {auth} = ctx.service;
-    const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await auth.listOrRecovery(pageNum, 1);
-      total = await auth.count();
+      result = await auth.listOrRecovery(ctx.query, 0);
+      total = await auth.count(0);
     } catch (err) {
       console.log(err);
       result = ctx.json.error();
@@ -35,11 +34,10 @@ class AuthController extends Controller {
   async recovery() {
     const ctx = this.ctx;
     const {auth} = ctx.service;
-    const {pageNum = 1} = ctx.query;
     let result, total;
     try {
-      result = await auth.listOrRecovery(pageNum, 2);
-      total = await auth.count();
+      result = await auth.listOrRecovery(ctx.query, 1);
+      total = await auth.count(1);
       ctx.body = ctx.json.success({data: {list: result, total: total}});
     } catch (err) {
       console.log(err);
@@ -75,7 +73,7 @@ class AuthController extends Controller {
     const ctx = this.ctx;
     const {auth} = ctx.service;
     try {
-      await auth.delOrRecover(ctx.request.body, 2);
+      await auth.delOrRecover(ctx.request.body, 1);
       ctx.body = ctx.json.success({msg: '删除成功'});
     } catch (err) {
       console.log(err);
@@ -87,7 +85,7 @@ class AuthController extends Controller {
     const ctx = this.ctx;
     const {auth} = ctx.service;
     try {
-      await auth.delOrRecover(ctx.request.body, 1);
+      await auth.delOrRecover(ctx.request.body, 0);
       ctx.body = ctx.json.success({msg: '恢复成功'});
     } catch (err) {
       console.log(err);

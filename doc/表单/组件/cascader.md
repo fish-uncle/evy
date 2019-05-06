@@ -22,6 +22,8 @@
 
 ## e.g.
 ```   
+import {FormItem} from '../../components';
+
 const cityList = [{
   "label": "内蒙古",
   "value": "内蒙古自治区",
@@ -42,6 +44,7 @@ const cityList = [{
       "value": "和林格尔县",
     }, {"label": "清水河县", "value": "清水河县",}]
   }]
-}]    
+}];
+  
 <FormItem label="级联示例" title='field_cascader' type='cascader' options={cityList}/>
 ```

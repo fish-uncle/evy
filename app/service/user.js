@@ -6,16 +6,25 @@ const format = require('date-fns/format');
 
 class UserService extends Service {
 
-  async listOrRecovery(page, type) {
-    const {mysql} = this.app;
-    return await mysql.select('evy-user', {
-      where: {'soft_delete': type,},
+  async listOrRecovery(options, type) {
+    const {page = 1, real_name = null, employee_id = null, phone = null, sex = null} = options;
+    const {sql} = this.app;
+    let where = {'soft_delete': type};
+    let like = {};
+    real_name ? like = Object.assign({}, like, {real_name}) : void 0;
+    employee_id ? like = Object.assign({}, like, {employee_id}) : void 0;
+    phone ? like = Object.assign({}, like, {phone}) : void 0;
+    sex ? where = Object.assign({}, where, {sex}) : void 0;
+    sql();
+    return await sql('evy-user', {
+      where,
+      like,
       columns: ['user_id', 'employee_id', 'sex', 'pay', 'phone', 'email', 'role', 'station', 'status',
         'remark', 'bank_address', 'native_address', 'native_address_detail', 'bank_card', 'real_name', 'type',
         'birth_time', 'join_time', 'nation', 'marriage', 'avatar', 'update_time', 'create_time'
       ],
-      limit: 10,    // 返回数据量
-      offset: (Number(page) - 1) * 10, // 数据偏移量
+      limit: 10,
+      offset: (Number(page) - 1) * 10,
       orders: [['update_time', 'desc']],
     });
   }
@@ -30,9 +39,9 @@ class UserService extends Service {
     });
   }
 
-  async count() {
+  async count(type) {
     const {mysql} = this.app;
-    return await mysql.count('evy-user', {'soft_delete': 1});
+    return await mysql.count('evy-user', {'soft_delete': type});
   }
 
   async insert(options) {

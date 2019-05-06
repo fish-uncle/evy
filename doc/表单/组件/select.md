@@ -22,6 +22,9 @@
 
 ## e.g.
 ```     
+import {FormItem} from '../../components';
+
 const sex={'男':1,'女':2};    
+
 <FormItem label="选择示例" title='field_select' type='select' select={sex} defaultValue='男'/>
 ```

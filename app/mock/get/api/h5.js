@@ -7,7 +7,7 @@ module.exports = Mock.mock({
       h5_id: '@guid',
       title: '@cname',
       name: '@cname',
-      release: '@boolean',
+      put: '@boolean',
       env: 'test',
       js_url: ['yy.js', 'xx.js'],
       version: /1\.\d\.\d/,

@@ -3,7 +3,7 @@ import {connect} from 'dva';
 import {FormItem} from '../../components';
 import {Form} from 'antd';
 import {SheetActions} from "../../models";
-import {label} from '../../utils/select';
+import {boolean, label} from '../../utils/select';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Right extends Component {
@@ -26,10 +26,10 @@ class Right extends Component {
               <FormItem label="描述" title='description' type='textArea'/>
               <FormItem label="标签" title='label' type='multiple' select={label} required={false}/>
               <FormItem label="所属应用" title='app' type='select' select={appList}/>
-              <FormItem label="是否为定时模块" title='timing' type='switch' required={false}/>
+              <FormItem label="是否为定时模块" title='timing' type='select' select={boolean} defaultValue={'1'}/>
               <FormItem label="模块开始时间" title='start_time' type='date'/>
               <FormItem label="模块结束时间" title='end_time' type='date'/>
-              <FormItem label="是否上架" title='release' type='switch' required={false}/>
+              <FormItem label="是否上架" title='put' type='select' select={boolean} defaultValue={'1'}/>
               <FormItem label="详细内容" title='content' type='editor' required={false}/>
               <FormItem title='module_id' type='hidden' required={false}/>
             </Fragment> : null
@@ -39,8 +39,8 @@ class Right extends Component {
             <FormItem label="中文标题" title='cn_title' required={false}/>
             <FormItem label="英文标题" title='en_title' required={false}/>
             <FormItem label="描述" title='description' type='textArea' required={false}/>
-            <FormItem label="是否上架" title='release' type='switch' required={false}/>
-            <FormItem label="是否为定时模块" title='timing' type='switch' required={false}/>
+            <FormItem label="是否上架" title='put' type='select' select={boolean}/>
+            <FormItem label="是否为定时模块" title='timing' type='select' select={boolean}/>
             <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
           </Fragment> : null
         }

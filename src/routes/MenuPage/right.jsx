@@ -3,6 +3,7 @@ import {connect} from 'dva';
 import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
 import {Form} from 'antd';
+import {boolean} from "../../utils/select";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Right extends Component {
@@ -24,7 +25,7 @@ class Right extends Component {
                       defaultValue={1}/>
             <FormItem label="链接地址" title='url' required={false}/>
             <FormItem label="排序" title='sort' required={false}/>
-            <FormItem label="是否显示在左侧菜单" title='display' type='select' select={{'显示': 2, '隐藏': 1}} defaultValue={1}/>
+            <FormItem label="是否显示在左侧菜单" title='display' type='select' select={boolean} defaultValue={0}/>
             <FormItem label="所属父级菜单" title='nexus' required={false} type='select' select={nexusList}
                       defaultValue={null}/>
             <FormItem label="图标" title='icon' required={false}/>

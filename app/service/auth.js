@@ -18,16 +18,21 @@ class AuthService extends Service {
   async all() {
     const {mysql} = this.app;
     return await mysql.select('evy-auth', {
-      where: {'soft_delete': 1,},
+      where: {'soft_delete': 0,},
       columns: ['auth_id', 'title'],
       orders: [['update_time', 'desc'], ['menu', 'desc']],
     });
   }
 
-  async listOrRecovery(page, type) {
-    const {mysql} = this.app;
-    return await mysql.select('evy-auth', {
-      where: {'soft_delete': type,},
+  async listOrRecovery(options, type) {
+    const {page = 1, title = null} = options;
+    const {sql} = this.app;
+    let where = {'soft_delete': type};
+    let like = {};
+    title ? like = Object.assign({}, like, {title}) : void 0;
+    return await sql('evy-auth', {
+      where,
+      like,
       columns: ['auth_id', 'title', 'remark', 'url', 'menu', 'update_time', 'create_time'],
       orders: [['update_time', 'desc'], ['menu', 'desc']],
       limit: 10,    // 返回数据量
@@ -35,9 +40,9 @@ class AuthService extends Service {
     });
   }
 
-  async count() {
+  async count(type) {
     const {mysql} = this.app;
-    return await mysql.count('evy-auth', {'soft_delete': 1});
+    return await mysql.count('evy-auth', {'soft_delete': type});
   }
 
   async insert(options) {

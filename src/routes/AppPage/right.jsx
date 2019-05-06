@@ -3,6 +3,7 @@ import {connect} from 'dva';
 import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
 import {Form} from 'antd';
+import {boolean} from "../../utils/select";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Right extends Component {
@@ -24,8 +25,9 @@ class Right extends Component {
             <FormItem label="英文标题" title='en_title'/>
             <FormItem label="描述" title='description' type='textArea'/>
             <FormItem label="关联网址" title='associate_url' required={false}/>
-            <FormItem label="版本号" title='version'/>
-            <FormItem label="强制更新" title='update' type='switch' required={false}/>
+            <FormItem label="版本号" title='version' type='version'/>
+            <FormItem label="强制更新" title='update' type='select' required={false} select={boolean}
+                      defaultValue={'1'}/>
             <FormItem title='app_id' type='hidden' required={false}/>
           </Fragment> : null
         }
@@ -34,8 +36,8 @@ class Right extends Component {
             <FormItem label="中文标题" title='cn_title' required={false}/>
             <FormItem label="英文标题" title='en_title' required={false}/>
             <FormItem label="描述" title='description' type='textArea' required={false}/>
-            <FormItem label="版本号" title='version' required={false}/>
-            <FormItem label="强制更新" title='update' type='switch' required={false}/>
+            <FormItem label="版本号" title='version' required={false} type='version'/>
+            <FormItem label="强制更新" title='update' type='select' required={false} select={boolean}/>
             <FormItem label="选择时间" title='update_time' type='rangeDate' required={false}/>
           </Fragment> : null
         }
