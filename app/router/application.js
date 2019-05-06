@@ -4,7 +4,7 @@
 module.exports = app => {
   const {router, controller} = app;
 
-  const {application} = controller;
+  const application = controller.application.index;
   router.get(`/api/application/recovery`, application.recovery);
   router.get(`/api/application/list`, application.list);
   router.get(`/api/application/all`, application.all);

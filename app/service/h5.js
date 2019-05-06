@@ -16,20 +16,20 @@ class H5Service extends Service {
   }
 
   async listOrRecovery(options, type) {
-    const {page = 1, name = null, title = null, put = null} = options;
+    const {pageNum = 1, pageSize = 10, name = null, title = null, put = null} = options;
     let where = {'soft_delete': type};
     let like = {};
     name ? like = Object.assign({}, like, {name}) : void 0;
     title ? like = Object.assign({}, like, {title}) : void 0;
     put ? where = Object.assign({}, where, {put}) : void 0;
     const {sql} = this.app;
-    return await sql('evy-h5', {
+    return await sql.select('evy-h5', {
       where,
       like,
       columns: ['h5_id', 'name', 'title', 'description', 'put', 'version', 'env', 'js_url', 'css_url', 'update_time', 'create_time'],
       orders: [['update_time', 'desc']],
-      limit: 10,    // 返回数据量
-      offset: (Number(page) - 1) * 10, // 数据偏移量
+      limit: pageSize,
+      offset: (Number(pageNum) - 1) * pageSize,
     });
   }
 

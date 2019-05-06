@@ -2,5 +2,11 @@
 
 
 module.exports = app => {
-  // console.log(app.config)
+
+  app.validator.addRule('number', (rule, value) => {
+    if (isNaN(value)) {
+      return 'must be number'
+    }
+  });
+
 };

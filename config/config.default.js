@@ -10,15 +10,7 @@ module.exports = appInfo => {
     errorLogName: `error.log`,
   };
 
-  config.customLogger = {
-    accessLogger: {
-      file: path.join(appInfo.root, 'logs', appInfo.name, 'access.log'),
-    }
-  };
-
   config.keys = appInfo.name + '_1522136911587_199';
-
-  config.middleware = ['gzip', 'access'];
 
   config.security = {
     csrf: false,

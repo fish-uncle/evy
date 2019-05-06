@@ -17,7 +17,7 @@ class ModuleService extends Service {
   }
 
   async listOrRecovery(options, type) {
-    const {page = 1, description = null, cn_title = null, en_title = null, timing = null, put = null} = options;
+    const {pageNum = 1, pageSize = 10, description = null, cn_title = null, en_title = null, timing = null, put = null} = options;
     let where = {'soft_delete': type};
     let like = {};
     description ? like = Object.assign({}, like, {description}) : void 0;
@@ -26,13 +26,13 @@ class ModuleService extends Service {
     timing ? where = Object.assign({}, where, {timing}) : void 0;
     put ? where = Object.assign({}, where, {put}) : void 0;
     const {sql} = this.app;
-    return await sql('evy-module', {
+    return await sql.select('evy-module', {
       where,
       like,
       columns: ['module_id', 'cn_title', 'en_title', 'description', 'put', 'content', 'app', 'label', 'timing', 'update_time', 'start_time', 'end_time', 'create_time'],
       orders: [['update_time', 'desc']],
-      limit: 10,    // 返回数据量
-      offset: (Number(page) - 1) * 10, // 数据偏移量
+      limit: pageSize,
+      offset: (Number(pageNum) - 1) * pageSize,
     });
   }
 

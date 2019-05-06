@@ -7,7 +7,7 @@ const format = require('date-fns/format');
 class UserService extends Service {
 
   async listOrRecovery(options, type) {
-    const {page = 1, real_name = null, employee_id = null, phone = null, sex = null} = options;
+    const {pageNum = 1, pageSize = 10, real_name = null, employee_id = null, phone = null, sex = null} = options;
     const {sql} = this.app;
     let where = {'soft_delete': type};
     let like = {};
@@ -15,16 +15,15 @@ class UserService extends Service {
     employee_id ? like = Object.assign({}, like, {employee_id}) : void 0;
     phone ? like = Object.assign({}, like, {phone}) : void 0;
     sex ? where = Object.assign({}, where, {sex}) : void 0;
-    sql();
-    return await sql('evy-user', {
+    return await sql.select('evy-user', {
       where,
       like,
       columns: ['user_id', 'employee_id', 'sex', 'pay', 'phone', 'email', 'role', 'station', 'status',
         'remark', 'bank_address', 'native_address', 'native_address_detail', 'bank_card', 'real_name', 'type',
         'birth_time', 'join_time', 'nation', 'marriage', 'avatar', 'update_time', 'create_time'
       ],
-      limit: 10,
-      offset: (Number(page) - 1) * 10,
+      limit: pageSize,
+      offset: (Number(pageNum) - 1) * pageSize,
       orders: [['update_time', 'desc']],
     });
   }

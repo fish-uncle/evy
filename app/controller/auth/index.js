@@ -1,6 +1,7 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const Controller = require('../../core/base_controller');
+const {rule_list} = require('./rule');
 
 class AuthController extends Controller {
 
@@ -10,11 +11,10 @@ class AuthController extends Controller {
     let result;
     try {
       result = await auth.all();
+      this.success({data: {list: result}});
     } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
+      this.error(err);
     }
-    ctx.body = ctx.json.success({data: {list: result}});
   }
 
   async list() {
@@ -22,13 +22,17 @@ class AuthController extends Controller {
     const {auth} = ctx.service;
     let result, total;
     try {
-      result = await auth.listOrRecovery(ctx.query, 0);
-      total = await auth.count(0);
-    } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
+      ctx.validate(rule_list, ctx.query);
+      try {
+        result = await auth.listOrRecovery(ctx.query, 0);
+        total = await auth.count(0);
+        this.success({data: {list: result, total: total}});
+      } catch (err) {
+        this.error(err);
+      }
+    } catch (e) {
+      this.error(e, {data: {list: [], total: 0}, msg: '请求参数有误'});
     }
-    ctx.body = ctx.json.success({data: {list: result, total: total}});
   }
 
   async recovery() {
@@ -36,12 +40,16 @@ class AuthController extends Controller {
     const {auth} = ctx.service;
     let result, total;
     try {
-      result = await auth.listOrRecovery(ctx.query, 1);
-      total = await auth.count(1);
-      ctx.body = ctx.json.success({data: {list: result, total: total}});
-    } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      ctx.validate(rule_list, ctx.query);
+      try {
+        result = await auth.listOrRecovery(ctx.query, 1);
+        total = await auth.count(1);
+        this.success({data: {list: result, total: total}});
+      } catch (err) {
+        this.error(err);
+      }
+    } catch (e) {
+      this.error(e, {data: {list: [], total: 0}, msg: '请求参数有误'});
     }
   }
 
@@ -50,10 +58,9 @@ class AuthController extends Controller {
     const {auth} = ctx.service;
     try {
       await auth.insert(ctx.request.body);
-      ctx.body = ctx.json.success({msg: '添加成功'});
+      this.success({msg: '添加成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 
@@ -62,10 +69,9 @@ class AuthController extends Controller {
     const {auth} = ctx.service;
     try {
       await auth.update(ctx.request.body);
-      ctx.body = ctx.json.success({msg: '更新成功'});
+      this.success({msg: '更新成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 
@@ -74,10 +80,9 @@ class AuthController extends Controller {
     const {auth} = ctx.service;
     try {
       await auth.delOrRecover(ctx.request.body, 1);
-      ctx.body = ctx.json.success({msg: '删除成功'});
+      this.success({msg: '删除成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 
@@ -86,10 +91,9 @@ class AuthController extends Controller {
     const {auth} = ctx.service;
     try {
       await auth.delOrRecover(ctx.request.body, 0);
-      ctx.body = ctx.json.success({msg: '恢复成功'});
+      this.success({msg: '恢复成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 

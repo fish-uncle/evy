@@ -1,0 +1,15 @@
+{
+  "name": "egg-gzip",
+  "eggPlugin": {
+    "name": "gzip"
+  },
+  "version": "1.0.0",
+  "description": "gzip",
+  "author": "fish-uncle",
+  "keywords": [
+    "egg",
+    "egg-plugin",
+    "eggPlugin",
+    "gzip"
+  ]
+}

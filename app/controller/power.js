@@ -1,6 +1,6 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const Controller = require('../core/base_controller');
 
 class PowerController extends Controller {
 
@@ -10,11 +10,10 @@ class PowerController extends Controller {
     let result;
     try {
       result = await power.all(ctx.request.body);
+      this.success({data: {list: result}});
     } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
+      this.error(err);
     }
-    ctx.body = ctx.json.success({data: {list: result}});
   }
 
   async selectMenu() {
@@ -28,11 +27,10 @@ class PowerController extends Controller {
       } else {
         result = await power.selectMenu(ctx.request.body);
       }
+      this.success({data: {list: result}});
     } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
+      this.error(err);
     }
-    ctx.body = ctx.json.success({data: {list: result}});
   }
 
   async selectAuth() {
@@ -46,11 +44,10 @@ class PowerController extends Controller {
       } else {
         result = await power.selectAuth(ctx.request.body);
       }
+      this.success({data: {list: result}});
     } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
+      this.error(err);
     }
-    ctx.body = ctx.json.success({data: {list: result}});
   }
 
   async updateMenu() {
@@ -62,11 +59,10 @@ class PowerController extends Controller {
       if (checkAdmin <= 0) {
         await power.updateMenu(ctx.request.body);
       }
+      this.success({msg: '修改成功'});
     } catch (err) {
-      console.log(err);
-      ctx.json.error();
+      this.error(err);
     }
-    ctx.body = ctx.json.success({msg: '修改成功'});
   }
 
   async updateAuth() {
@@ -78,11 +74,10 @@ class PowerController extends Controller {
       if (checkAdmin <= 0) {
         await power.updateAuth(ctx.request.body);
       }
+      this.success({msg: '修改成功'});
     } catch (err) {
-      console.log(err);
-      ctx.json.error();
+      this.error(err);
     }
-    ctx.body = ctx.json.success({msg: '修改成功'});
   }
 
 }

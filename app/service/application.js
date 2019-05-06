@@ -25,7 +25,7 @@ class ApplicationService extends Service {
   }
 
   async listOrRecovery(options, type) {
-    const {page = 1, cn_title = null, en_title = null, version = null, update = null} = options;
+    const {pageNum = 1, pageSize = 10, cn_title = null, en_title = null, version = null, update = null} = options;
     const {sql} = this.app;
     let where = {'soft_delete': type};
     let like = {};
@@ -33,13 +33,13 @@ class ApplicationService extends Service {
     en_title ? like = Object.assign({}, like, {en_title}) : void 0;
     version ? where = Object.assign({}, where, {version}) : void 0;
     update ? where = Object.assign({}, where, {update}) : void 0;
-    return await sql('evy-app', {
+    return await sql.select('evy-app', {
       where,
       like,
       columns: ['app_id', 'cn_title', 'en_title', 'version', 'icon', 'description', 'update', 'associate_url', 'update_time', 'create_time'],
       orders: [['update_time', 'desc']],
-      limit: 10,    // 返回数据量
-      offset: (Number(page) - 1) * 10, // 数据偏移量
+      limit: pageSize,
+      offset: (Number(pageNum) - 1) * pageSize,
     });
   }
 

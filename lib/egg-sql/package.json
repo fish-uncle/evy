@@ -1,0 +1,15 @@
+{
+  "name": "egg-sql",
+  "eggPlugin": {
+    "name": "sql"
+  },
+  "version": "1.0.0",
+  "description": "sql",
+  "author": "fish-uncle",
+  "keywords": [
+    "egg",
+    "egg-plugin",
+    "eggPlugin",
+    "sql"
+  ]
+}

@@ -1,6 +1,7 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const Controller = require('../../core/base_controller');
+const {rule_list} = require('./rule');
 
 class RoleController extends Controller {
 
@@ -10,11 +11,10 @@ class RoleController extends Controller {
     let result;
     try {
       result = await role.all();
+      this.success({data: {list: result}});
     } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
+      this.error(err);
     }
-    ctx.body = ctx.json.success({data: {list: result}});
   }
 
   async list() {
@@ -22,13 +22,17 @@ class RoleController extends Controller {
     const {role} = ctx.service;
     let result, total;
     try {
-      result = await role.listOrRecovery(ctx.query, 0);
-      total = await role.count(0);
-    } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
+      ctx.validate(rule_list, ctx.query);
+      try {
+        result = await role.listOrRecovery(ctx.query, 0);
+        total = await role.count(0);
+        this.success({data: {list: result, total: total}});
+      } catch (err) {
+        this.error(err);
+      }
+    } catch (e) {
+      this.error(e, {data: {list: [], total: 0}, msg: '请求参数有误'});
     }
-    ctx.body = ctx.json.success({data: {list: result, total: total}});
   }
 
   async recovery() {
@@ -36,12 +40,16 @@ class RoleController extends Controller {
     const {role} = ctx.service;
     let result, total;
     try {
-      result = await role.listOrRecovery(ctx.query, 1);
-      total = await role.count(1);
-      ctx.body = ctx.json.success({data: {list: result, total: total}});
-    } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      ctx.validate(rule_list, ctx.query);
+      try {
+        result = await role.listOrRecovery(ctx.query, 1);
+        total = await role.count(1);
+        this.success({data: {list: result, total: total}});
+      } catch (err) {
+        this.error(err);
+      }
+    } catch (e) {
+      this.error(e, {data: {list: [], total: 0}, msg: '请求参数有误'});
     }
   }
 
@@ -50,10 +58,9 @@ class RoleController extends Controller {
     const {role} = ctx.service;
     try {
       await role.insert(ctx.request.body);
-      ctx.body = ctx.json.success({msg: '添加成功'});
+      this.success({msg: '添加成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 
@@ -62,10 +69,9 @@ class RoleController extends Controller {
     const {role} = ctx.service;
     try {
       await role.update(ctx.request.body);
-      ctx.body = ctx.json.success({msg: '更新成功'});
+      this.success({msg: '更新成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 
@@ -74,10 +80,9 @@ class RoleController extends Controller {
     const {role} = ctx.service;
     try {
       await role.delOrRecover(ctx.request.body, 1);
-      ctx.body = ctx.json.success({msg: '删除成功'});
+      this.success({msg: '删除成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 
@@ -86,10 +91,9 @@ class RoleController extends Controller {
     const {role} = ctx.service;
     try {
       await role.delOrRecover(ctx.request.body, 0);
-      ctx.body = ctx.json.success({msg: '恢复成功'});
+      this.success({msg: '恢复成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 

@@ -30,7 +30,8 @@ export default class UserPage extends Component {
       insertUrl: '/api/user/insert',
       deleteUrl: '/api/user/delete',
       updateUrl: '/api/user/update',
-      recoveryUrl: '/user/recovery'
+      recoveryUrl: '/user/recovery',
+      exportUrl: '/api/excel/user'
     });
     let roleList = {};
     GET('/api/role/all').then(data => {

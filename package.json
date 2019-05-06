@@ -1,12 +1,13 @@
 {
   "name": "evy",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "后台数据管理平台",
   "main": "",
   "scripts": {
     "server": "egg-bin dev",
     "dev": "cross-env NODE_ENV=dev ESLINT=none PORT=6601 roadhog server",
-    "build": "cross-env NODE_ENV=prod ESLINT=none roadhog build"
+    "build": "cross-env NODE_ENV=prod ESLINT=none roadhog build",
+    "test": "egg-bin test"
   },
   "keywords": [
     "react",
@@ -27,6 +28,7 @@
     "egg": "^2.20.1",
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.11.0",
+    "egg-validate": "^2.0.2",
     "egg-view-nunjucks": "^2.2.0",
     "eruda": "^1.5.4",
     "excel-export": "^0.5.1",
@@ -46,7 +48,9 @@
     "babel-plugin-import": "^1.11.0",
     "cross-env": "^5.2.0",
     "egg-bin": "^4.11.1",
+    "egg-mock": "^3.22.3",
     "husky": "^0.12.0",
+    "mocha": "^6.1.4",
     "mockjs": "^1.0.1-beta3",
     "redbox-react": "^1.4.3",
     "roadhog": "^2.0.0"

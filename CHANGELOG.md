@@ -1,5 +1,16 @@
 # 更新日志
 
+## [0.1.1] - 2019-05-06
+### 新增
+* 添加 egg-validate 校验请求参数
+* 添加 sql 语句专用记录日志文件，方便排查错误
+* 添加 base_controller.js
+* 添加 sql.test.js 单元测试
+* 添加 user 导出 excel
+### 更新
+* 更新初始化 sql 按项目版本罗列，方便日后针对版本的进行增加表
+* 更新 access 与 gzip 从中间件改为插件形式
+
 ## [0.1.0] - 2019-05-05
 ### 新增
 * 添加 insertCallBack,updateCallBack,deleteCallBack 方法处理表单提交前数据

@@ -1,0 +1,15 @@
+{
+  "name": "egg-access",
+  "eggPlugin": {
+    "name": "access"
+  },
+  "version": "1.0.0",
+  "description": "access 访问 日志",
+  "author": "fish-uncle",
+  "keywords": [
+    "egg",
+    "egg-plugin",
+    "eggPlugin",
+    "access"
+  ]
+}

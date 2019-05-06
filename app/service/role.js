@@ -25,19 +25,19 @@ class RoleService extends Service {
   }
 
   async listOrRecovery(options, type) {
-    const {page = 1, admin = null, title = null} = options;
+    const {pageNum = 1, pageSize = 10, admin = null, title = null} = options;
     const {sql} = this.app;
     let where = {'soft_delete': type};
     let like = {};
     admin ? where = Object.assign({}, where, {admin}) : void 0;
     title ? like = Object.assign({}, like, {title}) : void 0;
-    return await sql('evy-role', {
+    return await sql.select('evy-role', {
       where,
       like,
       columns: ['role_id', 'title', 'admin', 'update_time', 'create_time'],
       orders: [['update_time', 'desc']],
-      limit: 10,
-      offset: (Number(page) - 1) * 10,
+      limit: pageSize,
+      offset: (Number(pageNum) - 1) * pageSize,
     });
   }
 

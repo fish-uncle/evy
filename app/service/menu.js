@@ -34,7 +34,7 @@ class MenuService extends Service {
   }
 
   async listOrRecovery(options, _type) {
-    const {page = 1, title = null, url = null, type = null} = options;
+    const {pageNum = 1, pageSize = 10, title = null, url = null, type = null} = options;
     let where = {'soft_delete': _type};
     let like = {};
     title ? like = Object.assign({}, like, {title}) : void 0;
@@ -46,8 +46,8 @@ class MenuService extends Service {
       like,
       columns: ['menu_id', 'title', 'icon', 'nexus', 'type', 'url', 'sort', 'update_time', 'create_time', 'display'],
       orders: [['sort'], ['update_time', 'desc']],
-      limit: 10,    // 返回数据量
-      offset: (Number(page) - 1) * 10, // 数据偏移量
+      limit: pageSize,
+      offset: (Number(pageNum) - 1) * pageSize,
     });
   }
 

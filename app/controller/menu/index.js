@@ -1,6 +1,7 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const Controller = require('../../core/base_controller');
+const {rule_list} = require('./rule');
 
 class MenuController extends Controller {
 
@@ -10,11 +11,10 @@ class MenuController extends Controller {
     let result;
     try {
       result = await menu.auth();
+      this.success({data: {list: result}});
     } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
+      this.error(err);
     }
-    ctx.body = ctx.json.success({data: {list: result}});
   }
 
   async all() {
@@ -23,11 +23,10 @@ class MenuController extends Controller {
     let result;
     try {
       result = await menu.all();
+      this.success({data: {list: result}});
     } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
+      this.error(err);
     }
-    ctx.body = ctx.json.success({data: {list: result}});
   }
 
   async list() {
@@ -35,13 +34,17 @@ class MenuController extends Controller {
     const {menu} = ctx.service;
     let result, total;
     try {
-      result = await menu.listOrRecovery(ctx.query, 0);
-      total = await menu.count(0);
-    } catch (err) {
-      console.log(err);
-      result = ctx.json.error();
+      ctx.validate(rule_list, ctx.query);
+      try {
+        result = await menu.listOrRecovery(ctx.query, 0);
+        total = await menu.count(0);
+        this.success({data: {list: result, total: total}});
+      } catch (err) {
+        this.error(err);
+      }
+    } catch (e) {
+      this.error(e, {data: {list: [], total: 0}, msg: '请求参数有误'});
     }
-    ctx.body = ctx.json.success({data: {list: result, total: total}});
   }
 
   async recovery() {
@@ -49,12 +52,16 @@ class MenuController extends Controller {
     const {menu} = ctx.service;
     let result, total;
     try {
-      result = await menu.listOrRecovery(ctx.query, 1);
-      total = await menu.count(1);
-      ctx.body = ctx.json.success({data: {list: result, total: total}});
-    } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      ctx.validate(rule_list, ctx.query);
+      try {
+        result = await menu.listOrRecovery(ctx.query, 1);
+        total = await menu.count(1);
+        this.success({data: {list: result, total: total}});
+      } catch (err) {
+        this.error(err);
+      }
+    } catch (e) {
+      this.error(e, {data: {list: [], total: 0}, msg: '请求参数有误'});
     }
   }
 
@@ -63,10 +70,9 @@ class MenuController extends Controller {
     const {menu} = ctx.service;
     try {
       await menu.insert(ctx.request.body);
-      ctx.body = ctx.json.success({msg: '添加成功'});
+      this.success({msg: '添加成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 
@@ -75,10 +81,9 @@ class MenuController extends Controller {
     const {menu} = ctx.service;
     try {
       await menu.update(ctx.request.body);
-      ctx.body = ctx.json.success({msg: '更新成功'});
+      this.success({msg: '更新成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 
@@ -87,10 +92,9 @@ class MenuController extends Controller {
     const {menu} = ctx.service;
     try {
       await menu.delOrRecover(ctx.request.body, 1);
-      ctx.body = ctx.json.success({msg: '删除成功'});
+      this.success({msg: '删除成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 
@@ -99,10 +103,9 @@ class MenuController extends Controller {
     const {menu} = ctx.service;
     try {
       await menu.delOrRecover(ctx.request.body, 0);
-      ctx.body = ctx.json.success({msg: '恢复成功'});
+      this.success({msg: '恢复成功'});
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 

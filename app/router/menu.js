@@ -4,7 +4,7 @@
 module.exports = app => {
   const {router, controller} = app;
 
-  const {menu} = controller;
+  const menu = controller.menu.index;
   router.get(`/api/menu/all`, menu.all);
   router.get(`/api/menu/auth`, menu.auth);
   router.get(`/api/menu/recovery`, menu.recovery);

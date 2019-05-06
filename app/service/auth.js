@@ -25,18 +25,18 @@ class AuthService extends Service {
   }
 
   async listOrRecovery(options, type) {
-    const {page = 1, title = null} = options;
+    const {pageNum = 1, pageSize = 10, title = null} = options;
     const {sql} = this.app;
     let where = {'soft_delete': type};
     let like = {};
     title ? like = Object.assign({}, like, {title}) : void 0;
-    return await sql('evy-auth', {
+    return await sql.select('evy-auth', {
       where,
       like,
       columns: ['auth_id', 'title', 'remark', 'url', 'menu', 'update_time', 'create_time'],
       orders: [['update_time', 'desc'], ['menu', 'desc']],
-      limit: 10,    // 返回数据量
-      offset: (Number(page) - 1) * 10, // 数据偏移量
+      limit: pageSize,
+      offset: (Number(pageNum) - 1) * pageSize,
     });
   }
 

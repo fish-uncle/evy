@@ -1,6 +1,6 @@
 'use strict';
 
-const Controller = require('egg').Controller;
+const Controller = require('../core/base_controller');
 
 class LoginController extends Controller {
 
@@ -11,19 +11,15 @@ class LoginController extends Controller {
     try {
       result = await login.login(ctx.request.body);
       if (result === 1) {
-        ctx.body = ctx.json.success({msg: '登录成功'});
+        this.success({msg: '登录成功'});
         user = await login.select(ctx.request.body);
         user_id = user[0].user_id;
-        // console.log(ctx.cookies.get('EVY_ID', {
-        //   encrypt: true,
-        // }));
-        ctx.cookies.set('EVY_ID', user_id, {encrypt: true, maxAge: 1000 * 60 * 60 * 24})
+        this.user = user_id;
       } else {
-        ctx.body = ctx.json.error({msg: '用户名或密码错误'});
+        this.error({msg: '用户名或密码错误'});
       }
     } catch (err) {
-      console.log(err);
-      ctx.body = ctx.json.error();
+      this.error(err);
     }
   }
 
