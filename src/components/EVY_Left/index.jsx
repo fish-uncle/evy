@@ -75,6 +75,7 @@ export default class Left extends Component {
         trigger={null}
         collapsible
         collapsed={collapsed}
+        className='left-container'
       >
         <div className={`logo ${collapsed ? 'active' : ''}`} style={{backgroundImage: `url(${logo.white})`}}/>
         {

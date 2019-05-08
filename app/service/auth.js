@@ -16,8 +16,8 @@ class AuthService extends Service {
   }
 
   async all() {
-    const {mysql} = this.app;
-    return await mysql.select('evy-auth', {
+    const {sql} = this.app;
+    return await sql.select('evy-auth', {
       where: {'soft_delete': 0,},
       columns: ['auth_id', 'title'],
       orders: [['update_time', 'desc'], ['menu', 'desc']],
@@ -68,9 +68,7 @@ class AuthService extends Service {
         update_time: literals.now,
         title, remark, url, menu
       }, {
-        where: {
-          auth_id
-        }
+        where: {auth_id}
       }
     );
   }

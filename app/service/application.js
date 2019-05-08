@@ -9,9 +9,7 @@ class ApplicationService extends Service {
     let {app_id} = options;
     const {mysql} = this.app;
     return await mysql.update('evy-app', {'soft_delete': type}, {
-      where: {
-        app_id
-      }
+      where: {app_id}
     });
   }
 
@@ -71,9 +69,7 @@ class ApplicationService extends Service {
         update_time: literals.now,
         cn_title, en_title, version, icon, description, update, associate_url
       }, {
-        where: {
-          app_id
-        }
+        where: {app_id}
       }
     );
   }

@@ -18,9 +18,23 @@ function checkStatus(response) {
 }
 
 function checkResult(res) {
-  const {success, data, msg} = res;
+  const {success, data, msg, code} = res;
   if (success) {
     return data;
+  }
+  // if (code === 500) {
+  //   location.href = `/#/500`
+  // }
+  // if (code === 404) {
+  //   location.href = `/#/404`
+  // }
+  // if (code === 403) {
+  //   location.href = `/#/403`
+  // }
+  if (code === 401) {
+    setTimeout(function () {
+      location.href = `/#/login/${encodeURIComponent(location.hash.replace('#', ''))}`
+    }, 1000)
   }
   notification.error({message: '提示', description: msg});
   return null

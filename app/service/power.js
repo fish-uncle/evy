@@ -4,14 +4,18 @@ const Service = require('egg').Service;
 
 class PowerService extends Service {
 
-  async all(options) {
+  async all() {
     const {mysql} = this.app;
-    const {role} = options;
     return await mysql.select('evy-menu', {
       where: {'soft_delete': 0,},
       columns: ['menu_id', 'title', 'nexus'],
-      orders: [['sort'], ['update_time', 'desc']],
+      orders: [['sort', 'asc'], ['update_time', 'desc']],
     });
+  }
+
+  async checkPower(url) {
+    const {mysql} = this.app;
+    return await mysql.query(`SELECT a.id FROM \`evy-auth\` AS a LEFT JOIN \`evy-role-auth\` AS b ON a.auth_id=b.auth WHERE soft_delete=0 AND url='${url}'`)
   }
 
   async check(options) {
@@ -21,18 +25,18 @@ class PowerService extends Service {
   }
 
   async selectMenu(options) {
-    const {mysql} = this.app;
+    const {sql} = this.app;
     const {role} = options;
-    return await mysql.select('evy-role-menu', {
+    return await sql.select('evy-role-menu', {
       where: {'role': role},
       columns: ['menu']
     });
   }
 
   async selectAuth(options) {
-    const {mysql} = this.app;
+    const {sql} = this.app;
     const {role} = options;
-    return await mysql.select('evy-role-auth', {
+    return await sql.select('evy-role-auth', {
       where: {'role': role},
       columns: ['auth']
     });

@@ -52,6 +52,7 @@ export default class _FormItem extends Component {
         value = '';
       }
     } else if (type === 'multiple') {
+      value = detailData[title];
       !value ? value = [] : void 0;
     } else if (type === 'version') {
       value = detailData[title] || defaultValue;
@@ -144,6 +145,7 @@ export default class _FormItem extends Component {
       disabled = false,
       className,
       placeholder = '',
+      required = true,
       uploadCallBack = this.uploadHandle,
       style,
       formData = {}, // type = img,file 专有
@@ -162,6 +164,7 @@ export default class _FormItem extends Component {
       rules: [{required: false}],
       normalize: this.normalizeHandle
     };
+    required ? label !== '' ? label = '* ' + label : void 0 : void 0;
     switch (type) {
       case 'date':
         html = <DatePicker disabled={disabled} showTime={showTime}/>;

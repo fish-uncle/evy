@@ -5,12 +5,18 @@ import {Layout, Icon, Breadcrumb, Dropdown, Menu} from 'antd';
 import {LeftActions} from '../../models';
 import './index.less';
 import {connect} from 'dva';
+import {POST} from "../../utils/request";
 
+const logoutHandle = () => {
+  POST('/api/logout').then(() => {
+    location.href = '/#/login';
+  })
+};
 const {Header, Content, Footer} = Layout;
 const menu = (
   <Menu>
     <Menu.Item>
-      <a href="/">退出登录</a>
+      <a onClick={logoutHandle}>退出登录</a>
     </Menu.Item>
   </Menu>
 );

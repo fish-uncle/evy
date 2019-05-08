@@ -32,9 +32,18 @@ class UserService extends Service {
     let {user_id} = options;
     const {mysql} = this.app;
     return await mysql.update('evy-user', {'soft_delete': type}, {
-      where: {
-        user_id
-      }
+      where: {user_id}
+    });
+  }
+
+  async detail(user_id) {
+    const {sql} = this.app;
+    return await sql.select('evy-user', {
+      where: {user_id, 'soft_delete': 0},
+      columns: ['user_id', 'employee_id', 'sex', 'pay', 'phone', 'email', 'role', 'station', 'status',
+        'remark', 'bank_address', 'native_address', 'native_address_detail', 'bank_card', 'real_name', 'type',
+        'birth_time', 'join_time', 'nation', 'marriage', 'avatar', 'update_time', 'create_time'
+      ],
     });
   }
 
@@ -80,9 +89,7 @@ class UserService extends Service {
     let {user_id} = options;
     const {mysql} = this.app;
     return await mysql.update('evy-user', {'password': this.app.encrypt('888888')}, {
-      where: {
-        user_id
-      }
+      where: {user_id}
     });
   }
 
@@ -114,9 +121,7 @@ class UserService extends Service {
         role,
         sex
       }, {
-        where: {
-          user_id
-        }
+        where: {user_id}
       }
     );
   }

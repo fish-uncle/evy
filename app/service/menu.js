@@ -5,21 +5,26 @@ const uuid = require('uuid/v4');
 
 class MenuService extends Service {
 
-  async auth() {
-    const {mysql} = this.app;
-    return await mysql.select('evy-menu', {
-      where: {'soft_delete': 0, 'display': 1},
-      columns: ['menu_id', 'title', 'icon', 'nexus', 'type', 'url'],
-      orders: [['sort'], ['update_time', 'desc']],
+  async auth(options) {
+    const {sql} = this.app;
+    return await sql.query(`SELECT menu_id,title,icon,nexus,type,url FROM \`evy-menu\` AS a LEFT JOIN \`evy-role-menu\` AS b ON a.menu_id = b.menu WHERE a.soft_delete = 0 AND a.display = 1 AND b.role='${options.role}' ORDER BY sort, update_time DESC`);
+  }
+
+  async allAuth() {
+    const {sql} = this.app;
+    return await sql.select('evy-menu', {
+      where: {'soft_delete': 0, display: 1},
+      columns: ['menu_id', 'title', 'nexus', 'icon', 'url', 'type'],
+      orders: [['sort', 'asc'], ['update_time', 'desc']],
     });
   }
 
   async all() {
-    const {mysql} = this.app;
-    return await mysql.select('evy-menu', {
+    const {sql} = this.app;
+    return await sql.select('evy-menu', {
       where: {'soft_delete': 0},
       columns: ['menu_id', 'title'],
-      orders: [['sort'], ['update_time', 'desc']],
+      orders: [['sort', 'asc'], ['update_time', 'desc']],
     });
   }
 
@@ -27,9 +32,7 @@ class MenuService extends Service {
     let {menu_id} = options;
     const {mysql} = this.app;
     return await mysql.update('evy-menu', {'soft_delete': type}, {
-      where: {
-        menu_id
-      }
+      where: {menu_id}
     });
   }
 
@@ -45,7 +48,7 @@ class MenuService extends Service {
       where,
       like,
       columns: ['menu_id', 'title', 'icon', 'nexus', 'type', 'url', 'sort', 'update_time', 'create_time', 'display'],
-      orders: [['sort'], ['update_time', 'desc']],
+      orders: [['sort', 'asc'], ['update_time', 'desc']],
       limit: pageSize,
       offset: (Number(pageNum) - 1) * pageSize,
     });
@@ -80,9 +83,7 @@ class MenuService extends Service {
         update_time: literals.now,
         title, type, url, sort, icon, nexus, display
       }, {
-        where: {
-          menu_id
-        }
+        where: {menu_id}
       }
     );
   }

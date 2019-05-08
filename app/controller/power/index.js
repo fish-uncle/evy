@@ -1,6 +1,6 @@
 'use strict';
 
-const Controller = require('../core/base_controller');
+const Controller = require('../../core/base_controller');
 
 class PowerController extends Controller {
 
@@ -9,7 +9,7 @@ class PowerController extends Controller {
     const {power} = ctx.service;
     let result;
     try {
-      result = await power.all(ctx.request.body);
+      result = await power.all();
       this.success({data: {list: result}});
     } catch (err) {
       this.error(err);

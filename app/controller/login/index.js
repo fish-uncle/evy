@@ -1,6 +1,6 @@
 'use strict';
 
-const Controller = require('../core/base_controller');
+const Controller = require('../../core/base_controller');
 
 class LoginController extends Controller {
 
@@ -16,10 +16,19 @@ class LoginController extends Controller {
         user_id = user[0].user_id;
         this.user = user_id;
       } else {
-        this.error({msg: '用户名或密码错误'});
+        this.error(new Error('用户名或密码错误'), {msg: '用户名或密码错误'});
       }
     } catch (err) {
       this.error(err);
+    }
+  }
+
+  async logout() {
+    try {
+      this.user = null;
+      this.success({msg: '退出成功'});
+    } catch (err) {
+      this.error(err, {msg: '退出失败'});
     }
   }
 

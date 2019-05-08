@@ -6,8 +6,8 @@ const uuid = require('uuid/v4');
 class RoleService extends Service {
 
   async all() {
-    const {mysql} = this.app;
-    return await mysql.select('evy-role', {
+    const {sql} = this.app;
+    return await sql.select('evy-role', {
       where: {'soft_delete': 0,},
       columns: ['role_id', 'title'],
       orders: [['update_time', 'desc']],
@@ -18,9 +18,7 @@ class RoleService extends Service {
     let {role_id} = options;
     const {mysql} = this.app;
     return await mysql.update('evy-role', {'soft_delete': type}, {
-      where: {
-        role_id
-      }
+      where: {role_id}
     });
   }
 
@@ -69,9 +67,7 @@ class RoleService extends Service {
         update_time: literals.now,
         title, admin
       }, {
-        where: {
-          role_id
-        }
+        where: {role_id}
       }
     );
   }

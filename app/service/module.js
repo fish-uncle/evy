@@ -10,9 +10,7 @@ class ModuleService extends Service {
     let {module_id} = options;
     const {mysql} = this.app;
     return await mysql.update('evy-module', {'soft_delete': type}, {
-      where: {
-        module_id
-      }
+      where: {module_id}
     });
   }
 
@@ -67,9 +65,7 @@ class ModuleService extends Service {
         update_time: literals.now,
         cn_title, en_title, content, app, description, label, timing, start_time, end_time, put
       }, {
-        where: {
-          module_id
-        }
+        where: {module_id}
       }
     );
   }

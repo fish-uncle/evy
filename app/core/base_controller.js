@@ -13,27 +13,33 @@ class BaseController extends Controller {
     })
   }
 
-  success({msg = '请求成功', data = '', obj, code = 200}) {
-    let result = {
-      code: code,
-      data: data,
-      msg: msg,
-      success: true
-    };
-    if (typeof obj === 'object') {
-      result = Object.assign(result, obj)
+  get success() {
+    return (options = {}) => {
+      const {msg = '请求成功', data = '', obj, code = 200} = options;
+      let result = {
+        code: code,
+        data: data,
+        msg: msg,
+        success: true
+      };
+      if (typeof obj === 'object') {
+        result = Object.assign(result, obj)
+      }
+      this.ctx.body = result;
     }
-    this.ctx.body = result;
   }
 
-  error(err, {msg = '请求失败', data = '', code = 500}) {
-    this.coreLogger.error(err);
-    this.ctx.body = {
-      code: code,
-      data: data,
-      msg: msg,
-      success: false
-    };
+  get error() {
+    return (err, options = {}) => {
+      const {msg = '请求失败', data = '', code = 500} = options;
+      this.logger.error(err);
+      this.ctx.body = {
+        code: code,
+        data: data,
+        msg: msg,
+        success: false
+      };
+    }
   }
 
 }

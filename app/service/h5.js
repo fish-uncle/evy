@@ -9,9 +9,7 @@ class H5Service extends Service {
     let {h5_id} = options;
     const {mysql} = this.app;
     return await mysql.update('evy-h5', {'soft_delete': type}, {
-      where: {
-        h5_id
-      }
+      where: {h5_id}
     });
   }
 
@@ -61,9 +59,7 @@ class H5Service extends Service {
         update_time: literals.now,
         name, title, description, put, version, env, js_url, css_url
       }, {
-        where: {
-          h5_id
-        }
+        where: {h5_id}
       }
     );
   }

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50617
 File Encoding         : 65001
 
-Date: 2019-05-06 16:07:59
+Date: 2019-05-08 14:28:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,12 +52,12 @@ CREATE TABLE `evy-auth` (
   `url` text COMMENT '链接地址。',
   `remark` text COMMENT '备注。',
   `menu` char(36) DEFAULT NULL COMMENT '所属页面。',
-  `soft_delete` tinyint(3) unsigned DEFAULT '1' COMMENT '记录：未删除/已删除：1/2。',
+  `soft_delete` tinyint(3) unsigned DEFAULT '0' COMMENT '记录：未删除/已删除：0/1。',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `update_time` datetime NOT NULL COMMENT '更新时间',
   `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`,`auth_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8 COMMENT='功能表';
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8 COMMENT='功能表';
 
 -- ----------------------------
 -- Records of evy-auth
@@ -92,6 +92,7 @@ INSERT INTO `evy-auth` VALUES ('27', '3801db70-852c-47b9-b3c2-40ae0fd21008', '�
 INSERT INTO `evy-auth` VALUES ('28', 'afa30927-ff9b-4b49-b58f-944525cd9919', '添加H5', '/api/h5/insert', null, 'e44e156c-3fce-4076-a74a-6ce51a92c869', '0', '2019-04-30 18:28:20', '2019-04-30 18:28:20', null);
 INSERT INTO `evy-auth` VALUES ('29', '90c08e95-1f92-469f-bfde-061d72005528', '更新H5', '/api/h5/update', null, 'e44e156c-3fce-4076-a74a-6ce51a92c869', '0', '2019-04-30 18:28:54', '2019-04-30 18:28:54', null);
 INSERT INTO `evy-auth` VALUES ('30', '4af3663c-e799-436a-af93-3d3bea495cc5', '删除H5', '/api/h5/delete', null, 'e44e156c-3fce-4076-a74a-6ce51a92c869', '0', '2019-04-30 18:29:14', '2019-04-30 18:29:14', null);
+INSERT INTO `evy-auth` VALUES ('31', 'c3d19b84-fd7f-41eb-bf6e-1d58682faaf8', '重置员工密码', '/api/user/password', null, '9c46e81f-6c22-4fa9-aea0-bcf5425e183a', '0', '2019-05-08 14:25:34', '2019-05-08 14:25:34', null);
 
 -- ----------------------------
 -- Table structure for evy-h5
@@ -208,7 +209,7 @@ CREATE TABLE `evy-role` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id.',
   `role_id` char(36) NOT NULL COMMENT 'id.',
   `title` char(10) NOT NULL COMMENT '角色名。',
-  `soft_delete` tinyint(3) unsigned DEFAULT '1' COMMENT '记录：未删除/已删除：1/2。',
+  `soft_delete` tinyint(3) unsigned DEFAULT '0' COMMENT '记录：未删除/已删除：0/1。',
   `admin` char(1) DEFAULT '2' COMMENT '是否是管理员：是/否：1/2。',
   `create_time` datetime NOT NULL COMMENT '创建时间。',
   `update_time` datetime NOT NULL COMMENT '更新时间。',
@@ -233,12 +234,16 @@ CREATE TABLE `evy-role-auth` (
   `auth` char(36) NOT NULL COMMENT 'auth_id.',
   `role` char(36) NOT NULL COMMENT 'role_id.',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='功能权限关联表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='功能权限关联表';
 
 -- ----------------------------
 -- Records of evy-role-auth
 -- ----------------------------
-INSERT INTO `evy-role-auth` VALUES ('1', '90c08e95-1f92-469f-bfde-061d72005528', '9b9b44b1-4058-4e21-a5df-91929380baab');
+INSERT INTO `evy-role-auth` VALUES ('2', 'febbde72-57c8-43b3-ad5d-40b3d1d51f30', '9b9b44b1-4058-4e21-a5df-91929380baab');
+INSERT INTO `evy-role-auth` VALUES ('3', '21018ee0-1d2f-4743-b070-4292d17d1cba', '9b9b44b1-4058-4e21-a5df-91929380baab');
+INSERT INTO `evy-role-auth` VALUES ('4', '90c08e95-1f92-469f-bfde-061d72005528', '9b9b44b1-4058-4e21-a5df-91929380baab');
+INSERT INTO `evy-role-auth` VALUES ('5', '3eab07e8-3ebf-43ff-957c-2711379490bf', '9b9b44b1-4058-4e21-a5df-91929380baab');
+INSERT INTO `evy-role-auth` VALUES ('6', '2041a6e2-1aca-4ace-8d39-2bbe7cd7a7f1', '9b9b44b1-4058-4e21-a5df-91929380baab');
 
 -- ----------------------------
 -- Table structure for evy-role-menu
@@ -306,6 +311,6 @@ CREATE TABLE `evy-user` (
 -- ----------------------------
 -- Records of evy-user
 -- ----------------------------
-INSERT INTO `evy-user` VALUES ('1', 'd3e934a2-df71-4673-be53-fb1ac7b8dfb8', 'T0001', '', '12fd5a8786005d13ffec89035674ff1a', null, null, '张三', '2', '3420', '0', '648f4bb7-8147-4a49-b042-4f32da30c893', '0', '1', '1', '2009-03-22 17:58:39', '2019-03-22 17:58:07', '汉族', '1', '', null, null, null, null, null, null, null, 'test@163.com', '13964445123', null, null, null, '1', null, '0', '2019-03-22 16:54:31', '2019-04-19 16:20:10', null);
-INSERT INTO `evy-user` VALUES ('2', 'c7d9dcbe-5c67-4c7c-a0ce-513e6b45dba7', 'T0002', '', '12fd5a8786005d13ffec89035674ff1a', null, null, '赵武', '2', '3200', '0', '2fc0fcbc-2cf2-40f7-8893-ef6b270b0b36', '0', '0', '1', '2004-03-22 17:58:46', '2019-03-22 17:58:05', '汉族', '1', null, null, null, null, null, null, null, null, 'admin@163.com', '15367945313', null, null, null, '1', null, '0', '2019-03-22 17:53:54', '2019-05-06 10:12:03', null);
+INSERT INTO `evy-user` VALUES ('1', 'd3e934a2-df71-4673-be53-fb1ac7b8dfb8', 'T0001', '', '12fd5a8786005d13ffec89035674ff1a', null, null, '张三', '2', '3420', '0', '9b9b44b1-4058-4e21-a5df-91929380baab', '0', '1', '1', '2009-03-22 17:58:39', '2019-03-22 17:58:07', '汉族', '1', null, null, null, null, null, null, null, null, 'test@163.com', '13964445123', null, null, null, '1', null, '0', '2019-03-22 16:54:31', '2019-05-07 18:22:20', null);
+INSERT INTO `evy-user` VALUES ('2', 'c7d9dcbe-5c67-4c7c-a0ce-513e6b45dba7', 'T0002', '', '12fd5a8786005d13ffec89035674ff1a', null, null, '赵武', '2', '3200', '0', '2fc0fcbc-2cf2-40f7-8893-ef6b270b0b36', '0', '1', '1', '2004-03-22 17:58:46', '2019-03-22 17:58:05', '汉族', '1', null, null, null, null, null, null, null, null, 'admin@163.com', '15367945313', null, null, null, '1', null, '0', '2019-03-22 17:53:54', '2019-05-06 10:12:03', null);
 INSERT INTO `evy-user` VALUES ('3', 'e5885e9a-6dfa-4082-8e98-ff9a4f7703d3', 'T0003', '', '12fd5a8786005d13ffec89035674ff1a', null, null, '李希', '1', '3590', '0', '648f4bb7-8147-4a49-b042-4f32da30c893', '0', '1', '1', '1999-03-22 17:50:58', '2019-03-22 17:50:58', '汉族', '1', '浙江省,杭州市,下城区', null, 'xx银行', '0000000000000000', null, null, null, null, '5@163.com', '18868945733', null, null, null, '1', null, '0', '2019-03-22 17:50:58', '2019-04-19 16:20:04', null);

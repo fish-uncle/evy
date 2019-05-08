@@ -7,10 +7,16 @@ class MenuController extends Controller {
 
   async auth() {
     const ctx = this.ctx;
-    const {menu} = ctx.service;
+    const {menu, user, power} = ctx.service;
     let result;
     try {
-      result = await menu.auth();
+      const detail = await user.detail(this.user);
+      const checkAdmin = await power.check(detail[0]);
+      if (checkAdmin > 0) {
+        result = await menu.allAuth();
+      } else {
+        result = await menu.auth(detail[0]);
+      }
       this.success({data: {list: result}});
     } catch (err) {
       this.error(err);
