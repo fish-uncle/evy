@@ -31,6 +31,15 @@ class H5Service extends Service {
     });
   }
 
+  async view(options) {
+    const {sql} = this.app;
+    const {id} = options;
+    return await sql.select('evy-h5', {
+      columns: ['js_url', 'css_url', 'title'],
+      where: {'soft_delete': 0, 'h5_id': id}
+    });
+  }
+
   async count(type) {
     const {mysql} = this.app;
     return await mysql.count('evy-h5', {'soft_delete': type});

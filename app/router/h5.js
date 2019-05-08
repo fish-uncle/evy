@@ -14,4 +14,6 @@ module.exports = app => {
   router.post(`/api/h5/delete`, checkLogin, checkPower, h5.del);
   router.post(`/api/h5/recover`, checkLogin, checkPower, h5.recover);
 
+  router.get(`/api/h5/view`, h5.view);
+
 };

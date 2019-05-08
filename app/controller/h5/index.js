@@ -63,6 +63,23 @@ class H5Controller extends Controller {
     }
   }
 
+  async view() {
+    const ctx = this.ctx;
+    const {h5} = ctx.service;
+    try {
+      const view = await h5.view(ctx.query);
+      const title = view[0].title;
+      let jsHtml = '', cssHtml = '';
+      view[0].js_url = view[0].js_url.split(',');
+      view[0].css_url = view[0].css_url.split(',');
+      const js = view[0].js_url.map(item => jsHtml += `<script src=${item}></script>`);
+      const css = view[0].css_url.map(item => cssHtml += `<link rel='stylesheet' href=${item}/>`);
+      ctx.body = `<html><head><title>${title}</title><meta charset='UTF-8'/>${css}</head><body>${js}</body></html>`;
+    } catch (err) {
+      this.error(err);
+    }
+  }
+
   async del() {
     const ctx = this.ctx;
     const {h5} = ctx.service;
