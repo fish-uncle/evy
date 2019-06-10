@@ -36,29 +36,37 @@ export default class _FormItem extends Component {
     let {type = 'input', title, sheet, defaultValue = null} = props;
     const {detailData} = sheet;
     let value, editorState, _version;
-    if (type === 'switch') {
-      value = detailData[title];
-    } else if (type === 'date') {
-      value = detailData[title] ? moment(detailData[title]) : null
-    } else if (type === 'editor') {
-      if (detailData[title]) {
-        const contentBlock = htmlToDraft(detailData[title]);
-        const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-        editorState = EditorState.createWithContent(contentState);
-        value = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-      } else {
-        const contentState = ContentState.createFromText('');
-        editorState = EditorState.createWithContent(contentState);
-        value = '';
-      }
-    } else if (type === 'multiple') {
-      value = detailData[title];
-      !value ? value = [] : void 0;
-    } else if (type === 'version') {
-      value = detailData[title] || defaultValue;
-      _version = value ? value.split('.') : [0, 0, 0]
-    } else {
-      value = typeof detailData[title] === 'number' || typeof detailData[title] === 'boolean' ? detailData[title] : detailData[title] || defaultValue
+    switch (type) {
+      case 'switch':
+        value = typeof detailData[title] === 'boolean' ? detailData[title] : defaultValue;
+        break;
+      case 'date':
+        value = detailData[title] ? moment(detailData[title]) : null;
+        break;
+      case 'editor':
+        if (detailData[title]) {
+          const contentBlock = htmlToDraft(detailData[title]);
+          const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
+          editorState = EditorState.createWithContent(contentState);
+          value = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+        } else if (defaultValue) {
+          value = defaultValue
+        } else {
+          const contentState = ContentState.createFromText('');
+          editorState = EditorState.createWithContent(contentState);
+          value = '';
+        }
+        break;
+      case 'multiple':
+        value = detailData[title] || defaultValue;
+        !value ? value = [] : void 0;
+        break;
+      case 'version':
+        value = detailData[title] || defaultValue;
+        _version = value ? value.split('.') : [0, 0, 0];
+        break;
+      default:
+        value = typeof detailData[title] === 'number' || typeof detailData[title] === 'boolean' ? detailData[title] : detailData[title] || defaultValue;
     }
     this.state = {
       value,
@@ -270,8 +278,7 @@ export default class _FormItem extends Component {
   }
 }
 
-_FormItem
-  .propTypes = {
+_FormItem.propTypes = {
   label: PropTypes.string,
   key: PropTypes.string,
   maxLength: PropTypes.number,
