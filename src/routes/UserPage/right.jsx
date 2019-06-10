@@ -4,7 +4,7 @@ import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
 import {Form, Button, notification} from 'antd';
 import {sex, station, nation, marriage, status} from '../../utils/select';
-import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
+import request from '../../utils/request';
 import cityList from '../../utils/cityList';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
@@ -16,14 +16,10 @@ class Right extends Component {
   }
 
   passwordHandle = (detailData) => {
-    try {
-      POST('/api/user/password', detailData);
-      this.props.sheet_load();
-      this.props.drawer_close();
-      notification.success({message: '提示', description: '重置成功'});
-    } catch (e) {
-      notification.success({message: '提示', description: '重置失败'});
-    }
+    request.post('/api/user/password', detailData);
+    this.props.sheet_load();
+    this.props.drawer_close();
+    notification.success({message: '提示', description: '重置成功'});
   };
 
   render() {

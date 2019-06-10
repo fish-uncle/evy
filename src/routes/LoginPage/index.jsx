@@ -5,9 +5,9 @@ import {Login, Default} from '../../components';
 import {connect} from "dva";
 import {Link} from "dva/router";
 import './index.less';
-import {POST} from "../../utils/request";
+import request from "../../utils/request";
 
-const {Tab, UserName, Password, Submit} = Login;
+const {UserName, Password, Submit} = Login;
 
 @connect((config, login) => ({...config, ...login}), {...RouterActions})
 class LoginPage extends Component {
@@ -21,7 +21,7 @@ class LoginPage extends Component {
     let data = {};
     /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(userName) ? data.email = userName : data.phone = userName;
     data.password = password;
-    POST('/api/login', data).then(() => {
+    request.post('/api/login', data).then(() => {
       notification.success({message: '提示', description: '登录成功'});
       if (callBackUrl) {
         this.props.push(decodeURIComponent(callBackUrl))

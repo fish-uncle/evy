@@ -1,5 +1,5 @@
 import {createModelActions} from '../utils/action';
-import {GET} from "../utils/request";
+import request from "../utils/request";
 
 export default {
 
@@ -19,7 +19,7 @@ export default {
     * left_load({payload, callback}, {call, put}) {
       try {
         const result = yield call(_ => {
-          return GET('/api/menu/auth')
+          return request.get('/api/menu/auth')
         });
         yield put({
           type: 'r_left_load',

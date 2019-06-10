@@ -5,10 +5,10 @@ import {Layout, Icon, Breadcrumb, Dropdown, Menu} from 'antd';
 import {LeftActions} from '../../models';
 import './index.less';
 import {connect} from 'dva';
-import {POST} from "../../utils/request";
+import request from "../../utils/request";
 
 const logoutHandle = () => {
-  POST('/api/logout').then(() => {
+  request.post('/api/logout').then(() => {
     location.href = '/#/login';
   })
 };

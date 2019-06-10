@@ -4,7 +4,7 @@ import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
+import request from '../../utils/request';
 import {sex, toColumns, station, status} from '../../utils/select';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
@@ -13,14 +13,10 @@ class Operation extends Component {
     const {sheet} = this.props;
     Modal.confirm({
       content: '确认是否删除？',
-      onOk: () => {
-        try {
-          POST(sheet.deleteUrl, item);
-          this.props.sheet_load();
-          notification.success({message: '提示', description: '删除成功'});
-        } catch (e) {
-          notification.success({message: '提示', description: '删除失败'});
-        }
+      onOk: async () => {
+        await request.post(sheet.deleteUrl, item);
+        this.props.sheet_load();
+        notification.success({message: '提示', description: '删除成功'});
       }
     })
   };

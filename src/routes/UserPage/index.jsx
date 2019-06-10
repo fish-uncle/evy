@@ -5,7 +5,7 @@ import {Body, Sheet, Drawer} from '../../components';
 import columns from './columns';
 import Right from './right';
 import moment from "moment";
-import {GET} from "../../utils/request";
+import request from "../../utils/request";
 
 @connect((sheet) => ({...sheet}), {...RouterActions, ...SheetActions})
 export default class UserPage extends Component {
@@ -14,7 +14,7 @@ export default class UserPage extends Component {
     roleList: {}
   };
 
-  componentWillMount() {
+  async componentWillMount() {
     this.props.sheet_set({
       columns: columns, rowKey: 'user_id', loadCallback: data => {
         data.list.map(item => {
@@ -34,12 +34,11 @@ export default class UserPage extends Component {
       exportUrl: '/api/excel/user'
     });
     let roleList = {};
-    GET('/api/role/all').then(data => {
-      data.list.map(item => {
-        roleList[item.title] = item['role_id']
-      });
-      this.setState({roleList})
+    const res = await request.get('/api/role/all');
+    res.list.map(item => {
+      roleList[item.title] = item['role_id']
     });
+    this.setState({roleList})
   }
 
   componentDidMount() {

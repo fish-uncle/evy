@@ -4,7 +4,7 @@ import {RouterActions, SheetActions} from '../../models';
 import {Body} from '../../components';
 import {FormItem} from '../../components';
 import {Form, Button, notification, Tree, Tabs, Transfer} from 'antd';
-import {GET, POST} from "../../utils/request";
+import request from "../../utils/request";
 import './index.less';
 
 const {TreeNode} = Tree;
@@ -28,20 +28,20 @@ class PowerPage extends Component {
   componentWillMount() {
     const form = this.props.form;
     this.props.drawer_set({form}); // 传递 antd 的 form 给 model
-    GET('/api/role/all').then(data => {
+    request.get('/api/role/all').then(data => {
       let roleList = {};
       data.list.map(item => {
         roleList[item.title] = item['role_id']
       });
       this.setState({roleList})
     });
-    GET('/api/power/all').then(data => {
+    request.get('/api/power/all').then(data => {
       const list = this.ruleHandle(data.list);
       this.setState({
         menuData: list
       })
     });
-    GET('/api/auth/all').then(data => {
+    request.get('/api/auth/all').then(data => {
       let list = [];
       data.list.map(item => {
         list.push({key: item.auth_id, title: item.title})
@@ -81,14 +81,14 @@ class PowerPage extends Component {
           this.setState({
             role: values.role
           });
-          POST('/api/power/select/menu', values).then(data => {
+          request.post('/api/power/select/menu', values).then(data => {
             let checkedKeys = [];
             data.list.map(item => checkedKeys.push(item.menu_id || item.menu));
             this.setState({
               checkedKeys
             })
           });
-          POST('/api/power/select/auth', values).then(data => {
+          request.post('/api/power/select/auth', values).then(data => {
             let targetKeys = [];
             data.list.map(item => targetKeys.push(item.auth_id || item.auth));
             this.setState({
@@ -138,7 +138,7 @@ class PowerPage extends Component {
       notification.error({message: '提示', description: '请先选择角色'});
       return false
     }
-    POST('/api/power/update/menu', {list: checkedKeys, role}).then(() => {
+    request.post('/api/power/update/menu', {list: checkedKeys, role}).then(() => {
       notification.success({message: '提示', description: '更新成功'});
     });
   };
@@ -149,7 +149,7 @@ class PowerPage extends Component {
       notification.error({message: '提示', description: '请先选择角色'});
       return false
     }
-    POST('/api/power/update/auth', {list: targetKeys, role}).then(() => {
+    request.post('/api/power/update/auth', {list: targetKeys, role}).then(() => {
       notification.success({message: '提示', description: '更新成功'});
     });
   };

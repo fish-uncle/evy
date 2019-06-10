@@ -1,4 +1,5 @@
 import path from 'path';
+import pkg from './package.json';
 
 const publicPath = `/`;
 export default {
@@ -6,6 +7,8 @@ export default {
     "primary-color": "#1DA57A",
   },
   define: {
+    'pkg.name': JSON.stringify(pkg.name),
+    'pkg.version': JSON.stringify(pkg.version),
     'process.env.NODE_ENV': process.env.NODE_ENV,
   },
   entry: {

@@ -5,7 +5,7 @@ import {LeftActions, RouterActions, SheetActions} from '../../models';
 import {Body, Sheet, Drawer} from '../../components';
 import columns from './columns';
 import Right from './right';
-import {GET} from "../../utils/request";
+import request from "../../utils/request";
 
 @connect((sheet, left) => ({...sheet, ...left}), {...RouterActions, ...SheetActions, ...LeftActions})
 export default class ModulePage extends Component {
@@ -34,7 +34,7 @@ export default class ModulePage extends Component {
       recoveryUrl: '/module/recovery'
     });
     let appList = {};
-    GET('/api/application/all').then(data => {
+    request.get('/api/application/all').then(data => {
       data.list.map(item => {
         appList[item.cn_title] = item['app_id']
       });

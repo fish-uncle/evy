@@ -1,211 +1,92 @@
-import fetch from 'dva/fetch';
-import LoadingInAjax from '../components/EVY_LoadingInAjax';
 import {notification} from "antd";
 
-function parseJSON(response) {
-  return response ? response.json() : {};
-}
+const axios = require('axios');
+const format = require('date-fns/format');
+const {BrowserClient, Hub} = require('@sentry/browser');
+// https://sentry.io 申请 dsn
+const client = new BrowserClient({
+  dsn: 'https://fb2dedd217ca40a4b8f540abc45ff49c@sentry.io/1478316',
+  release: `${process.env.NODE_ENV}${pkg.version}`,
+  environment: `${process.env.NODE_ENV === 'production' ? 'production' : 'test'}`
+});
+const hub = new Hub(client);
 
-function checkStatus(response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response;
-  }
+let requestKeyInfo;
 
-  const error = new Error(response.statusText);
-  error.response = response;
-  notification.error({message: '提示', description: error.toString()});
-  return null
-}
+axios.defaults.baseURL = process.env.NODE_ENV === 'production' ? '/' : '/';
 
-function checkResult(res) {
-  const {success, data, msg, code} = res;
-  if (success) {
-    return data;
-  }
-  // if (code === 500) {
-  //   location.href = `/#/500`
-  // }
-  // if (code === 404) {
-  //   location.href = `/#/404`
-  // }
-  // if (code === 403) {
-  //   location.href = `/#/403`
-  // }
-  if (code === 401) {
-    setTimeout(function () {
-      location.href = `/#/login/${encodeURIComponent(location.hash.replace('#', ''))}`
-    }, 1000)
-  }
-  notification.error({message: '提示', description: msg});
-  return null
-}
-
-let requestCount = 0;
-let timeoutForLoadingToShow;
-
-function requestStart() {
-  requestCount++;
-  clearTimeout(timeoutForLoadingToShow);
-  timeoutForLoadingToShow = setTimeout(_ => {
-    LoadingInAjax.show();
-  }, 50);
-}
-
-function parseParams(obj) {
-  if (!obj) return '';
-
-  let resArr = [];
-  Object.keys(obj).map(value => {
-    let str = value + '=' + encodeURIComponent(obj[value]);
-    resArr.push(str);
-  });
-  return resArr.join('&');
-}
-
-function requestEnd() {
-  requestCount--;
-  // console.log('requestCount = ' + requestCount);
-  if (requestCount < 1) {
-    clearTimeout(timeoutForLoadingToShow);
-    LoadingInAjax.hide();
-  }
-}
-
-/**
- * Requests a URL, returning a promise.
- *
- * @param  {string} url       The URL we want to request
- * @param  {object} [options] The options we want to pass to "fetch"
- * @return {object}           An object containing either "data" or "err"
- */
-export default function request(url, options) {
-  // 设置默认选项
-  let defaultOpt = {
-    method: 'GET',
-    credentials: 'include', // same-origin（同源）， include（跨源）， omit（不包含cookie）
+axios.interceptors.request.use(function (config) {
+  requestKeyInfo = {
+    headers: config.headers,
+    method: config.method,
+    url: config.url,
+    data: config.data,
   };
-  if (!(options.body instanceof FormData)) {
-    defaultOpt.headers = new Headers({
-      'Content-Type': 'application/json',
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    });
-  }
-  const newOpt = {...defaultOpt, ...options};
-  const {body} = newOpt;
+  return config;
+}, function (error) {
+  return Promise.reject(error);
+});
 
-  // 去除多余属性
-  if (typeof body === 'object') {
-    Object.keys(body)
-      .forEach(key => {
-        if (!body[key] && body[key] !== 0) {
-          delete body[key];
-        }
+
+// {
+//   code: 200
+//   data: '数据',
+//   success: true,
+//   msg： null
+// }
+// 可自行判断 逻辑报错请求
+axios.interceptors.response.use(response => {
+  const {data} = response;
+  if (data.data === 0 || data.data === 1) {
+    return data.data;
+  }
+  if (!data.success) {
+    console.error(data.msg || '网络异常，请重试');
+    notification.error({message: '提示', description: data.msg || '网络异常，请重试'});
+    hub.configureScope(scope => {
+      scope.setUser({
+        username: 'fishuncle',
+        email: 'fish-uncle@126.com'
       });
-  }
-
-  const {method} = newOpt;
-  if (method === 'GET' || method === 'HEAD') {
-    Object.keys(body).forEach(key => {
-      if (url.indexOf('?') === -1) {
-        url += '?' + key + '=' + body[key];
-      } else {
-        url += '&' + key + '=' + body[key];
-      }
+      scope.setLevel('error');
+      scope.setTag('env', process.env.NODE_ENV);
+      scope.setTag('url', requestKeyInfo.url);
+      scope.setExtra("Request", {
+        method: requestKeyInfo.method,
+        url: requestKeyInfo.url,
+        headers: requestKeyInfo.headers,
+        data: requestKeyInfo.data,
+      });
+      scope.setExtra("Response", response);
     });
-    delete newOpt.body;
+    hub.captureMessage(`${format(new Date(), 'YYYY-MM-DD HH:mm:ss')} [error] Request Error: ${requestKeyInfo.url}`);
+    return false;
   }
-
-  if (newOpt.body && typeof newOpt.body === 'object') {
-    if (newOpt.body instanceof FormData) {
-    } else {
-      newOpt.body = JSON.stringify(newOpt.body);
-      // newOpt.body = parseParams(newOpt.body);
-    }
+  if (data.data === void 0) {
+    return data.success;
   }
+  return data.data;
 
-  requestStart();
-  return fetch(url, newOpt)
-    .then(checkStatus)
-    .then(parseJSON)
-    .then(checkResult)
-    .then(res => {
-      requestEnd();
-      return res;
-    }, e => {
-      requestEnd();
-      throw e;
+}, function (e) {
+  // 上报后端无响应的错误请求
+  hub.configureScope(scope => {
+    scope.setUser({
+      username: 'fishuncle',
+      email: 'fish-uncle@126.com'
     });
+    scope.setLevel('error');
+    scope.setTag('env', process.env.NODE_ENV);
+    scope.setTag('url', requestKeyInfo.url);
+    scope.setExtra("Request", {
+      method: requestKeyInfo.method,
+      url: requestKeyInfo.url,
+      headers: requestKeyInfo.headers,
+      data: requestKeyInfo.data,
+    });
+    scope.setExtra("Error", e);
+  });
+  hub.captureMessage(`${format(new Date(), 'YYYY-MM-DD HH:mm:ss')} [error] Request Fatal: ${requestKeyInfo.url}`);
+  return false;
+});
 
-}
-
-/**
- * 以get方式请求
- * @param {string} url 请求的地址，如：/banner/{id}
- * @param {object} body  请求的参数，如：{id:123}
- * */
-function GET(url, body = {}) {
-  const method = 'GET';
-  return request(url, {method, body});
-}
-
-/**
- * 以POST方式请求
- * @param {string} url 请求的地址，如：/banner/{id}
- * @param {object} body  请求的参数，如：{id:123}
- * */
-function POST(url, body = {}) {
-  const method = 'POST';
-  return request(url, {method, body});
-}
-
-/**
- * 以DELETE方式请求
- * @param {string} url 请求的地址，如：/banner/{id}
- * @param {object} body  请求的参数，如：{id:123}
- * */
-function DELETE(url, body = {}) {
-  const method = 'DELETE';
-  return request(url, {method, body});
-}
-
-/**
- * 以PUT方式请求
- * @param {string} url 请求的地址，如：/banner/{id}
- * @param {object} body  请求的参数，如：{id:123}
- * */
-function PUT(url, body = {}) {
-  const method = 'PUT';
-  return request(url, {method, body});
-}
-
-/**
- * 以OPTIONS方式请求
- * @param {string} url 请求的地址，如：/banner/{id}
- * @param {object} body  请求的参数，如：{id:123}
- * */
-function OPTIONS(url, body = {}) {
-  const method = 'OPTIONS';
-  return request(url, {method, body});
-}
-
-/**
- * 以PATCH方式请求
- * @param {string} url 请求的地址，如：/banner/{id}
- * @param {object} body  请求的参数，如：{id:123}
- * */
-function PATCH(url, body = {}) {
-  const method = 'PATCH';
-  return request(url, {method, body});
-}
-
-/**
- * 以HEAD方式请求
- * @param {string} url 请求的地址，如：/banner/{id}
- * @param {object} body  请求的参数，如：{id:123}
- * */
-function HEAD(url, body = {}) {
-  const method = 'HEAD';
-  return request(url, {method, body});
-}
-
-export {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH};
+export default axios;

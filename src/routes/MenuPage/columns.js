@@ -4,7 +4,7 @@ import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-import {GET, POST} from "../../utils/request";
+import request from "../../utils/request";
 import {toColumns} from '../../utils/select';
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
@@ -13,14 +13,11 @@ class Operation extends Component {
     const {sheet} = this.props;
     Modal.confirm({
       content: '确认是否删除？',
-      onOk: () => {
-        try {
-          POST(sheet.deleteUrl, item).then(() => {
-            this.props.sheet_load();
-            notification.success({message: '提示', description: '删除成功'});
-          });
-        } catch (e) {
-          notification.success({message: '提示', description: '删除失败'});
+      onOk: async () => {
+        const res = await request.post(sheet.deleteUrl, item);
+        if (res) {
+          this.props.sheet_load();
+          notification.success({message: '提示', description: '删除成功'});
         }
       }
     })
@@ -40,7 +37,7 @@ class Operation extends Component {
 }
 
 let nexusList = {'无父级': null};
-GET('/api/menu/all').then(data => {
+request.get('/api/menu/all').then(data => {
   data.list.map(item => {
     nexusList[item.title] = item['menu_id']
   });

@@ -4,8 +4,8 @@ import {Button, Modal, notification} from "antd";
 import mackColumns from '../../utils/mackColumns';
 import {connect} from "dva";
 import {SheetActions} from "../../models";
-import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
 import {sex, toColumns, station} from '../../utils/select';
+import request from "../../utils/request";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
 class Operation extends Component {
@@ -13,14 +13,10 @@ class Operation extends Component {
     const {sheet} = this.props;
     Modal.confirm({
       content: '确认是否恢复？',
-      onOk: () => {
-        try {
-          POST(sheet.recoverUrl, item);
-          this.props.sheet_load();
-          notification.success({message: '提示', description: '恢复成功'});
-        } catch (e) {
-          notification.success({message: '提示', description: '恢复失败'});
-        }
+      onOk: async () => {
+        await request.post(sheet.recoverUrl, item);
+        this.props.sheet_load();
+        notification.success({message: '提示', description: '恢复成功'});
       }
     })
   };

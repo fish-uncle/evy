@@ -4,7 +4,7 @@ import {SheetActions} from '../../models';
 import {FormItem} from '../../components';
 import {Form, Button, notification} from 'antd';
 import {label, nation} from '../../utils/select';
-import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../../utils/request';
+import request from '../../utils/request';
 import cityList from "../../utils/cityList";
 
 @connect((sheet) => ({...sheet}), {...SheetActions})
@@ -16,14 +16,10 @@ class Right extends Component {
   }
 
   setHandle = (detailData) => {
-    try {
-      POST('/api/example/setting', detailData);
-      this.props.sheet_load();
-      this.props.drawer_close();
-      notification.success({message: '提示', description: '设置成功'});
-    } catch (e) {
-      notification.success({message: '提示', description: '设置失败'});
-    }
+    request.post('/api/example/setting', detailData);
+    this.props.sheet_load();
+    this.props.drawer_close();
+    notification.success({message: '提示', description: '设置成功'});
   };
 
   render() {

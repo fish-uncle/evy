@@ -4,7 +4,7 @@ import {RouterActions, SheetActions} from '../../models';
 import {Body, Sheet, Drawer} from '../../components';
 import columns from './columns';
 import Right from './right';
-import {GET} from "../../utils/request";
+import request from "../../utils/request";
 import moment from "moment";
 
 @connect((sheet) => ({...sheet}), {...RouterActions, ...SheetActions})
@@ -30,7 +30,7 @@ export default class MenuPage extends Component {
       updateUrl: '/api/menu/update',
       recoveryUrl: '/menu/recovery'
     });
-    GET('/api/menu/all').then(data => {
+    request.get('/api/menu/all').then(data => {
       let nexusList = {'无父级': null};
       data.list.map(item => {
         nexusList[item.title] = item['menu_id']

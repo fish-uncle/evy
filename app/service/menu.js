@@ -6,8 +6,8 @@ const uuid = require('uuid/v4');
 class MenuService extends Service {
 
   async auth(options) {
-    const {sql} = this.app;
-    return await sql.query(`SELECT menu_id,title,icon,nexus,type,url FROM \`evy-menu\` AS a LEFT JOIN \`evy-role-menu\` AS b ON a.menu_id = b.menu WHERE a.soft_delete = 0 AND a.display = 1 AND b.role='${options.role}' ORDER BY sort, update_time DESC`);
+    const {mysql} = this.app;
+    return await mysql.query(`SELECT menu_id,title,icon,nexus,type,url FROM \`evy-menu\` AS a LEFT JOIN \`evy-role-menu\` AS b ON a.menu_id = b.menu WHERE a.soft_delete = 0 AND a.display = 1 AND b.role='${options.role}' ORDER BY sort, update_time DESC`);
   }
 
   async allAuth() {

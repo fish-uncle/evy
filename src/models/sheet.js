@@ -1,5 +1,5 @@
 import {createModelActions} from '../utils/action';
-import {GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH} from '../utils/request';
+import request from '../utils/request';
 
 export default {
 
@@ -60,7 +60,7 @@ export default {
         let param = {pageNum: page.current, pageSize: 10};
         param = Object.assign({}, search, param);
         const result = yield call(_ => {
-          return GET(listUrl, param)
+          return request.get(listUrl, {params: param})
         });
         yield put({
           type: 'r_sheet_page',
@@ -81,7 +81,7 @@ export default {
         let param = {pageNum: page.current, pageSize: 10};
         param = Object.assign({}, search, param);
         const result = yield call(_ => {
-          return GET(listUrl, param)
+          return request.get(listUrl, {params: param})
         });
         yield put({
           type: 'r_sheet_load',

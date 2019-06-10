@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import {Checkbox, notification} from 'antd';
+import {notification} from 'antd';
 import {RouterActions} from '../../models';
 import {Login, Default} from '../../components';
 import {connect} from "dva";
 import './index.less';
-import {POST} from "../../utils/request";
+import request from "../../utils/request";
 import {Link} from "react-router-dom";
 
 const {Tab, UserName, Password, Submit} = Login;
@@ -20,7 +20,7 @@ class LoginPage extends Component {
     let data = {};
     /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/.test(userName) ? data.email = userName : data.phone = userName;
     data.password = password;
-    POST('/api/login', data).then(data => {
+    request.post('/api/login', data).then(data => {
       if (data && data.success) {
         notification.success({message: '提示', description: '登录成功'});
       }
